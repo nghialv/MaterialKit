@@ -13,6 +13,9 @@
 		8C4D639B1A160C95003629F6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C4D639A1A160C95003629F6 /* Images.xcassets */; };
 		8C4D639E1A160C95003629F6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4D639C1A160C95003629F6 /* LaunchScreen.xib */; };
 		8C4D63AA1A160C95003629F6 /* MaterialKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4D63A91A160C95003629F6 /* MaterialKitTests.swift */; };
+		8C780DD31A16203100C9DEB9 /* MKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C780DD21A16203100C9DEB9 /* MKButton.swift */; };
+		8C780DD51A16205100C9DEB9 /* MKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C780DD41A16205100C9DEB9 /* MKTextField.swift */; };
+		8C780DD71A16209200C9DEB9 /* MKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C780DD61A16209200C9DEB9 /* MKColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		8C4D63A31A160C95003629F6 /* MaterialKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaterialKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C4D63A81A160C95003629F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8C4D63A91A160C95003629F6 /* MaterialKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialKitTests.swift; sourceTree = "<group>"; };
+		8C780DD21A16203100C9DEB9 /* MKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKButton.swift; sourceTree = "<group>"; };
+		8C780DD41A16205100C9DEB9 /* MKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTextField.swift; sourceTree = "<group>"; };
+		8C780DD61A16209200C9DEB9 /* MKColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +83,7 @@
 		8C4D63901A160C95003629F6 /* MaterialKit */ = {
 			isa = PBXGroup;
 			children = (
+				8C780DCF1A160D5000C9DEB9 /* Source */,
 				8C4D63931A160C95003629F6 /* AppDelegate.swift */,
 				8C4D63951A160C95003629F6 /* ViewController.swift */,
 				8C4D63971A160C95003629F6 /* Main.storyboard */,
@@ -110,6 +117,17 @@
 				8C4D63A81A160C95003629F6 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8C780DCF1A160D5000C9DEB9 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				8C780DD21A16203100C9DEB9 /* MKButton.swift */,
+				8C780DD41A16205100C9DEB9 /* MKTextField.swift */,
+				8C780DD61A16209200C9DEB9 /* MKColor.swift */,
+			);
+			name = Source;
+			path = ../../Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,6 +179,7 @@
 				TargetAttributes = {
 					8C4D638D1A160C95003629F6 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = PZK4944X96;
 					};
 					8C4D63A21A160C95003629F6 = {
 						CreatedOnToolsVersion = 6.1;
@@ -212,7 +231,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C780DD31A16203100C9DEB9 /* MKButton.swift in Sources */,
+				8C780DD51A16205100C9DEB9 /* MKTextField.swift in Sources */,
 				8C4D63961A160C95003629F6 /* ViewController.swift in Sources */,
+				8C780DD71A16209200C9DEB9 /* MKColor.swift in Sources */,
 				8C4D63941A160C95003629F6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,10 +358,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MaterialKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -347,10 +372,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = MaterialKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -407,6 +435,7 @@
 				8C4D63AF1A160C95003629F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8C4D63B01A160C95003629F6 /* Build configuration list for PBXNativeTarget "MaterialKitTests" */ = {
 			isa = XCConfigurationList;
@@ -415,6 +444,7 @@
 				8C4D63B21A160C95003629F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
