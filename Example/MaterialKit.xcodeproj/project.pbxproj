@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		86FE3A2F1A1755CF004A0CD5 /* TextFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE3A2E1A1755CF004A0CD5 /* TextFieldViewController.swift */; };
+		86FE3A311A175604004A0CD5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE3A301A175604004A0CD5 /* ViewController.swift */; };
+		86FE3A331A178473004A0CD5 /* flat_button_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 86FE3A321A178473004A0CD5 /* flat_button_icon.png */; };
 		8C4D63941A160C95003629F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4D63931A160C95003629F6 /* AppDelegate.swift */; };
-		8C4D63961A160C95003629F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4D63951A160C95003629F6 /* ViewController.swift */; };
+		8C4D63961A160C95003629F6 /* ButtonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4D63951A160C95003629F6 /* ButtonViewController.swift */; };
 		8C4D63991A160C95003629F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C4D63971A160C95003629F6 /* Main.storyboard */; };
 		8C4D639B1A160C95003629F6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C4D639A1A160C95003629F6 /* Images.xcassets */; };
 		8C4D639E1A160C95003629F6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4D639C1A160C95003629F6 /* LaunchScreen.xib */; };
@@ -29,10 +32,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		86FE3A2E1A1755CF004A0CD5 /* TextFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldViewController.swift; sourceTree = "<group>"; };
+		86FE3A301A175604004A0CD5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		86FE3A321A178473004A0CD5 /* flat_button_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flat_button_icon.png; sourceTree = "<group>"; };
 		8C4D638E1A160C95003629F6 /* MaterialKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaterialKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C4D63921A160C95003629F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8C4D63931A160C95003629F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8C4D63951A160C95003629F6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8C4D63951A160C95003629F6 /* ButtonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonViewController.swift; sourceTree = "<group>"; };
 		8C4D63981A160C95003629F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8C4D639A1A160C95003629F6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8C4D639D1A160C95003629F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -85,8 +91,11 @@
 			children = (
 				8C780DCF1A160D5000C9DEB9 /* Source */,
 				8C4D63931A160C95003629F6 /* AppDelegate.swift */,
-				8C4D63951A160C95003629F6 /* ViewController.swift */,
+				86FE3A301A175604004A0CD5 /* ViewController.swift */,
+				8C4D63951A160C95003629F6 /* ButtonViewController.swift */,
+				86FE3A2E1A1755CF004A0CD5 /* TextFieldViewController.swift */,
 				8C4D63971A160C95003629F6 /* Main.storyboard */,
+				86FE3A321A178473004A0CD5 /* flat_button_icon.png */,
 				8C4D639A1A160C95003629F6 /* Images.xcassets */,
 				8C4D639C1A160C95003629F6 /* LaunchScreen.xib */,
 				8C4D63911A160C95003629F6 /* Supporting Files */,
@@ -212,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C4D63991A160C95003629F6 /* Main.storyboard in Resources */,
+				86FE3A331A178473004A0CD5 /* flat_button_icon.png in Resources */,
 				8C4D639E1A160C95003629F6 /* LaunchScreen.xib in Resources */,
 				8C4D639B1A160C95003629F6 /* Images.xcassets in Resources */,
 			);
@@ -233,7 +243,9 @@
 			files = (
 				8C780DD31A16203100C9DEB9 /* MKButton.swift in Sources */,
 				8C780DD51A16205100C9DEB9 /* MKTextField.swift in Sources */,
-				8C4D63961A160C95003629F6 /* ViewController.swift in Sources */,
+				86FE3A2F1A1755CF004A0CD5 /* TextFieldViewController.swift in Sources */,
+				8C4D63961A160C95003629F6 /* ButtonViewController.swift in Sources */,
+				86FE3A311A175604004A0CD5 /* ViewController.swift in Sources */,
 				8C780DD71A16209200C9DEB9 /* MKColor.swift in Sources */,
 				8C4D63941A160C95003629F6 /* AppDelegate.swift in Sources */,
 			);
