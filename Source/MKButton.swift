@@ -115,12 +115,6 @@ class MKButton : UIButton
     // MARK - location tracking methods
     override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
         resetSubLayerLocation(touch.locationInView(self))
-        
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        subLayer.opacity = 1.0
-        CATransaction.commit()
-        
         // subLayer animation
         let subLayerAnim = CABasicAnimation(keyPath: "transform.scale")
         subLayerAnim.fromValue = 0.45
