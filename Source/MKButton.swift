@@ -17,33 +17,37 @@ enum MKButtonType {
 @IBDesignable
 class MKButton : UIButton
 {
-    @IBInspectable var shadowAnimationEnable : Bool = true
-    @IBInspectable var animationDuration : CFTimeInterval = 0.65
-    @IBInspectable var animateFromTapLocationEnable : Bool = true
-    @IBInspectable var cornerRadius: CGFloat = 2.0 {
-        didSet {
-            self.layer.cornerRadius = cornerRadius
-            self.resetCornerRadius()
-        }
-    }
     @IBInspectable var mkType: MKButtonType = .Raised {
         didSet {
             didChangeButtonType()
         }
     }
-    var subLayerColor = UIColor(white: 0.45, alpha: 0.5)
-    var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
+    
+    // animations
+    @IBInspectable var shadowAniEnable : Bool = true
+    @IBInspectable var backgroundAniEnable: Bool = true
+    @IBInspectable var aniDuration : Float = 0.65
+    @IBInspectable var aniFromTapLocationEnable : Bool = true
+    
+    @IBInspectable var cornerRadius: CGFloat = 2.0 {
         didSet {
-            backgroundLayer.backgroundColor = backgroundLayerColor.CGColor
+            layer.cornerRadius = cornerRadius
+            mkLayer.setMaskLayerCornerRadius(cornerRadius)
         }
     }
-    
-    private let subLayer = CALayer()
-    private let backgroundLayer = CALayer()
-    private let maskLayer = CAShapeLayer()
-    
-    private let linearTimingFunction = CAMediaTimingFunction(name: "linear")
-    private let easeOutTimingFunction = CAMediaTimingFunction(name: "easeOut")
+    // color
+    @IBInspectable var circleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+        didSet {
+            mkLayer.setCircleLayerColor(circleLayerColor)
+        }
+    }
+    @IBInspectable var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
+        didSet {
+            mkLayer.setBackgroundLayerColor(backgroundLayerColor)
+        }
+    }
+   
+    private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
     
     // MARK - initilization
     override init(frame: CGRect) {
@@ -58,114 +62,51 @@ class MKButton : UIButton
     
     // MARK - reset methods
     private func setupLayer() {
-        // background layer
-        backgroundLayer.frame = self.bounds
-        backgroundLayer.backgroundColor = backgroundLayerColor.CGColor
-        backgroundLayer.opacity = 0.0
-        self.layer.addSublayer(backgroundLayer)
-       
-        // sublayer
-        let subSize = max(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) * 0.85
-        let subCornerRadius = subSize/2
-        
-        subLayer.backgroundColor = subLayerColor.CGColor
-        subLayer.cornerRadius = subCornerRadius
-        resetSubLayerLocation(CGPoint(x: self.bounds.size.width/2, y: self.bounds.size.height/2))
-        backgroundLayer.addSublayer(subLayer)
-        
-        // mask layer
-        resetCornerRadius()
-        backgroundLayer.mask = maskLayer
+        mkLayer.setMaskLayerCornerRadius(cornerRadius)
+        mkLayer.setBackgroundLayerColor(backgroundLayerColor)
+        mkLayer.setCircleLayerColor(circleLayerColor)
     }
    
-    private func resetSubLayerLocation(center: CGPoint) {
-        if mkType == .FloatingAction {
-            return
-        }
-        
-        let width = CGRectGetWidth(self.bounds)
-        let height = CGRectGetHeight(self.bounds)
-        let subSize = max(width, height) * 0.9
-        let subX = center.x - subSize/2
-        let subY = center.y - subSize/2
-        
-        // disable animation when changing layer frame
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        subLayer.frame = CGRect(x: subX, y: subY, width: subSize, height: subSize)
-        CATransaction.commit()
-    }
-    
-    private func resetCornerRadius() {
-        maskLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerRadius).CGPath
-    }
-    
     private func didChangeButtonType() {
         if mkType == .FloatingAction {
             let width = CGRectGetWidth(self.bounds)
             let height = CGRectGetHeight(self.bounds)
             self.cornerRadius = min(width, height)/2
-            backgroundLayer.cornerRadius = self.cornerRadius
-            backgroundLayer.mask = nil
+            mkLayer.enableMask(enable: false)
         } else {
-            backgroundLayer.mask = maskLayer
+            mkLayer.enableMask(enable: true)
         }
     }
    
     // MARK - location tracking methods
     override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
-        resetSubLayerLocation(touch.locationInView(self))
-        // subLayer animation
-        let subLayerAnim = CABasicAnimation(keyPath: "transform.scale")
-        subLayerAnim.fromValue = 0.45
-        subLayerAnim.toValue = mkType == .FloatingAction ? 1.75 : 1.0
-        subLayerAnim.duration = animationDuration
-        subLayerAnim.timingFunction = mkType == .FloatingAction ? easeOutTimingFunction : linearTimingFunction
-        subLayerAnim.removedOnCompletion = false
-        subLayerAnim.fillMode = kCAFillModeForwards
-        subLayer.addAnimation(subLayerAnim, forKey: "subLayerAnimation")
-   
-        // backgroundLayer animation
-        let backgroundLayerAnim = CABasicAnimation(keyPath: "opacity")
-        backgroundLayerAnim.fromValue = 1.0
-        backgroundLayerAnim.toValue = 0.0
-        backgroundLayerAnim.duration = mkType == .Flat ? 1.0 : animationDuration
-        backgroundLayerAnim.timingFunction = mkType == .Flat ? easeOutTimingFunction : linearTimingFunction
-        backgroundLayer.addAnimation(backgroundLayerAnim, forKey: "backgroundLayerAnimation")
+        if mkType != .FloatingAction {
+            mkLayer.setSubLayerLocationAt(touch.locationInView(self))
+        }
         
+        // circleLayer animation
+        let toValue: Float = mkType == .FloatingAction ? 1.75 : 1.0
+        let timingFunction = mkType == .FloatingAction ? MKTimingFunction.EaseOut : MKTimingFunction.Linear
+        mkLayer.animateScaleForCircleLayer(0.45, toScale: toValue, timingFunction: timingFunction, duration: CFTimeInterval( aniDuration))
+        
+        // backgroundLayer animation
+        if backgroundAniEnable {
+            let duration = mkType == .Flat ? 1.0 : CFTimeInterval(aniDuration)
+            let timingFunction2 = mkType == .Flat ? MKTimingFunction.EaseOut : MKTimingFunction.Linear
+            mkLayer.animateAlphaForBackgroundLayer(timingFunction2, duration: duration)
+        }
         // shadow animation for self
-        if shadowAnimationEnable {
+        if shadowAniEnable {
             let shadowRadius = self.layer.shadowRadius
             let shadowOpacity = self.layer.shadowOpacity
-            shadowAnimation(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, duration: animationDuration)
+            
+            if mkType == .Flat {
+                mkLayer.animateMaskLayerShadow()
+            } else {
+                mkLayer.animateSuperLayerShadow(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, timingFunction: MKTimingFunction.EaseOut, duration: CFTimeInterval(aniDuration))
+            }
         }
         
         return super.beginTrackingWithTouch(touch, withEvent: event)
-    }
-    
-    override func endTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) {
-        super.endTrackingWithTouch(touch, withEvent: event)
-    }
-    
-    // MARK - animations
-    private func shadowAnimation(fromRadius: CGFloat, toRadius: CGFloat, fromOpacity: Float, toOpacity: Float, duration: CFTimeInterval) {
-        let radiusAnimation = CABasicAnimation(keyPath: "shadowRadius")
-        radiusAnimation.fromValue = fromRadius
-        radiusAnimation.toValue = toRadius
-    
-        let opacityAnimation = CABasicAnimation(keyPath: "shadowOpacity")
-        opacityAnimation.fromValue = fromOpacity
-        opacityAnimation.toValue = toOpacity
-    
-        let groupAnimation = CAAnimationGroup()
-        groupAnimation.duration = duration
-        groupAnimation.removedOnCompletion = false
-        groupAnimation.fillMode = kCAFillModeForwards
-        groupAnimation.animations = [radiusAnimation, opacityAnimation]
-        if mkType == .Flat {
-            maskLayer.addAnimation(groupAnimation, forKey: "shadow-animation")
-        } else {
-            self.layer.addAnimation(groupAnimation, forKey: "shadow-animation")
-        }
     }
 }

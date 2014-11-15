@@ -58,9 +58,12 @@ class MKLayer {
         backgroundLayer.mask = maskLayer
     }
     
-    func setupLayer(backgroundColor: UIColor, circleLayerColor: UIColor) {
-        backgroundLayer.backgroundColor = backgroundColor.CGColor
-        circleLayer.backgroundColor = circleLayerColor.CGColor
+    func setBackgroundLayerColor(color: UIColor) {
+        backgroundLayer.backgroundColor = color.CGColor
+    }
+    
+    func setCircleLayerColor(color: UIColor) {
+        circleLayer.backgroundColor = color.CGColor
     }
     
     func setSubLayerLocationAt(center: CGPoint) {
@@ -79,6 +82,7 @@ class MKLayer {
     }
     
     func setMaskLayerCornerRadius(cornerRadius: CGFloat) {
+        println("Change mask corner Radius")
         maskLayer.path = UIBezierPath(roundedRect: backgroundLayer.bounds, cornerRadius: cornerRadius).CGPath
     }
    
@@ -105,5 +109,32 @@ class MKLayer {
         backgroundLayerAnim.duration = duration
         backgroundLayerAnim.timingFunction = timingFunction.function
         backgroundLayer.addAnimation(backgroundLayerAnim, forKey: nil)
+    }
+    
+    func animateSuperLayerShadow(fromRadius: CGFloat, toRadius: CGFloat, fromOpacity: Float, toOpacity: Float, timingFunction: MKTimingFunction, duration: CFTimeInterval) {
+        animateShadowForLayer(superLayer, fromRadius: fromRadius, toRadius: toRadius, fromOpacity: fromOpacity, toOpacity: toOpacity, timingFunction: timingFunction, duration: duration)
+    }
+    
+    func animateMaskLayerShadow() {
+        
+    }
+    
+    private func animateShadowForLayer(layer: CALayer, fromRadius: CGFloat, toRadius: CGFloat, fromOpacity: Float, toOpacity: Float, timingFunction: MKTimingFunction, duration: CFTimeInterval) {
+        let radiusAnimation = CABasicAnimation(keyPath: "shadowRadius")
+        radiusAnimation.fromValue = fromRadius
+        radiusAnimation.toValue = toRadius
+        
+        let opacityAnimation = CABasicAnimation(keyPath: "shadowOpacity")
+        opacityAnimation.fromValue = fromOpacity
+        opacityAnimation.toValue = toOpacity
+        
+        let groupAnimation = CAAnimationGroup()
+        groupAnimation.duration = duration
+        groupAnimation.timingFunction = timingFunction.function
+        groupAnimation.removedOnCompletion = false
+        groupAnimation.fillMode = kCAFillModeForwards
+        groupAnimation.animations = [radiusAnimation, opacityAnimation]
+        
+        layer.addAnimation(groupAnimation, forKey: nil)
     }
 }
