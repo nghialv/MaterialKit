@@ -9,8 +9,9 @@
 import UIKit
 
 class MKTableViewCell : UITableViewCell {
-   
-    private var mkLayer: MKLayer!
+    @IBInspectable var tapLocationEnabled: Bool = true
+    
+    private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.contentView.layer)
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -18,17 +19,16 @@ class MKTableViewCell : UITableViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupLayer()
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        setupLayer()
     }
     
     func setupLayer() {
         self.selectionStyle = .None
-        println("View \(CGRectGetHeight(contentView.bounds))")
-        
-        mkLayer = MKLayer(superLayer: self.contentView.layer)
         mkLayer.setCircleLayerColor(UIColor.MKColor.Orange)
         mkLayer.setBackgroundLayerColor(UIColor.brownColor())
     }
@@ -36,8 +36,13 @@ class MKTableViewCell : UITableViewCell {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         super.touchesBegan(touches, withEvent: event)
         
-        let firstTouch = touches.anyObject() as UITouch
-        mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: MKTimingFunction.Linear, duration: 0.75)
-        println("Touch")
+        if let firstTouch = touches.anyObject() as? UITouch {
+            mkLayer.superLayerDidResize()
+            mkLayer.setCircleLayerLocationAt(firstTouch.locationInView(self.contentView))
+            mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: MKTimingFunction.Linear, duration: 0.75)
+            mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: 0.75)
+            println("\(self.bounds.height)")
+            println("Touch")
+        }
     }
 }

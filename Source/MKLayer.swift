@@ -43,7 +43,7 @@ class MKLayer {
                 let circleCornerRadius = circleSize/2
                 
                 circleLayer.cornerRadius = circleCornerRadius
-                setSubLayerLocationAt(CGPoint(x: superLayerWidth/2, y: superLayerHeight/2))
+                setCircleLayerLocationAt(CGPoint(x: superLayerWidth/2, y: superLayerHeight/2))
             }
         }
     }
@@ -65,14 +65,19 @@ class MKLayer {
        
         circleLayer.opacity = 0.0
         circleLayer.cornerRadius = circleCornerRadius
-        setSubLayerLocationAt(CGPoint(x: superLayerWidth/2, y: superLayerHeight/2))
+        setCircleLayerLocationAt(CGPoint(x: superLayerWidth/2, y: superLayerHeight/2))
         backgroundLayer.addSublayer(circleLayer)
         
         // mask layer
         setMaskLayerCornerRadius(superLayer.cornerRadius)
         backgroundLayer.mask = maskLayer
     }
-   
+    
+    func superLayerDidResize() {
+        backgroundLayer.frame = superLayer.bounds
+        setCircleLayerLocationAt(CGPoint(x: superLayer.bounds.width/2, y: superLayer.bounds.height/2))
+    }
+    
     func enableOnlyCircleLayer() {
         backgroundLayer.removeFromSuperlayer()
         superLayer.addSublayer(circleLayer)
@@ -86,7 +91,7 @@ class MKLayer {
         circleLayer.backgroundColor = color.CGColor
     }
     
-    func setSubLayerLocationAt(center: CGPoint) {
+    func setCircleLayerLocationAt(center: CGPoint) {
         let bounds = superLayer.bounds
         let width = CGRectGetWidth(bounds)
         let height = CGRectGetHeight(bounds)

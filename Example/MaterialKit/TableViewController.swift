@@ -24,7 +24,6 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as MyCell
-        cell.setupLayer()
         cell.setMessage("HELLO")
         
         return cell

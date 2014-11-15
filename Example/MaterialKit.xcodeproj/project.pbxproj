@@ -146,8 +146,8 @@
 			children = (
 				8C780DD21A16203100C9DEB9 /* MKButton.swift */,
 				8C780DD41A16205100C9DEB9 /* MKTextField.swift */,
-				8C780DD61A16209200C9DEB9 /* MKColor.swift */,
 				86FE3A341A178863004A0CD5 /* MKTableViewCell.swift */,
+				8C780DD61A16209200C9DEB9 /* MKColor.swift */,
 				86FE3A361A1788FF004A0CD5 /* MKLayer.swift */,
 			);
 			name = Source;
