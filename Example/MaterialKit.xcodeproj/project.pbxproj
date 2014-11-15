@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		866D96861A17B12500897451 /* icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 866D96841A17B12500897451 /* icon1.png */; };
+		866D96871A17B12500897451 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 866D96851A17B12500897451 /* icon2.png */; };
 		86FE3A2F1A1755CF004A0CD5 /* TextFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE3A2E1A1755CF004A0CD5 /* TextFieldViewController.swift */; };
 		86FE3A311A175604004A0CD5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE3A301A175604004A0CD5 /* ViewController.swift */; };
-		86FE3A331A178473004A0CD5 /* flat_button_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 86FE3A321A178473004A0CD5 /* flat_button_icon.png */; };
 		86FE3A351A178863004A0CD5 /* MKTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE3A341A178863004A0CD5 /* MKTableViewCell.swift */; };
 		86FE3A371A1788FF004A0CD5 /* MKLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE3A361A1788FF004A0CD5 /* MKLayer.swift */; };
 		8C4D63941A160C95003629F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4D63931A160C95003629F6 /* AppDelegate.swift */; };
@@ -34,9 +35,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		866D96841A17B12500897451 /* icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1.png; sourceTree = "<group>"; };
+		866D96851A17B12500897451 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
 		86FE3A2E1A1755CF004A0CD5 /* TextFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldViewController.swift; sourceTree = "<group>"; };
 		86FE3A301A175604004A0CD5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		86FE3A321A178473004A0CD5 /* flat_button_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flat_button_icon.png; sourceTree = "<group>"; };
 		86FE3A341A178863004A0CD5 /* MKTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTableViewCell.swift; sourceTree = "<group>"; };
 		86FE3A361A1788FF004A0CD5 /* MKLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLayer.swift; sourceTree = "<group>"; };
 		8C4D638E1A160C95003629F6 /* MaterialKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaterialKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,8 +100,9 @@
 				86FE3A301A175604004A0CD5 /* ViewController.swift */,
 				8C4D63951A160C95003629F6 /* ButtonViewController.swift */,
 				86FE3A2E1A1755CF004A0CD5 /* TextFieldViewController.swift */,
+				866D96841A17B12500897451 /* icon1.png */,
+				866D96851A17B12500897451 /* icon2.png */,
 				8C4D63971A160C95003629F6 /* Main.storyboard */,
-				86FE3A321A178473004A0CD5 /* flat_button_icon.png */,
 				8C4D639A1A160C95003629F6 /* Images.xcassets */,
 				8C4D639C1A160C95003629F6 /* LaunchScreen.xib */,
 				8C4D63911A160C95003629F6 /* Supporting Files */,
@@ -227,8 +230,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C4D63991A160C95003629F6 /* Main.storyboard in Resources */,
-				86FE3A331A178473004A0CD5 /* flat_button_icon.png in Resources */,
+				866D96871A17B12500897451 /* icon2.png in Resources */,
 				8C4D639E1A160C95003629F6 /* LaunchScreen.xib in Resources */,
+				866D96861A17B12500897451 /* icon1.png in Resources */,
 				8C4D639B1A160C95003629F6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

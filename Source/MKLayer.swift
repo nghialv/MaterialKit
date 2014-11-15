@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 enum MKTimingFunction {
     case Linear
@@ -33,7 +34,20 @@ class MKLayer {
     private let circleLayer = CALayer()
     private let backgroundLayer = CALayer()
     private let maskLayer = CAShapeLayer()
-
+    var circleGrowRatioMax: Float = 0.9 {
+        didSet {
+            if circleGrowRatioMax > 0 {
+                let superLayerWidth = CGRectGetWidth(superLayer.bounds)
+                let superLayerHeight = CGRectGetHeight(superLayer.bounds)
+                let circleSize = CGFloat(max(superLayerWidth, superLayerHeight)) * CGFloat(circleGrowRatioMax)
+                let circleCornerRadius = circleSize/2
+                
+                circleLayer.cornerRadius = circleCornerRadius
+                setSubLayerLocationAt(CGPoint(x: superLayerWidth/2, y: superLayerHeight/2))
+            }
+        }
+    }
+    
     init(superLayer: CALayer) {
         self.superLayer = superLayer
         
@@ -46,9 +60,10 @@ class MKLayer {
         superLayer.addSublayer(backgroundLayer)
         
         // circlelayer
-        let circleSize = max(superLayerWidth, superLayerHeight) * 0.9
+        let circleSize = CGFloat(max(superLayerWidth, superLayerHeight)) * CGFloat(circleGrowRatioMax)
         let circleCornerRadius = circleSize/2
-        
+       
+        circleLayer.opacity = 0.0
         circleLayer.cornerRadius = circleCornerRadius
         setSubLayerLocationAt(CGPoint(x: superLayerWidth/2, y: superLayerHeight/2))
         backgroundLayer.addSublayer(circleLayer)
@@ -56,6 +71,11 @@ class MKLayer {
         // mask layer
         setMaskLayerCornerRadius(superLayer.cornerRadius)
         backgroundLayer.mask = maskLayer
+    }
+   
+    func enableOnlyCircleLayer() {
+        backgroundLayer.removeFromSuperlayer()
+        superLayer.addSublayer(circleLayer)
     }
     
     func setBackgroundLayerColor(color: UIColor) {
@@ -67,10 +87,10 @@ class MKLayer {
     }
     
     func setSubLayerLocationAt(center: CGPoint) {
-        let bounds = backgroundLayer.bounds
+        let bounds = superLayer.bounds
         let width = CGRectGetWidth(bounds)
         let height = CGRectGetHeight(bounds)
-        let subSize = max(width, height) * 0.9
+        let subSize = CGFloat(max(width, height)) * CGFloat(circleGrowRatioMax)
         let subX = center.x - subSize/2
         let subY = center.y - subSize/2
         
@@ -82,7 +102,6 @@ class MKLayer {
     }
     
     func setMaskLayerCornerRadius(cornerRadius: CGFloat) {
-        println("Change mask corner Radius")
         maskLayer.path = UIBezierPath(roundedRect: backgroundLayer.bounds, cornerRadius: cornerRadius).CGPath
     }
    
@@ -90,16 +109,29 @@ class MKLayer {
         backgroundLayer.mask = enable ? maskLayer : nil
     }
     
+    func setBackgroundLayerCornerRadius(cornerRadius: CGFloat) {
+        backgroundLayer.cornerRadius = cornerRadius
+    }
+    
     // MARK - Animation
     func animateScaleForCircleLayer(fromScale: Float, toScale: Float, timingFunction: MKTimingFunction, duration: CFTimeInterval) {
         let circleLayerAnim = CABasicAnimation(keyPath: "transform.scale")
         circleLayerAnim.fromValue = fromScale
         circleLayerAnim.toValue = toScale
-        circleLayerAnim.duration = duration
-        circleLayerAnim.timingFunction = timingFunction.function
-        circleLayerAnim.removedOnCompletion = false
-        circleLayerAnim.fillMode = kCAFillModeForwards
-        circleLayer.addAnimation(circleLayerAnim, forKey: nil)
+        
+        let opacityAnim = CABasicAnimation(keyPath: "opacity")
+        opacityAnim.fromValue = 1.0
+        opacityAnim.toValue = 0.0
+        
+        let groupAnim = CAAnimationGroup()
+        groupAnim.duration = duration
+        groupAnim.timingFunction = timingFunction.function
+        groupAnim.removedOnCompletion = false
+        groupAnim.fillMode = kCAFillModeForwards
+        
+        groupAnim.animations = [circleLayerAnim, opacityAnim]
+    
+        circleLayer.addAnimation(groupAnim, forKey: nil)
     }
     
     func animateAlphaForBackgroundLayer(timingFunction: MKTimingFunction, duration: CFTimeInterval) {

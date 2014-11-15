@@ -12,38 +12,60 @@ import QuartzCore
 class ButtonViewController: UIViewController {
 
     @IBOutlet var raisedButton: MKButton!
-    @IBOutlet var floatingActionButton: MKButton!
-    @IBOutlet var flatButton: MKButton!
-    @IBOutlet var flatImageButton: MKButton!
+    
+    @IBOutlet var flatButton1: MKButton!
+    @IBOutlet var flatButton2: MKButton!
+    
+    @IBOutlet var imageButton1: MKButton!
+    @IBOutlet var imageButton2: MKButton!
+    
+    @IBOutlet var floatButton1: MKButton!
+    @IBOutlet var floatButton2: MKButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-       
-        //raisedButton.backgroundColor = UIColor.MKColor.Blue
+      
         raisedButton.layer.shadowOpacity = 0.55
         raisedButton.layer.shadowRadius = 5.0
         raisedButton.layer.shadowColor = UIColor.grayColor().CGColor
         raisedButton.layer.shadowOffset = CGSize(width: 0, height: 2.5)
         
-        floatingActionButton.mkType = .FloatingAction
-        floatingActionButton.layer.shadowOpacity = 0.75
-        floatingActionButton.layer.shadowRadius = 3.5
-        floatingActionButton.layer.shadowColor = UIColor.blackColor().CGColor
-        floatingActionButton.layer.shadowOffset = CGSize(width: 1.0, height: 5.5)
-       
-        flatButton.mkType = .Flat
-        flatButton.backgroundLayerColor = UIColor.MKColor.Lime
+        flatButton1.backgroundLayerColor = UIColor.MKColor.Lime
+        flatButton1.layer.shadowOpacity = 0.5
+        flatButton1.layer.shadowRadius = 5.0
+        flatButton1.layer.shadowColor = UIColor.blackColor().CGColor
+        flatButton1.layer.shadowOffset = CGSize(width: 0, height: 2.5)
         
-        /*
-        flatButton.layer.shadowOpacity = 0.5
-        flatButton.layer.shadowRadius = 5.0
-        flatButton.layer.shadowColor = UIColor.blackColor().CGColor
+        flatButton2.maskEnabled = false
+        flatButton2.circleGrowRatioMax = 0.5
+        flatButton2.backgroundAniEnabled = false
+        flatButton2.tapLocationEnabled = false
         
-        flatButton.layer.shadowOffset = CGSize(width: 0, height: 2.5)
-        */
+        imageButton1.circleLayerColor = UIColor.MKColor.DeepOrange
         
-        flatImageButton.mkType = .FloatingAction
+        imageButton2.maskEnabled = false
+        imageButton2.circleGrowRatioMax = 1.2
+        imageButton2.backgroundAniEnabled = false
+        imageButton2.tapLocationEnabled = false
+        
+        floatButton1.cornerRadius = 40.0
+        floatButton1.backgroundLayerCornerRadius = 40.0
+        floatButton1.maskEnabled = false
+        floatButton1.circleGrowRatioMax = 1.45
+        floatButton1.tapLocationEnabled = false
+        floatButton1.aniDuration = 0.85
+        
+        floatButton1.layer.shadowOpacity = 0.75
+        floatButton1.layer.shadowRadius = 3.5
+        floatButton1.layer.shadowColor = UIColor.blackColor().CGColor
+        floatButton1.layer.shadowOffset = CGSize(width: 1.0, height: 5.5)
+        
+        floatButton2.cornerRadius = 40.0
+        floatButton2.layer.shadowOpacity = 0.75
+        floatButton2.layer.shadowRadius = 3.5
+        floatButton2.layer.shadowColor = UIColor.blackColor().CGColor
+        floatButton2.layer.shadowOffset = CGSize(width: 1.0, height: 5.5)
     }
 
     func buttonPressed() {

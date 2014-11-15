@@ -8,28 +8,40 @@
 
 import UIKit
 
-enum MKButtonType {
-    case FloatingAction
-    case Raised
-    case Flat
-}
-
 @IBDesignable
 class MKButton : UIButton
 {
-    @IBInspectable var mkType: MKButtonType = .Raised {
+    @IBInspectable var maskEnabled: Bool = true {
         didSet {
-            didChangeButtonType()
+            mkLayer.enableMask(enable: maskEnabled)
         }
     }
-    
+    @IBInspectable var tapLocationEnabled: Bool = true
+    @IBInspectable var circleGrowRatioMax: Float = 0.9 {
+        didSet {
+            mkLayer.circleGrowRatioMax = circleGrowRatioMax
+        }
+    }
+    @IBInspectable var backgroundLayerCornerRadius: CGFloat = 0.0 {
+        didSet {
+            mkLayer.setBackgroundLayerCornerRadius(backgroundLayerCornerRadius)
+        }
+    }
     // animations
-    @IBInspectable var shadowAniEnable : Bool = true
-    @IBInspectable var backgroundAniEnable: Bool = true
-    @IBInspectable var aniDuration : Float = 0.65
-    @IBInspectable var aniFromTapLocationEnable : Bool = true
+    @IBInspectable var shadowAniEnabled: Bool = true
+    @IBInspectable var backgroundAniEnabled: Bool = true {
+        didSet {
+            if !backgroundAniEnabled {
+                mkLayer.enableOnlyCircleLayer()
+            }
+        }
+    }
+    @IBInspectable var aniDuration: Float = 0.65
+    @IBInspectable var circleAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable var backgroundAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable var shadowAniTimingFunction: MKTimingFunction = .EaseOut
     
-    @IBInspectable var cornerRadius: CGFloat = 2.0 {
+    @IBInspectable var cornerRadius: CGFloat = 2.5 {
         didSet {
             layer.cornerRadius = cornerRadius
             mkLayer.setMaskLayerCornerRadius(cornerRadius)
@@ -62,49 +74,36 @@ class MKButton : UIButton
     
     // MARK - reset methods
     private func setupLayer() {
-        mkLayer.setMaskLayerCornerRadius(cornerRadius)
+        adjustsImageWhenHighlighted = false
+        self.cornerRadius = 2.5
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setCircleLayerColor(circleLayerColor)
     }
    
-    private func didChangeButtonType() {
-        if mkType == .FloatingAction {
-            let width = CGRectGetWidth(self.bounds)
-            let height = CGRectGetHeight(self.bounds)
-            self.cornerRadius = min(width, height)/2
-            mkLayer.enableMask(enable: false)
-        } else {
-            mkLayer.enableMask(enable: true)
-        }
-    }
-   
     // MARK - location tracking methods
     override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
-        if mkType != .FloatingAction {
+        if tapLocationEnabled {
             mkLayer.setSubLayerLocationAt(touch.locationInView(self))
         }
         
         // circleLayer animation
-        let toValue: Float = mkType == .FloatingAction ? 1.75 : 1.0
-        let timingFunction = mkType == .FloatingAction ? MKTimingFunction.EaseOut : MKTimingFunction.Linear
-        mkLayer.animateScaleForCircleLayer(0.45, toScale: toValue, timingFunction: timingFunction, duration: CFTimeInterval( aniDuration))
+        mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval( aniDuration))
         
         // backgroundLayer animation
-        if backgroundAniEnable {
-            let duration = mkType == .Flat ? 1.0 : CFTimeInterval(aniDuration)
-            let timingFunction2 = mkType == .Flat ? MKTimingFunction.EaseOut : MKTimingFunction.Linear
-            mkLayer.animateAlphaForBackgroundLayer(timingFunction2, duration: duration)
+        if backgroundAniEnabled {
+            mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(aniDuration))
         }
+        
         // shadow animation for self
-        if shadowAniEnable {
+        if shadowAniEnabled {
             let shadowRadius = self.layer.shadowRadius
             let shadowOpacity = self.layer.shadowOpacity
             
-            if mkType == .Flat {
-                mkLayer.animateMaskLayerShadow()
-            } else {
-                mkLayer.animateSuperLayerShadow(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, timingFunction: MKTimingFunction.EaseOut, duration: CFTimeInterval(aniDuration))
-            }
+            //if mkType == .Flat {
+            //    mkLayer.animateMaskLayerShadow()
+            //} else {
+                mkLayer.animateSuperLayerShadow(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, timingFunction: shadowAniTimingFunction, duration: CFTimeInterval(aniDuration))
+            //}
         }
         
         return super.beginTrackingWithTouch(touch, withEvent: event)

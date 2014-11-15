@@ -111,7 +111,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LHn-c9-UeF" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="97" y="151" width="180" height="45"/>
+                                <rect key="frame" x="88" y="126" width="180" height="45"/>
                                 <color key="backgroundColor" red="0.20392156862745098" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="RAISED BUTTON">
@@ -125,7 +125,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gT6-rQ-K01" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="147" y="380" width="80" height="80"/>
+                                <rect key="frame" x="66" y="541" width="80" height="80"/>
                                 <color key="backgroundColor" red="0.792156862745098" green="0.14901960784313725" blue="0.094117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                 <state key="normal" title="→">
@@ -133,17 +133,40 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rRf-3K-a7K" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="147" y="551" width="80" height="80"/>
-                                <state key="normal" image="flat_button_icon.png">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0we-b2-A58" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
+                                <rect key="frame" x="233" y="541" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.23529411764705882" green="0.6470588235294118" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
+                                <state key="normal" title="→">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFl-hq-l2E" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
+                                <rect key="frame" x="243" y="385" width="60" height="60"/>
+                                <state key="normal" image="icon2.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VIB-GK-Jle" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="97" y="264" width="180" height="45"/>
+                                <rect key="frame" x="88" y="215" width="180" height="45"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="FLAT BUTTON">
                                     <color key="titleColor" red="0.21957780671963514" green="0.25220345923465765" blue="0.66646938131313127" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qSz-ai-pBs" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
+                                <rect key="frame" x="88" y="294" width="180" height="45"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBold" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="FLAT BUTTON">
+                                    <color key="titleColor" red="0.47450980392156861" green="0.73725490196078436" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rRf-3K-a7K" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
+                                <rect key="frame" x="76" y="385" width="60" height="60"/>
+                                <state key="normal" image="icon1.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
@@ -154,10 +177,13 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="flatButton" destination="VIB-GK-Jle" id="lP5-ql-Pz1"/>
-                        <outlet property="flatImageButton" destination="rRf-3K-a7K" id="qbP-vt-GT9"/>
-                        <outlet property="floatingActionButton" destination="gT6-rQ-K01" id="W6T-by-v63"/>
-                        <outlet property="raisedButton" destination="LHn-c9-UeF" id="mVt-yf-g2b"/>
+                        <outlet property="flatButton1" destination="VIB-GK-Jle" id="ta9-ws-e2u"/>
+                        <outlet property="flatButton2" destination="qSz-ai-pBs" id="qzz-54-b0j"/>
+                        <outlet property="floatButton1" destination="gT6-rQ-K01" id="3lq-ge-JdW"/>
+                        <outlet property="floatButton2" destination="0we-b2-A58" id="NJl-GB-y82"/>
+                        <outlet property="imageButton1" destination="rRf-3K-a7K" id="cmR-Xd-sHA"/>
+                        <outlet property="imageButton2" destination="CFl-hq-l2E" id="hf4-Bv-9oG"/>
+                        <outlet property="raisedButton" destination="LHn-c9-UeF" id="j6Z-Gq-zHG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -166,6 +192,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="flat_button_icon.png" width="500" height="500"/>
+        <image name="icon1.png" width="155" height="154"/>
+        <image name="icon2.png" width="154" height="154"/>
     </resources>
 </document>
