@@ -72,7 +72,7 @@ class MKButton : UIButton
         setupLayer()
     }
     
-    // MARK - reset methods
+    // MARK - setup methods
     private func setupLayer() {
         adjustsImageWhenHighlighted = false
         self.cornerRadius = 2.5
@@ -87,7 +87,7 @@ class MKButton : UIButton
         }
         
         // circleLayer animation
-        mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval( aniDuration))
+        mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval(aniDuration))
         
         // backgroundLayer animation
         if backgroundAniEnabled {
