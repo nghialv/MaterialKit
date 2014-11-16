@@ -40,12 +40,14 @@ class TextFieldViewController: UIViewController {
         textField3.layer.borderColor = UIColor.MKColor.Grey.CGColor
         textField3.circleLayerColor = UIColor.MKColor.Amber
         textField3.tintColor = UIColor.MKColor.DeepOrange
+        textField3.rippleLocation = .Left
         
         // No border, no shadow, floatingPlaceholderEnabled
         textField4.layer.borderColor = UIColor.clearColor().CGColor
         textField4.floatingPlaceholderEnabled = true
         textField4.placeholder = "Github"
         textField4.tintColor = UIColor.MKColor.Blue
+        textField4.rippleLocation = .Right
         
         // No border, shadow, floatingPlaceholderEnabled
         textField5.layer.borderColor = UIColor.clearColor().CGColor

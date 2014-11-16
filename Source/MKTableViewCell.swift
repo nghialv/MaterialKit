@@ -38,7 +38,7 @@ class MKTableViewCell : UITableViewCell {
         
         if let firstTouch = touches.anyObject() as? UITouch {
             mkLayer.superLayerDidResize()
-            mkLayer.setCircleLayerLocationAt(firstTouch.locationInView(self.contentView))
+            mkLayer.didChangeTapLocation(firstTouch.locationInView(self.contentView))
             mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: MKTimingFunction.Linear, duration: 0.75)
             mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: 0.75)
             println("\(self.bounds.height)")

@@ -83,7 +83,7 @@ class MKButton : UIButton
     // MARK - location tracking methods
     override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
         if tapLocationEnabled {
-            mkLayer.setCircleLayerLocationAt(touch.locationInView(self))
+            mkLayer.didChangeTapLocation(touch.locationInView(self))
         }
         
         // circleLayer animation

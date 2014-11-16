@@ -41,6 +41,25 @@ class MKLayer {
     private let circleLayer = CALayer()
     private let backgroundLayer = CALayer()
     private let maskLayer = CAShapeLayer()
+    var rippleLocation: MKRippleLocation = .TapLocation {
+        didSet {
+            var origin: CGPoint?
+            switch rippleLocation {
+            case .Center:
+                origin = CGPoint(x: superLayer.bounds.width/2, y: superLayer.bounds.height/2)
+            case .Left:
+                origin = CGPoint(x: superLayer.bounds.width * 0.25, y: superLayer.bounds.height/2)
+            case .Right:
+                origin = CGPoint(x: superLayer.bounds.width * 0.75, y: superLayer.bounds.height/2)
+            default:
+                origin = nil
+            }
+            if let originPoint = origin {
+                setCircleLayerLocationAt(originPoint)
+            }
+        }
+    }
+    
     var circleGrowRatioMax: Float = 0.9 {
         didSet {
             if circleGrowRatioMax > 0 {
@@ -98,19 +117,10 @@ class MKLayer {
         circleLayer.backgroundColor = color.CGColor
     }
     
-    func setCircleLayerLocationAt(center: CGPoint) {
-        let bounds = superLayer.bounds
-        let width = CGRectGetWidth(bounds)
-        let height = CGRectGetHeight(bounds)
-        let subSize = CGFloat(max(width, height)) * CGFloat(circleGrowRatioMax)
-        let subX = center.x - subSize/2
-        let subY = center.y - subSize/2
-        
-        // disable animation when changing layer frame
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        circleLayer.frame = CGRect(x: subX, y: subY, width: subSize, height: subSize)
-        CATransaction.commit()
+    func didChangeTapLocation(location: CGPoint) {
+        if rippleLocation == .TapLocation {
+            self.setCircleLayerLocationAt(location)
+        }
     }
     
     func setMaskLayerCornerRadius(cornerRadius: CGFloat) {
@@ -123,6 +133,21 @@ class MKLayer {
     
     func setBackgroundLayerCornerRadius(cornerRadius: CGFloat) {
         backgroundLayer.cornerRadius = cornerRadius
+    }
+    
+    private func setCircleLayerLocationAt(center: CGPoint) {
+        let bounds = superLayer.bounds
+        let width = CGRectGetWidth(bounds)
+        let height = CGRectGetHeight(bounds)
+        let subSize = CGFloat(max(width, height)) * CGFloat(circleGrowRatioMax)
+        let subX = center.x - subSize/2
+        let subY = center.y - subSize/2
+        
+        // disable animation when changing layer frame
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        circleLayer.frame = CGRect(x: subX, y: subY, width: subSize, height: subSize)
+        CATransaction.commit()
     }
     
     // MARK - Animation

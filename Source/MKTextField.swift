@@ -14,7 +14,12 @@ class MKTextField : UITextField {
     @IBInspectable var floatingLabelBottomMargin: CGFloat = 2.0
     @IBInspectable var floatingPlaceholderEnabled: Bool = false
     
-    @IBInspectable var rippleLocation: MKRippleLocation = .TapLocation
+    @IBInspectable var rippleLocation: MKRippleLocation = .TapLocation {
+        didSet {
+            mkLayer.rippleLocation = rippleLocation
+        }
+    }
+    
     @IBInspectable var aniDuration: Float = 0.65
     @IBInspectable var circleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable var shadowAniEnabled: Bool = true
@@ -85,9 +90,7 @@ class MKTextField : UITextField {
     }
     
     override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
-        if rippleLocation == .TapLocation {
-            mkLayer.setCircleLayerLocationAt(touch.locationInView(self))
-        }
+        mkLayer.didChangeTapLocation(touch.locationInView(self))
         
         mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: MKTimingFunction.Linear, duration: 0.75)
         mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: 0.75)
