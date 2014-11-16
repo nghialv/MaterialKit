@@ -9,9 +9,9 @@
 import UIKit
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
-        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

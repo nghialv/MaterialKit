@@ -100,7 +100,11 @@ class MKLayer {
     }
     
     func superLayerDidResize() {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         backgroundLayer.frame = superLayer.bounds
+        setMaskLayerCornerRadius(superLayer.cornerRadius)
+        CATransaction.commit()
         setCircleLayerLocationAt(CGPoint(x: superLayer.bounds.width/2, y: superLayer.bounds.height/2))
     }
     
