@@ -19,4 +19,6 @@ Components
 </p>
 
 #### MKTableViewCell
-->![MKTableViewCell-Gif](https://dl.dropboxusercontent.com/u/8556646/MKTableViewCell.gif)<-
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTableViewCell.gif" width="365" height="568">
+</p>
