@@ -16,7 +16,7 @@ class MKTableViewCell : UITableViewCell {
     }
     @IBInspectable var circleAniDuration: Float = 0.75
     @IBInspectable var backgroundAniDuration: Float = 1.0
-    @IBInspectable var circleAniTimingFunction: MKTimingFunction = .EaseOut
+    @IBInspectable var circleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable var shadowAniEnabled: Bool = true
     
     // color
@@ -52,6 +52,7 @@ class MKTableViewCell : UITableViewCell {
         self.selectionStyle = .None
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setCircleLayerColor(circleLayerColor)
+        mkLayer.circleGrowRatioMax = 1.2
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -63,7 +64,7 @@ class MKTableViewCell : UITableViewCell {
             }
             mkLayer.didChangeTapLocation(firstTouch.locationInView(self.contentView))
             
-            mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval(circleAniDuration))
+            mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval(circleAniDuration))
             mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: CFTimeInterval(backgroundAniDuration))
         }
     }
