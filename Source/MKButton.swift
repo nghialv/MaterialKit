@@ -16,7 +16,11 @@ class MKButton : UIButton
             mkLayer.enableMask(enable: maskEnabled)
         }
     }
-    @IBInspectable var tapLocationEnabled: Bool = true
+    @IBInspectable var rippleLocation: MKRippleLocation = .TapLocation {
+        didSet {
+            mkLayer.rippleLocation = rippleLocation
+        }
+    }
     @IBInspectable var circleGrowRatioMax: Float = 0.9 {
         didSet {
             mkLayer.circleGrowRatioMax = circleGrowRatioMax
@@ -82,7 +86,7 @@ class MKButton : UIButton
    
     // MARK - location tracking methods
     override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
-        if tapLocationEnabled {
+        if rippleLocation == .TapLocation {
             mkLayer.didChangeTapLocation(touch.locationInView(self))
         }
         

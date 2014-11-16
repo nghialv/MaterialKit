@@ -40,20 +40,20 @@ class ButtonViewController: UIViewController {
         flatButton2.maskEnabled = false
         flatButton2.circleGrowRatioMax = 0.5
         flatButton2.backgroundAniEnabled = false
-        flatButton2.tapLocationEnabled = false
+        flatButton2.rippleLocation = .Center
         
         imageButton1.circleLayerColor = UIColor.MKColor.DeepOrange
         
         imageButton2.maskEnabled = false
         imageButton2.circleGrowRatioMax = 1.2
         imageButton2.backgroundAniEnabled = false
-        imageButton2.tapLocationEnabled = false
+        imageButton2.rippleLocation = .Center
         
         floatButton1.cornerRadius = 40.0
         floatButton1.backgroundLayerCornerRadius = 40.0
         floatButton1.maskEnabled = false
         floatButton1.circleGrowRatioMax = 1.75
-        floatButton1.tapLocationEnabled = false
+        floatButton1.rippleLocation = .Center
         floatButton1.aniDuration = 0.85
         
         floatButton1.layer.shadowOpacity = 0.75
