@@ -7,11 +7,57 @@
 //
 
 import UIKit
+import QuartzCore
 
 class MKTextField : UITextField {
-    @IBInspectable var tapLocationEnabled: Bool = true
+    @IBInspectable var padding: CGSize = CGSize(width: 5, height: 5)
+    @IBInspectable var floatingLabelBottomMargin: CGFloat = 2.0
+    @IBInspectable var floatingPlaceholderEnabled: Bool = false
+    
+    @IBInspectable var rippleLocation: MKRippleLocation = .TapLocation
+    @IBInspectable var aniDuration: Float = 0.65
+    @IBInspectable var circleAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable var shadowAniEnabled: Bool = true
+    @IBInspectable var cornerRadius: CGFloat = 2.5 {
+        didSet {
+            layer.cornerRadius = cornerRadius
+            mkLayer.setMaskLayerCornerRadius(cornerRadius)
+        }
+    }
+    // color
+    @IBInspectable var circleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+        didSet {
+            mkLayer.setCircleLayerColor(circleLayerColor)
+        }
+    }
+    @IBInspectable var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
+        didSet {
+            mkLayer.setBackgroundLayerColor(backgroundLayerColor)
+        }
+    }
+    
+    // floating label
+    @IBInspectable var floatingLabelFont: UIFont = UIFont.boldSystemFontOfSize(10.0) {
+        didSet {
+            floatingLabel.font = floatingLabelFont
+        }
+    }
+    @IBInspectable var floatingLabelTextColor: UIColor = UIColor.lightGrayColor() {
+        didSet {
+            floatingLabel.textColor = floatingLabelTextColor
+        }
+    }
+   
+    override var placeholder: String? {
+        didSet {
+            floatingLabel.text = placeholder
+            floatingLabel.sizeToFit()
+            setFloatingLabelOverlapTextField()
+        }
+    }
     
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
+    private var floatingLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,11 +70,22 @@ class MKTextField : UITextField {
     }
     
     private func setupLayer() {
-        mkLayer.setCircleLayerColor(UIColor.MKColor.Orange)
+        self.cornerRadius = 2.5
+        self.layer.borderWidth = 1.0
+        self.borderStyle = .None
+        mkLayer.circleGrowRatioMax = 1.0
+        mkLayer.setBackgroundLayerColor(backgroundLayerColor)
+        mkLayer.setCircleLayerColor(circleLayerColor)
+        
+        // floating label
+        floatingLabel = UILabel()
+        floatingLabel.font = floatingLabelFont
+        floatingLabel.alpha = 0.0
+        self.addSubview(floatingLabel)
     }
     
     override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
-        if tapLocationEnabled {
+        if rippleLocation == .TapLocation {
             mkLayer.setCircleLayerLocationAt(touch.locationInView(self))
         }
         
@@ -36,5 +93,71 @@ class MKTextField : UITextField {
         mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: 0.75)
         
         return super.beginTrackingWithTouch(touch, withEvent: event)
+    }
+   
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if !floatingPlaceholderEnabled {
+            return
+        }
+        
+        if !self.text.isEmpty {
+            floatingLabel.textColor = self.isFirstResponder() ? self.tintColor : floatingLabelTextColor
+            if floatingLabel.alpha == 0 {
+                self.showFloatingLabel()
+            }
+        } else {
+            self.hideFloatingLabel()
+        }
+    }
+    
+    override func textRectForBounds(bounds: CGRect) -> CGRect {
+        let rect = super.textRectForBounds(bounds)
+        var newRect = CGRect(x: rect.origin.x + padding.width, y: rect.origin.y,
+            width: rect.size.width - 2*padding.width, height: rect.size.height)
+        
+        if !floatingPlaceholderEnabled {
+            return newRect
+        }
+
+        if !self.text.isEmpty {
+            let dTop = floatingLabel.font.lineHeight + floatingLabelBottomMargin
+            newRect = UIEdgeInsetsInsetRect(newRect, UIEdgeInsets(top: dTop, left: 0.0, bottom: 0.0, right: 0.0))
+        }
+        return newRect
+    }
+    
+    override func editingRectForBounds(bounds: CGRect) -> CGRect {
+        return self.textRectForBounds(bounds)
+    }
+    
+    // MARK - private
+    private func setFloatingLabelOverlapTextField() {
+        let textRect = self.textRectForBounds(self.bounds)
+        var originX = textRect.origin.x
+        switch self.textAlignment {
+        case .Center:
+            originX += textRect.size.width/2 - floatingLabel.bounds.width/2
+        case .Right:
+            originX += textRect.size.width - floatingLabel.bounds.width
+        default:
+            break
+        }
+        floatingLabel.frame = CGRect(x: originX, y: padding.height,
+            width: floatingLabel.frame.size.width, height: floatingLabel.frame.size.height)
+    }
+    
+    private func showFloatingLabel() {
+        let curFrame = floatingLabel.frame
+        floatingLabel.frame = CGRect(x: curFrame.origin.x, y: self.bounds.height/2, width: curFrame.width, height: curFrame.height)
+        UIView.animateWithDuration(0.45, delay: 0.0, options: .CurveEaseOut, animations: {
+            self.floatingLabel.alpha = 1.0
+            self.floatingLabel.frame = curFrame
+        }, completion: nil)
+    }
+    
+    private func hideFloatingLabel() {
+        floatingLabel.alpha = 0.0
     }
 }

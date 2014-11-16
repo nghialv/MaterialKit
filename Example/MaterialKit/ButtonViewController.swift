@@ -52,7 +52,7 @@ class ButtonViewController: UIViewController {
         floatButton1.cornerRadius = 40.0
         floatButton1.backgroundLayerCornerRadius = 40.0
         floatButton1.maskEnabled = false
-        floatButton1.circleGrowRatioMax = 1.45
+        floatButton1.circleGrowRatioMax = 1.75
         floatButton1.tapLocationEnabled = false
         floatButton1.aniDuration = 0.85
         

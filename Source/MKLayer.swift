@@ -29,6 +29,13 @@ enum MKTimingFunction {
     }
 }
 
+enum MKRippleLocation {
+    case Center
+    case Left
+    case Right
+    case TapLocation
+}
+
 class MKLayer {
     private var superLayer: CALayer!
     private let circleLayer = CALayer()
