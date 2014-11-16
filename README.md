@@ -14,9 +14,8 @@ Features
 Components
 -----
 #### MKButton
-
 <p align="center">
-<img src="https://dl.dropboxusercontent.com/u/8556646/MKButton.gif">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKButton.gif" width="365" height="568">
 </p>
 
 #### MKTableViewCell
