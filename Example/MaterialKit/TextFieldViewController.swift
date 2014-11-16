@@ -20,31 +20,40 @@ class TextFieldViewController: UIViewController {
     override func viewDidLoad() {
         // No border, no shadow, floatPlaceHolderDisabled
         textField1.layer.borderColor = UIColor.clearColor().CGColor
-        textField1.placeholder = "placeholder"
+        textField1.placeholder = "Placeholder"
         textField1.tintColor = UIColor.grayColor()
         
-        // Border, no shadow, floatPlaceHolderDisabled
-        textField2.layer.borderColor = UIColor.MKColor.Grey.CGColor
-        
         // No border, shadow, floatPlaceHolderDisabled
+        textField2.layer.borderColor = UIColor.clearColor().CGColor
+        textField2.placeholder = "Repo name"
+        textField2.backgroundColor = UIColor(hex: 0xE0E0E0)
+        textField2.tintColor = UIColor.grayColor()
         /*
-        textField1.layer.shadowOpacity = 1.0
-        textField1.layer.shadowRadius = 1.5
-        textField1.layer.shadowColor = UIColor.MKColor.Red.CGColor
-        textField1.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        textField1.borderStyle = .None
+        textField2.layer.shadowOpacity = 1.0
+        textField2.layer.shadowRadius = 1.5
+        textField2.layer.shadowColor = UIColor.MKColor.Red.CGColor
+        textField2.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+        textField2.borderStyle = .None
         */
+        
+        // Border, no shadow, floatPlaceHolderDisabled
+        textField3.layer.borderColor = UIColor.MKColor.Grey.CGColor
+        textField3.circleLayerColor = UIColor.MKColor.Amber
+        textField3.tintColor = UIColor.MKColor.DeepOrange
         
         // No border, no shadow, floatingPlaceholderEnabled
         textField4.layer.borderColor = UIColor.clearColor().CGColor
         textField4.floatingPlaceholderEnabled = true
-        textField4.placeholder = "Your name"
+        textField4.placeholder = "Github"
         textField4.tintColor = UIColor.MKColor.Blue
         
         // No border, shadow, floatingPlaceholderEnabled
+        textField5.layer.borderColor = UIColor.clearColor().CGColor
         textField5.floatingPlaceholderEnabled = true
-        textField5.placeholder = "Github account"
+        textField5.placeholder = "Email account"
         textField5.circleLayerColor = UIColor.MKColor.LightBlue
+        textField5.tintColor = UIColor.MKColor.Blue
+        textField5.backgroundColor = UIColor(hex: 0xE0E0E0)
         
         // Border, floatingPlaceholderEnabled
         textField6.floatingPlaceholderEnabled = true
