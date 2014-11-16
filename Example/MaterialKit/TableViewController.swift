@@ -10,12 +10,15 @@ import UIKit
 
 class TableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
+    var labels = ["MKButton", "MKTextField", "MKTableViewCell", "MKTextView", "MKColor", "MKLayer", "MKAlert", "MKCheckBox"]
+    var rippleLocations: [MKRippleLocation] = [.TapLocation, .TapLocation, .Center, .Left, .Right, .TapLocation, .TapLocation, .TapLocation]
+    var circleColors = [UIColor.MKColor.LightBlue, UIColor.MKColor.Grey, UIColor.MKColor.LightGreen]
     
     override func viewDidLoad() {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return labels.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -24,7 +27,11 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as MyCell
-        cell.setMessage("HELLO")
+        cell.setMessage(labels[indexPath.row])
+        cell.rippleLocation = rippleLocations[indexPath.row]
+        
+        let index = indexPath.row % circleColors.count
+        cell.circleLayerColor = circleColors[index]
         
         return cell
     }

@@ -17,7 +17,6 @@ class MyCell : MKTableViewCell {
     }
     
     func setMessage(message: String) {
-        
         messageLabel.text = message
     }
 }
