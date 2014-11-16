@@ -11,9 +11,13 @@ Features
 - [ ] MKTextView
 - [ ] MKCheckBox
 
-
+Components
+-----
 #### MKButton
-->![MKButton-Gif](https://dl.dropboxusercontent.com/u/8556646/MKButton.gif)<-
+
+<p align="center">
+<img src="https://dl.dropboxusercontent.com/u/8556646/MKButton.gif">
+</p>
 
 #### MKTableViewCell
 ->![MKTableViewCell-Gif](https://dl.dropboxusercontent.com/u/8556646/MKTableViewCell.gif)<-
