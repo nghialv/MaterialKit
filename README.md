@@ -27,56 +27,46 @@ Components
 <img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKButton.gif" width="365" height="568">
 </p>
 
-Custommizable attributes
+- There are 3 types of main buttons: `Floating Action Button`, `Raised Button`, `Flat Button`
+- Custommizable attributes: color, ripple location, animation timing function, animation duration...
 
-- `rippleLocation: MKRippleLocation = .TapLocation` : `Center`, `Left`, `Right`
-- `maskEnabled: Bool = true`	: `false`
-- `circleGrowRatioMax: Float = 0.9`
-- `cornerRadius: CGFloat = 2.5`
-- `backgroundLayerCornerRadius: CGFloat = 0.0`
-- `shadowAniEnabled: Bool = true`
-- `backgroundAniEnabled: Bool = true`
-- `aniDuration: Float = 0.65`
-- `circleAniTimingFunction: MKTimingFunction = .Linear` : `EaseIn`, `EaseOut`, `Custom`
-- `backgroundAniTimingFunction: MKTimingFunction = .Linear` : `EaseIn`, `EaseOut`, `Custom`
-- `shadowAniTimingFunction: MKTimingFunction = .EaseOut` : `EaseIn`, `EaseOut`, `Custom`
-- `circleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5)`
-- `backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25)`
-
+``` swift
+	let button = MKButton(frame: CGRect(x: 10, y: 10, width: 100, height: 35))
+	button.maskEnabled = true
+	button.rippleLocation = .TapLocation
+	button.circleLayerColor = UIColor.MKColor.LightGreen
+```
 
 #### MKTextField
 <p align="center">
 <img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField.gif" width="365" height="568">
 </p>
 
-Custommizable attributes
+- Single-line text field
+- Floating placeholder
+- Ripple Animation
+- Custommizable attributes: color, ripple location, animation timing function, animation duration...
 
-- `cornerRadius: CGFloat = 2.5`
-- `rippleLocation: MKRippleLocation = .TapLocation` : `Center`, `Left`, `Right`
-- `padding: CGSize = CGSize(width: 5, height: 5)`
-- `floatingLabelBottomMargin: CGFloat = 2.0`
-- `floatingPlaceholderEnabled: Bool = false`
-- `aniDuration: Float = 0.65`
-- `circleAniTimingFunction: MKTimingFunction = .Linear` : `EaseIn`, `EaseOut`, `Custom`
-- `circleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5)`
-- `backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25)`
-- `floatingLabelFont: UIFont = UIFont.boldSystemFontOfSize(10.0)`
-- `floatingLabelTextColor: UIColor = UIColor.lightGrayColor()`
-
+``` swift
+	textField.rippleLocation = .Left
+	textField.floatingPlaceholderEnabled = true
+	textField.placeholder = "Description"
+	textField.layer.borderColor = UIColor.MKColor.Green.CGColor
+	textField.circleLayerColor = UIColor.MKColor.LightGreen
+```
 
 #### MKTableViewCell
 <p align="center">
 <img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTableViewCell.gif" width="365" height="568">
 </p>
 
-Custommizable attributes
+- Custommizable attributes: color, ripple location, animation timing function, animation duration...
 
-- `rippleLocation: MKRippleLocation = .TapLocation` : `Center`, `Left`, `Right`
-- `circleAniDuration: Float = 0.75`
-- `circleAniTimingFunction: MKTimingFunction = .Linear` : `EaseIn`, `EaseOut`, `Custom`
-- `backgroundAniDuration: Float = 1.0`
-- `circleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5)`
-- `backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25)`
+``` swift
+	var cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as MyCell
+	cell.rippleLocation = .Center
+	cell.circleLayerColor = UIColor.MKColor.Blue
+```
 
 #### MKLayer
 A subclass of CALayer.
