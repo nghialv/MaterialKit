@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 
 
-class MKTextField : UITextField, UITextFieldDelegate{
+class MKTextField : UITextField {
     @IBInspectable var padding: CGSize = CGSize(width: 5, height: 5)
     @IBInspectable var floatingLabelBottomMargin: CGFloat = 2.0
     @IBInspectable var floatingPlaceholderEnabled: Bool = false
