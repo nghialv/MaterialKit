@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B23" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Nz2-bn-2Jh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Nz2-bn-2Jh">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -48,7 +48,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="dgb-3A-4h0" kind="push" id="DgS-SL-NkY"/>
+                                    <segue destination="dgb-3A-4h0" kind="show" id="DgS-SL-NkY"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgH-fo-Ey9" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
@@ -65,7 +65,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="push" id="PRJ-go-jn1"/>
+                                    <segue destination="vXZ-lx-hvc" kind="show" id="PRJ-go-jn1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7L-Oy-Zhc" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
@@ -82,7 +82,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="CbM-R4-xRj" kind="push" id="CaM-88-3Tl"/>
+                                    <segue destination="CbM-R4-xRj" kind="show" id="CaM-88-3Tl"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -243,15 +243,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gT6-rQ-K01" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="66" y="541" width="80" height="80"/>
-                                <color key="backgroundColor" red="0.792156862745098" green="0.14901960784313725" blue="0.094117647058823528" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
-                                <state key="normal" title="→">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0we-b2-A58" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
                                 <rect key="frame" x="233" y="541" width="80" height="80"/>
                                 <color key="backgroundColor" red="0.23529411764705882" green="0.6470588235294118" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
@@ -286,6 +277,15 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rRf-3K-a7K" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
                                 <rect key="frame" x="76" y="385" width="60" height="60"/>
                                 <state key="normal" image="icon1.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gT6-rQ-K01" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
+                                <rect key="frame" x="66" y="541" width="80" height="80"/>
+                                <color key="backgroundColor" red="0.792156862745098" green="0.14901960784313725" blue="0.094117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
+                                <state key="normal" title="→">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>

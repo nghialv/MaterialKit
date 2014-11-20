@@ -9,10 +9,17 @@
 import UIKit
 import QuartzCore
 
-class MKTextField : UITextField {
+protocol MKTextFieldDelegate {
+    func MKTextFieldDidReturn (textField: MKTextField)
+
+}
+
+class MKTextField : UITextField, UITextFieldDelegate{
     @IBInspectable var padding: CGSize = CGSize(width: 5, height: 5)
     @IBInspectable var floatingLabelBottomMargin: CGFloat = 2.0
     @IBInspectable var floatingPlaceholderEnabled: Bool = false
+    
+    var MKTdelegate: MKTextFieldDelegate?
     
     @IBInspectable var rippleLocation: MKRippleLocation = .TapLocation {
         didSet {
@@ -162,5 +169,10 @@ class MKTextField : UITextField {
     
     private func hideFloatingLabel() {
         floatingLabel.alpha = 0.0
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        MKTdelegate?.MKTextFieldDidReturn(textField as MKTextField)
+        return true
     }
 }

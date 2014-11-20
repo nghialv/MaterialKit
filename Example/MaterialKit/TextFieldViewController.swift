@@ -9,7 +9,7 @@
 
 import UIKit
 
-class TextFieldViewController: UIViewController {
+class TextFieldViewController: UIViewController, MKTextFieldDelegate{
     @IBOutlet var textField1: MKTextField!
     @IBOutlet var textField2: MKTextField!
     @IBOutlet var textField3: MKTextField!
@@ -65,4 +65,13 @@ class TextFieldViewController: UIViewController {
         textField6.circleLayerColor = UIColor.MKColor.LightGreen
         textField6.tintColor = UIColor.MKColor.LightGreen
     }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        self.view.endEditing(true)
+    }
+   
+    func MKTextFieldDidReturn(textField: MKTextField) {
+        textField.resignFirstResponder()
+    }
+
 }
