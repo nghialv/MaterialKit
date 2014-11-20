@@ -9,10 +9,13 @@
 import UIKit
 import QuartzCore
 
-class MKTextField : UITextField {
+
+class MKTextField : UITextField, UITextFieldDelegate{
     @IBInspectable var padding: CGSize = CGSize(width: 5, height: 5)
     @IBInspectable var floatingLabelBottomMargin: CGFloat = 2.0
     @IBInspectable var floatingPlaceholderEnabled: Bool = false
+    
+    
     
     @IBInspectable var rippleLocation: MKRippleLocation = .TapLocation {
         didSet {
@@ -52,7 +55,7 @@ class MKTextField : UITextField {
             floatingLabel.textColor = floatingLabelTextColor
         }
     }
-   
+    
     override var placeholder: String? {
         didSet {
             floatingLabel.text = placeholder
@@ -97,7 +100,7 @@ class MKTextField : UITextField {
         
         return super.beginTrackingWithTouch(touch, withEvent: event)
     }
-   
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -123,7 +126,7 @@ class MKTextField : UITextField {
         if !floatingPlaceholderEnabled {
             return newRect
         }
-
+        
         if !self.text.isEmpty {
             let dTop = floatingLabel.font.lineHeight + floatingLabelBottomMargin
             newRect = UIEdgeInsetsInsetRect(newRect, UIEdgeInsets(top: dTop, left: 0.0, bottom: 0.0, right: 0.0))
@@ -157,10 +160,12 @@ class MKTextField : UITextField {
         UIView.animateWithDuration(0.45, delay: 0.0, options: .CurveEaseOut, animations: {
             self.floatingLabel.alpha = 1.0
             self.floatingLabel.frame = curFrame
-        }, completion: nil)
+            }, completion: nil)
     }
     
     private func hideFloatingLabel() {
         floatingLabel.alpha = 0.0
     }
+    
+    
 }
