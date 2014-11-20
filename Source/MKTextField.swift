@@ -9,17 +9,13 @@
 import UIKit
 import QuartzCore
 
-protocol MKTextFieldDelegate {
-    func MKTextFieldDidReturn (textField: MKTextField)
-
-}
 
 class MKTextField : UITextField, UITextFieldDelegate{
     @IBInspectable var padding: CGSize = CGSize(width: 5, height: 5)
     @IBInspectable var floatingLabelBottomMargin: CGFloat = 2.0
     @IBInspectable var floatingPlaceholderEnabled: Bool = false
     
-    var MKTdelegate: MKTextFieldDelegate?
+    
     
     @IBInspectable var rippleLocation: MKRippleLocation = .TapLocation {
         didSet {
@@ -59,7 +55,7 @@ class MKTextField : UITextField, UITextFieldDelegate{
             floatingLabel.textColor = floatingLabelTextColor
         }
     }
-   
+    
     override var placeholder: String? {
         didSet {
             floatingLabel.text = placeholder
@@ -104,7 +100,7 @@ class MKTextField : UITextField, UITextFieldDelegate{
         
         return super.beginTrackingWithTouch(touch, withEvent: event)
     }
-   
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -130,7 +126,7 @@ class MKTextField : UITextField, UITextFieldDelegate{
         if !floatingPlaceholderEnabled {
             return newRect
         }
-
+        
         if !self.text.isEmpty {
             let dTop = floatingLabel.font.lineHeight + floatingLabelBottomMargin
             newRect = UIEdgeInsetsInsetRect(newRect, UIEdgeInsets(top: dTop, left: 0.0, bottom: 0.0, right: 0.0))
@@ -164,15 +160,12 @@ class MKTextField : UITextField, UITextFieldDelegate{
         UIView.animateWithDuration(0.45, delay: 0.0, options: .CurveEaseOut, animations: {
             self.floatingLabel.alpha = 1.0
             self.floatingLabel.frame = curFrame
-        }, completion: nil)
+            }, completion: nil)
     }
     
     private func hideFloatingLabel() {
         floatingLabel.alpha = 0.0
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        MKTdelegate?.MKTextFieldDidReturn(textField as MKTextField)
-        return true
-    }
+    
 }

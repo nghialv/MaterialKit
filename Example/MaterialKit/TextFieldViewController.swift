@@ -9,7 +9,7 @@
 
 import UIKit
 
-class TextFieldViewController: UIViewController, MKTextFieldDelegate{
+class TextFieldViewController: UIViewController {
     @IBOutlet var textField1: MKTextField!
     @IBOutlet var textField2: MKTextField!
     @IBOutlet var textField3: MKTextField!
@@ -69,9 +69,5 @@ class TextFieldViewController: UIViewController, MKTextFieldDelegate{
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         self.view.endEditing(true)
     }
-   
-    func MKTextFieldDidReturn(textField: MKTextField) {
-        textField.resignFirstResponder()
-    }
-
+    
 }
