@@ -14,9 +14,11 @@ Features
 - [x] MKButton : floating action button, raised button, flat button, ripple effect 
 - [x] MKTextField: ripple effect, floating placeholder
 - [x] MKTableViewCell
-- [ ] MKTextView (In progress)
-- [ ] MKCheckBox
-- [ ] MKAlert
+- [ ] MKTextView **(Coming Soon)**
+- [ ] MKSwitch **(Coming Soon)**
+- [ ] MKAlert **(Coming Soon)**
+- [ ] MKActivityIndicator **(In progress)**
+- [ ] MKAnimation **(In progress)**
 - [x] MKLayer
 - [x] MKColor
 
