@@ -15,8 +15,6 @@ class MKTextField : UITextField {
     @IBInspectable var floatingLabelBottomMargin: CGFloat = 2.0
     @IBInspectable var floatingPlaceholderEnabled: Bool = false
     
-    
-    
     @IBInspectable var rippleLocation: MKRippleLocation = .TapLocation {
         didSet {
             mkLayer.rippleLocation = rippleLocation
@@ -56,6 +54,22 @@ class MKTextField : UITextField {
         }
     }
     
+    @IBInspectable var bottomBorderEnabled: Bool = true {
+        didSet {
+            bottomBorderLayer?.removeFromSuperlayer()
+            bottomBorderLayer = nil
+            if bottomBorderEnabled {
+                bottomBorderLayer = CALayer()
+                bottomBorderLayer?.frame = CGRect(x: 0, y: self.layer.bounds.height - 1, width: self.bounds.width, height: 1)
+                bottomBorderLayer?.backgroundColor = UIColor.MKColor.Grey.CGColor
+                self.layer.addSublayer(bottomBorderLayer)
+            }
+        }
+    }
+    @IBInspectable var bottomBorderWidth: CGFloat = 1.0
+    @IBInspectable var bottomBorderColor: UIColor = UIColor.lightGrayColor()
+    @IBInspectable var bottomBorderHighlightWidth: CGFloat = 1.75
+    
     override var placeholder: String? {
         didSet {
             floatingLabel.text = placeholder
@@ -66,6 +80,7 @@ class MKTextField : UITextField {
     
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
     private var floatingLabel: UILabel!
+    private var bottomBorderLayer: CALayer?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -116,6 +131,10 @@ class MKTextField : UITextField {
         } else {
             self.hideFloatingLabel()
         }
+        
+        bottomBorderLayer?.backgroundColor = self.isFirstResponder() ? self.tintColor.CGColor : bottomBorderColor.CGColor
+        let borderWidth = self.isFirstResponder() ? bottomBorderHighlightWidth : bottomBorderWidth
+        bottomBorderLayer?.frame = CGRect(x: 0, y: self.layer.bounds.height - borderWidth, width: self.layer.bounds.width, height: borderWidth)
     }
     
     override func textRectForBounds(bounds: CGRect) -> CGRect {
@@ -166,6 +185,4 @@ class MKTextField : UITextField {
     private func hideFloatingLabel() {
         floatingLabel.alpha = 0.0
     }
-    
-    
 }

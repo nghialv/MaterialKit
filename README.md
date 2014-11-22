@@ -43,11 +43,14 @@ Components
 <p align="center">
 <img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField.gif" width="365" height="568">
 </p>
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField_bottomborder.gif" width="365" height="111">
+</p>
 
 - Single-line text field
 - Floating placeholder
 - Ripple Animation
-- Custommizable attributes: color, ripple location, animation timing function, animation duration...
+- Custommizable attributes: color, ripple location, bottom border, animation timing function, animation duration...
 
 ``` swift
 	textField.rippleLocation = .Left

@@ -78,6 +78,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		861DB20C1A20581D00CA47EB /* Button Example */ = {
+			isa = PBXGroup;
+			children = (
+				866D96841A17B12500897451 /* icon1.png */,
+				866D96851A17B12500897451 /* icon2.png */,
+				8C4D63951A160C95003629F6 /* ButtonViewController.swift */,
+			);
+			name = "Button Example";
+			sourceTree = "<group>";
+		};
+		861DB20D1A20582C00CA47EB /* TextField Example */ = {
+			isa = PBXGroup;
+			children = (
+				86FE3A2E1A1755CF004A0CD5 /* TextFieldViewController.swift */,
+			);
+			name = "TextField Example";
+			sourceTree = "<group>";
+		};
+		861DB20E1A20583700CA47EB /* TableViewCell Example */ = {
+			isa = PBXGroup;
+			children = (
+				866D96881A17C21D00897451 /* TableViewController.swift */,
+				866D968A1A17CE2700897451 /* MyCell.swift */,
+			);
+			name = "TableViewCell Example";
+			sourceTree = "<group>";
+		};
+		861DB20F1A20586400CA47EB /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				8C4D63931A160C95003629F6 /* AppDelegate.swift */,
+				86FE3A301A175604004A0CD5 /* ViewController.swift */,
+				8C4D63971A160C95003629F6 /* Main.storyboard */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
 		8C4D63851A160C95003629F6 = {
 			isa = PBXGroup;
 			children = (
@@ -100,15 +137,10 @@
 			isa = PBXGroup;
 			children = (
 				8C780DCF1A160D5000C9DEB9 /* Source */,
-				8C4D63931A160C95003629F6 /* AppDelegate.swift */,
-				86FE3A301A175604004A0CD5 /* ViewController.swift */,
-				8C4D63951A160C95003629F6 /* ButtonViewController.swift */,
-				866D96881A17C21D00897451 /* TableViewController.swift */,
-				866D968A1A17CE2700897451 /* MyCell.swift */,
-				86FE3A2E1A1755CF004A0CD5 /* TextFieldViewController.swift */,
-				866D96841A17B12500897451 /* icon1.png */,
-				866D96851A17B12500897451 /* icon2.png */,
-				8C4D63971A160C95003629F6 /* Main.storyboard */,
+				861DB20F1A20586400CA47EB /* Application */,
+				861DB20E1A20583700CA47EB /* TableViewCell Example */,
+				861DB20D1A20582C00CA47EB /* TextField Example */,
+				861DB20C1A20581D00CA47EB /* Button Example */,
 				8C4D639A1A160C95003629F6 /* Images.xcassets */,
 				8C4D639C1A160C95003629F6 /* LaunchScreen.xib */,
 				8C4D63911A160C95003629F6 /* Supporting Files */,

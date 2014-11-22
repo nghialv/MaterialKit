@@ -28,13 +28,6 @@ class TextFieldViewController: UIViewController {
         textField2.placeholder = "Repo name"
         textField2.backgroundColor = UIColor(hex: 0xE0E0E0)
         textField2.tintColor = UIColor.grayColor()
-        /*
-        textField2.layer.shadowOpacity = 1.0
-        textField2.layer.shadowRadius = 1.5
-        textField2.layer.shadowColor = UIColor.MKColor.Red.CGColor
-        textField2.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        textField2.borderStyle = .None
-        */
         
         // Border, no shadow, floatPlaceHolderDisabled
         textField3.layer.borderColor = UIColor.MKColor.Grey.CGColor
@@ -48,6 +41,8 @@ class TextFieldViewController: UIViewController {
         textField4.placeholder = "Github"
         textField4.tintColor = UIColor.MKColor.Blue
         textField4.rippleLocation = .Right
+        textField4.cornerRadius = 0
+        textField4.bottomBorderEnabled = true
         
         // No border, shadow, floatingPlaceholderEnabled
         textField5.layer.borderColor = UIColor.clearColor().CGColor
