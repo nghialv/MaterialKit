@@ -9,27 +9,25 @@
 import UIKit
 
 class BarButtonItemViewController: UIViewController {
-
+    @IBOutlet var label: MKLabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        // customize UIBarButtonItem
+        let imageView = MKImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
+        imageView.image = UIImage(named: "uibaritem_icon.png")
+        imageView.backgroundAniEnabled = false
+        imageView.rippleLocation = .Center
+        imageView.circleGrowRatioMax = 1.15
         
-        //let rightButton = MKBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "rightButtonPressed")
-        let label = MKLabel(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
-        label.text = "+"
-        label.textAlignment = .Center
-        label.backgroundColor = UIColor.greenColor()
-        
-        let rightButton = UIBarButtonItem(customView: label)
+        let rightButton = UIBarButtonItem(customView: imageView)
         self.navigationItem.rightBarButtonItem = rightButton
         
         
-        let label2 = MKLabel(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
-        label2.text = "MKLabel"
-        label2.textAlignment = .Center
-        label2.rippleLocation = .TapLocation
-        label2.circleLayerColor = UIColor.MKColor.LightGreen
-        
-        self.view.addSubview(label2)
+        label.rippleLocation = .TapLocation
+        label.circleLayerColor = UIColor.MKColor.LightGreen
+        label.backgroundLayerColor = UIColor.clearColor()
     }
     
     func rightButtonPressed() {

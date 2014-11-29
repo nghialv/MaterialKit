@@ -22,6 +22,18 @@ class MKLabel: UILabel {
     @IBInspectable var aniDuration: Float = 0.65
     @IBInspectable var circleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable var backgroundAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable var backgroundAniEnabled: Bool = true {
+        didSet {
+            if !backgroundAniEnabled {
+                mkLayer.enableOnlyCircleLayer()
+            }
+        }
+    }
+    @IBInspectable var circleGrowRatioMax: Float = 0.9 {
+        didSet {
+            mkLayer.circleGrowRatioMax = circleGrowRatioMax
+        }
+    }
     
     @IBInspectable var cornerRadius: CGFloat = 2.5 {
         didSet {

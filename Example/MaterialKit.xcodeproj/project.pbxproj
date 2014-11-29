@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8667C0111A299B7200025664 /* MKLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8667C0101A299B7200025664 /* MKLabel.swift */; };
+		8667C0131A29A53100025664 /* uibaritem_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8667C0121A29A53100025664 /* uibaritem_icon.png */; };
 		866D96861A17B12500897451 /* icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 866D96841A17B12500897451 /* icon1.png */; };
 		866D96871A17B12500897451 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 866D96851A17B12500897451 /* icon2.png */; };
 		866D96891A17C21D00897451 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866D96881A17C21D00897451 /* TableViewController.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		8667C0101A299B7200025664 /* MKLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLabel.swift; sourceTree = "<group>"; };
+		8667C0121A29A53100025664 /* uibaritem_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uibaritem_icon.png; sourceTree = "<group>"; };
 		866D96841A17B12500897451 /* icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1.png; sourceTree = "<group>"; };
 		866D96851A17B12500897451 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
 		866D96881A17C21D00897451 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 		861DB20F1A20586400CA47EB /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				8667C0121A29A53100025664 /* uibaritem_icon.png */,
 				8C4D63931A160C95003629F6 /* AppDelegate.swift */,
 				86FE3A301A175604004A0CD5 /* ViewController.swift */,
 				8C4D63971A160C95003629F6 /* Main.storyboard */,
@@ -285,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C4D63991A160C95003629F6 /* Main.storyboard in Resources */,
+				8667C0131A29A53100025664 /* uibaritem_icon.png in Resources */,
 				866D96871A17B12500897451 /* icon2.png in Resources */,
 				8C4D639E1A160C95003629F6 /* LaunchScreen.xib in Resources */,
 				866D96861A17B12500897451 /* icon1.png in Resources */,
