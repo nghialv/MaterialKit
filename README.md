@@ -74,6 +74,17 @@ Components
 	cell.circleLayerColor = UIColor.MKColor.Blue
 ```
 
+#### MKLabel, MKImageView (BarButtonItem)
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKBarButtonItem.gif" width="373" height="334">
+</p>
+ 
+- Custommizable attributes: color, ripple location, animation timing function, animation duration...
+
+``` swift
+
+```
+
 #### MKLayer
 A subclass of CALayer.
 
