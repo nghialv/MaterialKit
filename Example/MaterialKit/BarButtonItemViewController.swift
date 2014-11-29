@@ -10,27 +10,41 @@ import UIKit
 
 class BarButtonItemViewController: UIViewController {
     @IBOutlet var label: MKLabel!
+    @IBOutlet var imageView: MKImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
        
         // customize UIBarButtonItem
-        let imageView = MKImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
-        imageView.image = UIImage(named: "uibaritem_icon.png")
-        imageView.backgroundAniEnabled = false
-        imageView.rippleLocation = .Center
-        imageView.circleGrowRatioMax = 1.15
+        let imgView = MKImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
+        imgView.image = UIImage(named: "uibaritem_icon.png")
+        imgView.backgroundAniEnabled = false
+        imgView.rippleLocation = .Center
+        imgView.circleGrowRatioMax = 1.15
+        imgView.userInteractionEnabled = true
         
-        let rightButton = UIBarButtonItem(customView: imageView)
+        let rightButton = UIBarButtonItem(customView: imgView)
         self.navigationItem.rightBarButtonItem = rightButton
         
         
         label.rippleLocation = .TapLocation
         label.circleLayerColor = UIColor.MKColor.LightGreen
         label.backgroundLayerColor = UIColor.clearColor()
+        //label.userInteractionEnabled = true
+        NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: "animateLabelRipple", userInfo: nil, repeats: false)
+        
+        imageView.layer.borderColor = UIColor.MKColor.Grey.CGColor
+        imageView.layer.borderWidth = 1.0
+        imageView.circleGrowRatioMax = 1.2
+        imageView.rippleLocation = .Left
+        NSTimer.scheduledTimerWithTimeInterval(3.5, target: self, selector: "animateImageRipple", userInfo: nil, repeats: false)
+    }
+   
+    func animateLabelRipple() {
+        label.animateRipple()
     }
     
-    func rightButtonPressed() {
-        
+    func animateImageRipple() {
+        imageView.animateRipple()
     }
 }

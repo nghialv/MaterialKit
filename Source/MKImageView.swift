@@ -83,19 +83,27 @@ class MKImageView: UIImageView
     }
     
     private func setup() {
-        self.userInteractionEnabled = true
         mkLayer.setCircleLayerColor(circleLayerColor)
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setMaskLayerCornerRadius(cornerRadius)
+    }
+   
+    func animateRipple(location: CGPoint? = nil) {
+        if let point = location {
+            mkLayer.didChangeTapLocation(point)
+        } else if rippleLocation == .TapLocation {
+            rippleLocation = .Center
+        }
+        
+        mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval(aniDuration))
+        mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(aniDuration))
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         super.touchesBegan(touches, withEvent: event)
         if let firstTouch = touches.anyObject() as? UITouch {
-            mkLayer.didChangeTapLocation(firstTouch.locationInView(self))
-            
-            mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval(aniDuration))
-            mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(aniDuration))
+            let location = firstTouch.locationInView(self)
+            animateRipple(location: location)
         }
     }
 }

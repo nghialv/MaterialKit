@@ -13,6 +13,7 @@
 		866D96871A17B12500897451 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 866D96851A17B12500897451 /* icon2.png */; };
 		866D96891A17C21D00897451 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866D96881A17C21D00897451 /* TableViewController.swift */; };
 		866D968B1A17CE2700897451 /* MyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866D968A1A17CE2700897451 /* MyCell.swift */; };
+		868A1C8E1A29ADCE005207F1 /* wall-e.png in Resources */ = {isa = PBXBuildFile; fileRef = 868A1C8D1A29ADCE005207F1 /* wall-e.png */; };
 		86EA09661A298A6A008EDEF8 /* BarButtonItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EA09651A298A6A008EDEF8 /* BarButtonItemViewController.swift */; };
 		86EA09681A29990D008EDEF8 /* MKImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EA09671A29990D008EDEF8 /* MKImageView.swift */; };
 		86FE3A2F1A1755CF004A0CD5 /* TextFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FE3A2E1A1755CF004A0CD5 /* TextFieldViewController.swift */; };
@@ -47,6 +48,7 @@
 		866D96851A17B12500897451 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
 		866D96881A17C21D00897451 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		866D968A1A17CE2700897451 /* MyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
+		868A1C8D1A29ADCE005207F1 /* wall-e.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall-e.png"; sourceTree = "<group>"; };
 		86EA09651A298A6A008EDEF8 /* BarButtonItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarButtonItemViewController.swift; sourceTree = "<group>"; };
 		86EA09671A29990D008EDEF8 /* MKImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKImageView.swift; sourceTree = "<group>"; };
 		86FE3A2E1A1755CF004A0CD5 /* TextFieldViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 		861DB20F1A20586400CA47EB /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				868A1C8D1A29ADCE005207F1 /* wall-e.png */,
 				8667C0121A29A53100025664 /* uibaritem_icon.png */,
 				8C4D63931A160C95003629F6 /* AppDelegate.swift */,
 				86FE3A301A175604004A0CD5 /* ViewController.swift */,
@@ -289,6 +292,7 @@
 			files = (
 				8C4D63991A160C95003629F6 /* Main.storyboard in Resources */,
 				8667C0131A29A53100025664 /* uibaritem_icon.png in Resources */,
+				868A1C8E1A29ADCE005207F1 /* wall-e.png in Resources */,
 				866D96871A17B12500897451 /* icon2.png in Resources */,
 				8C4D639E1A160C95003629F6 /* LaunchScreen.xib in Resources */,
 				866D96861A17B12500897451 /* icon1.png in Resources */,
