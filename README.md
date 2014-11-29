@@ -16,9 +16,9 @@ Features
 - [x] MKTableViewCell
 - [x] MKLabel
 - [x] MKImageView
-- [ ] MKTextView **(Coming Soon)**
-- [ ] MKSwitch **(Coming Soon)**
-- [ ] MKAlert **(Coming Soon)**
+- [ ] MKTextView **(In progress)**
+- [ ] MKSwitch **(In progress)**
+- [ ] MKAlert **(In progress)**
 - [ ] MKActivityIndicator **(In progress)**
 - [x] MKLayer
 - [x] MKColor
@@ -80,8 +80,19 @@ Components
 </p>
  
 - Custommizable attributes: color, ripple location, animation timing function, animation duration...
+- Play ripple animation whenever you want by calling `animateRipple` method (but you have to set `userInteractionEnabled = true` for label/imageview)
+
+- Easy to customize UIBarButtonItem or UITabBarButton by using MKLabel or MKImageView
 
 ``` swift
+	// customize UIBarButtonItem by using MKImageView
+	let imgView = MKImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
+	imgView.image = UIImage(named: "uibaritem_icon.png")
+	imgView.rippleLocation = .Center
+	imgView.userInteractionEnabled = true
+
+	let rightBarButton = UIBarButtonItem(customView: imgView)
+	self.navigationItem.rightBarButtonItem = rightBarButton
 
 ```
 
