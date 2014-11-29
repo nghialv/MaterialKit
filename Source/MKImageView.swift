@@ -1,0 +1,89 @@
+//
+//  MKImageView.swift
+//  MaterialKit
+//
+//  Created by Le Van Nghia on 11/29/14.
+//  Copyright (c) 2014 Le Van Nghia. All rights reserved.
+//
+
+import UIKit
+
+@IBDesignable
+class MKImageView: UIImageView
+{
+    @IBInspectable var maskEnabled: Bool = true {
+        didSet {
+            mkLayer.enableMask(enable: maskEnabled)
+        }
+    }
+    @IBInspectable var rippleLocation: MKRippleLocation = .TapLocation {
+        didSet {
+            mkLayer.rippleLocation = rippleLocation
+        }
+    }
+    @IBInspectable var aniDuration: Float = 0.65
+    @IBInspectable var circleAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable var backgroundAniTimingFunction: MKTimingFunction = .Linear
+    
+    @IBInspectable var cornerRadius: CGFloat = 2.5 {
+        didSet {
+            layer.cornerRadius = cornerRadius
+            mkLayer.setMaskLayerCornerRadius(cornerRadius)
+        }
+    }
+    // color
+    @IBInspectable var circleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+        didSet {
+            mkLayer.setCircleLayerColor(circleLayerColor)
+        }
+    }
+    @IBInspectable var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
+        didSet {
+            mkLayer.setBackgroundLayerColor(backgroundLayerColor)
+        }
+    }
+    
+    private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
+    
+    override init() {
+        super.init()
+        setup()
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    override init(image: UIImage!) {
+        super.init(image: image)
+        setup()
+    }
+    
+    override init(image: UIImage!, highlightedImage: UIImage?) {
+        super.init(image: image, highlightedImage: highlightedImage)
+        setup()
+    }
+    
+    private func setup() {
+        self.userInteractionEnabled = true
+        mkLayer.setCircleLayerColor(circleLayerColor)
+        mkLayer.setBackgroundLayerColor(backgroundLayerColor)
+        mkLayer.setMaskLayerCornerRadius(cornerRadius)
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        super.touchesBegan(touches, withEvent: event)
+        if let firstTouch = touches.anyObject() as? UITouch {
+            mkLayer.didChangeTapLocation(firstTouch.locationInView(self))
+            
+            mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval(aniDuration))
+            mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(aniDuration))
+        }
+    }
+}
