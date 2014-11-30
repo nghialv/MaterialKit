@@ -80,7 +80,8 @@ Components
 </p>
  
 - Custommizable attributes: color, ripple location, animation timing function, animation duration...
-- Play ripple animation whenever you want by calling `animateRipple` method (but you have to set `userInteractionEnabled = true` for label/imageview)
+- Play ripple animation whenever you want by calling `animateRipple` method
+  or by setting `userInteractionEnabled = true` ripple animation will be played when the label/imageview is tapped
 
 - Easy to customize UIBarButtonItem or UITabBarButton by using MKLabel or MKImageView
 
