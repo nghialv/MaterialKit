@@ -1,5 +1,15 @@
 MaterialKit
 ===========
+
+[![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat
+)](https://developer.apple.com/iphone/index.action)
+[![Language](http://img.shields.io/badge/language-swift-orange.svg?style=flat
+)](https://developer.apple.com/swift)
+[![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat
+)](http://mit-license.org)
+[![Issues](https://img.shields.io/github/issues/nghialv/MaterialKit.svg?style=flat
+)](https://github.com/nghialv/MaterialKit/issues?state=open)
+
 Material design components (inspired by [Google Material Design](http://www.google.com/design/spec/material-design/introduction.html)) for iOS written in Swift
 
 Please feel free to make pull requests.
