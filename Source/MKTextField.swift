@@ -77,6 +77,11 @@ class MKTextField : UITextField {
             setFloatingLabelOverlapTextField()
         }
     }
+    override var bounds: CGRect {
+        didSet {
+            mkLayer.superLayerDidResize()
+        }
+    }
     
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
     private var floatingLabel: UILabel!

@@ -62,7 +62,12 @@ class MKButton : UIButton
             mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         }
     }
-   
+    override var bounds: CGRect {
+        didSet {
+            mkLayer.superLayerDidResize()
+        }
+    }
+    
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
     
     // MARK - initilization

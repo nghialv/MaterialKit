@@ -54,7 +54,11 @@ class MKImageView: UIImageView
             mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         }
     }
-    
+    override var bounds: CGRect {
+        didSet {
+            mkLayer.superLayerDidResize()
+        }
+    }
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
     
     override init() {
