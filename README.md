@@ -118,6 +118,10 @@ A category for UIColor that adds some methods to get flat colors designed by [Go
 	let lightBlueColor = UIColor.MKColor.LightBlue
 ```
 
+TODO
+-----
+- [ ] pod file
+
 Requirements
 -----
 - iOS 7.0+
