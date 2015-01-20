@@ -150,6 +150,7 @@ class MKLayer {
         // disable animation when changing layer frame
         CATransaction.begin()
         CATransaction.setDisableActions(true)
+        circleLayer.cornerRadius = subSize / 2
         circleLayer.frame = CGRect(x: subX, y: subY, width: subSize, height: subSize)
         CATransaction.commit()
     }

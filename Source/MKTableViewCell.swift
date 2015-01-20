@@ -32,7 +32,7 @@ class MKTableViewCell : UITableViewCell {
     }
     
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.contentView.layer)
-    private var didResizeContentView = false
+    private var contentViewResized = false
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -59,8 +59,9 @@ class MKTableViewCell : UITableViewCell {
         super.touchesBegan(touches, withEvent: event)
         
         if let firstTouch = touches.anyObject() as? UITouch {
-            if !didResizeContentView {
+            if !contentViewResized {
                 mkLayer.superLayerDidResize()
+                contentViewResized = true
             }
             mkLayer.didChangeTapLocation(firstTouch.locationInView(self.contentView))
             
