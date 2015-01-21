@@ -120,7 +120,18 @@ A category for UIColor that adds some methods to get flat colors designed by [Go
 
 TODO
 -----
-- [ ] pod file
+- [x] pod file
+
+Installation
+-----
+* Installation with CocoaPods
+
+```
+	pod 'MaterialKit'
+```
+
+* Copying all the files into your project
+* Using submodule
 
 Requirements
 -----
