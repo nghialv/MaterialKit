@@ -107,6 +107,15 @@ Components
 
 ```
 
+#### MKProgressView (Coming Soon)
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKProgressView2.gif" width="217" height="155">
+</p>
+
+<p align="center">
+<img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKProgressView.gif" width="217" height="155">
+</p>
+
 #### MKLayer
 A subclass of CALayer.
 
