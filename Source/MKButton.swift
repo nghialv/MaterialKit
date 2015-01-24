@@ -8,6 +8,12 @@
 
 import UIKit
 
+enum MKButtonType {
+    case Raised
+    case FloatingAction
+    case Flat
+    case FlatRaised
+}
 @IBDesignable
 class MKButton : UIButton
 {
@@ -62,6 +68,14 @@ class MKButton : UIButton
             mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         }
     }
+    
+    // Button type.
+    @IBInspectable var mkButtonType : MKButtonType = .Raised {
+        didSet {
+            self.setUpLayerForType()
+        }
+    }
+    
     override var bounds: CGRect {
         didSet {
             mkLayer.superLayerDidResize()
@@ -75,7 +89,14 @@ class MKButton : UIButton
         super.init(frame: frame)
         setupLayer()
     }
-
+    
+    init(type : MKButtonType) {
+        super.init()
+        setupLayer()
+        self.mkButtonType = type
+        self.setUpLayerForType()
+    }
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupLayer()
@@ -88,7 +109,60 @@ class MKButton : UIButton
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setCircleLayerColor(circleLayerColor)
     }
-   
+    
+    private func setUpLayerForType(){
+        switch (self.mkButtonType) {
+        case .Raised:
+            self.configureRaisedButton()
+        case .FloatingAction:
+            self.configureFloatingActionButton()
+        case .Flat:
+            self.configureFlatButton()
+        case .FlatRaised:
+            self.configureFlatRaisedButton()
+        default:
+            break
+        }
+    }
+    
+    private func configureFlatRaisedButton() {
+        
+        // Taken from example project
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowRadius = 5.0
+        self.layer.shadowColor = UIColor.blackColor().CGColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 2.5)
+        
+    }
+    private func configureFlatButton() {
+        
+        // Taken from example project.
+        self.maskEnabled = false
+        self.circleGrowRatioMax = 0.5
+        self.backgroundAniEnabled = false
+        self.rippleLocation = .Center
+    }
+    private func configureRaisedButton() {
+        
+        // Taken from example project.
+        self.layer.shadowOpacity = 0.55
+        self.layer.shadowRadius = 5.0
+        self.layer.shadowColor = UIColor.grayColor().CGColor
+        self.layer.shadowOffset = CGSize(width: 0, height: 2.5)
+    }
+    
+    private func configureFloatingActionButton() {
+        
+        // Taken from example project.
+        self.cornerRadius = 40.0
+        self.layer.shadowOpacity = 0.75
+        self.layer.shadowRadius = 3.5
+        self.layer.shadowColor = UIColor.blackColor().CGColor
+        self.layer.shadowOffset = CGSize(width: 1.0, height: 5.5)
+        
+    }
+    
+    
     // MARK - location tracking methods
     override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
         if rippleLocation == .TapLocation {
@@ -111,7 +185,7 @@ class MKButton : UIButton
             //if mkType == .Flat {
             //    mkLayer.animateMaskLayerShadow()
             //} else {
-                mkLayer.animateSuperLayerShadow(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, timingFunction: shadowAniTimingFunction, duration: CFTimeInterval(aniDuration))
+            mkLayer.animateSuperLayerShadow(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, timingFunction: shadowAniTimingFunction, duration: CFTimeInterval(aniDuration))
             //}
         }
         
