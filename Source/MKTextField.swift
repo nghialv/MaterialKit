@@ -121,7 +121,7 @@ public class MKTextField : UITextField {
         return super.beginTrackingWithTouch(touch, withEvent: event)
     }
 
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
 
         if !floatingPlaceholderEnabled {

@@ -90,7 +90,7 @@ public class MKButton : UIButton
     }
 
     // MARK - location tracking methods
-    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
+    override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
         if rippleLocation == .TapLocation {
             mkLayer.didChangeTapLocation(touch.locationInView(self))
         }

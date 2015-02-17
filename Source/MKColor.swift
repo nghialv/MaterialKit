@@ -16,7 +16,7 @@ extension UIColor {
         self.init(red:red, green:green, blue:blue, alpha:alpha)
     }
 
-    struct MKColor {
+    public struct MKColor {
         public static let Red = UIColor(hex: 0xF44336)
         public static let Pink = UIColor(hex: 0xE91E63)
         public static let Purple = UIColor(hex: 0x9C27B0)
