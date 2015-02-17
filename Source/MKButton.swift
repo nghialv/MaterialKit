@@ -84,7 +84,7 @@ public class MKButton : UIButton
     // MARK - setup methods
     private func setupLayer() {
         adjustsImageWhenHighlighted = false
-        self.cornerRadius = 2.5
+        cornerRadius = 2.5
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setCircleLayerColor(circleLayerColor)
     }
@@ -105,8 +105,8 @@ public class MKButton : UIButton
 
         // shadow animation for self
         if shadowAniEnabled {
-            let shadowRadius = self.layer.shadowRadius
-            let shadowOpacity = self.layer.shadowOpacity
+            let shadowRadius = layer.shadowRadius
+            let shadowOpacity = layer.shadowOpacity
 
             //if mkType == .Flat {
             //    mkLayer.animateMaskLayerShadow()

@@ -15,7 +15,7 @@ public enum MKTimingFunction {
     case EaseOut
     case Custom(Float, Float, Float, Float)
 
-    public var function : CAMediaTimingFunction {
+    public var function: CAMediaTimingFunction {
         switch self {
         case .Linear:
             return CAMediaTimingFunction(name: "linear")
@@ -123,7 +123,7 @@ public class MKLayer {
 
     public func didChangeTapLocation(location: CGPoint) {
         if rippleLocation == .TapLocation {
-            self.setCircleLayerLocationAt(location)
+            setCircleLayerLocationAt(location)
         }
     }
 

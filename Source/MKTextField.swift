@@ -60,9 +60,9 @@ public class MKTextField : UITextField {
             bottomBorderLayer = nil
             if bottomBorderEnabled {
                 bottomBorderLayer = CALayer()
-                bottomBorderLayer?.frame = CGRect(x: 0, y: self.layer.bounds.height - 1, width: self.bounds.width, height: 1)
+                bottomBorderLayer?.frame = CGRect(x: 0, y: layer.bounds.height - 1, width: bounds.width, height: 1)
                 bottomBorderLayer?.backgroundColor = UIColor.MKColor.Grey.CGColor
-                self.layer.addSublayer(bottomBorderLayer)
+                layer.addSublayer(bottomBorderLayer)
             }
         }
     }
@@ -98,9 +98,9 @@ public class MKTextField : UITextField {
     }
 
     private func setupLayer() {
-        self.cornerRadius = 2.5
-        self.layer.borderWidth = 1.0
-        self.borderStyle = .None
+        cornerRadius = 2.5
+        layer.borderWidth = 1.0
+        borderStyle = .None
         mkLayer.circleGrowRatioMax = 1.0
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setCircleLayerColor(circleLayerColor)
@@ -109,7 +109,7 @@ public class MKTextField : UITextField {
         floatingLabel = UILabel()
         floatingLabel.font = floatingLabelFont
         floatingLabel.alpha = 0.0
-        self.addSubview(floatingLabel)
+        addSubview(floatingLabel)
     }
 
     override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
@@ -128,18 +128,18 @@ public class MKTextField : UITextField {
             return
         }
 
-        if !self.text.isEmpty {
-            floatingLabel.textColor = self.isFirstResponder() ? self.tintColor : floatingLabelTextColor
+        if !text.isEmpty {
+            floatingLabel.textColor = isFirstResponder() ? tintColor : floatingLabelTextColor
             if floatingLabel.alpha == 0 {
-                self.showFloatingLabel()
+                showFloatingLabel()
             }
         } else {
-            self.hideFloatingLabel()
+            hideFloatingLabel()
         }
 
-        bottomBorderLayer?.backgroundColor = self.isFirstResponder() ? self.tintColor.CGColor : bottomBorderColor.CGColor
-        let borderWidth = self.isFirstResponder() ? bottomBorderHighlightWidth : bottomBorderWidth
-        bottomBorderLayer?.frame = CGRect(x: 0, y: self.layer.bounds.height - borderWidth, width: self.layer.bounds.width, height: borderWidth)
+        bottomBorderLayer?.backgroundColor = isFirstResponder() ? tintColor.CGColor : bottomBorderColor.CGColor
+        let borderWidth = isFirstResponder() ? bottomBorderHighlightWidth : bottomBorderWidth
+        bottomBorderLayer?.frame = CGRect(x: 0, y: layer.bounds.height - borderWidth, width: layer.bounds.width, height: borderWidth)
     }
 
     override public func textRectForBounds(bounds: CGRect) -> CGRect {
@@ -151,7 +151,7 @@ public class MKTextField : UITextField {
             return newRect
         }
 
-        if !self.text.isEmpty {
+        if !text.isEmpty {
             let dTop = floatingLabel.font.lineHeight + floatingLabelBottomMargin
             newRect = UIEdgeInsetsInsetRect(newRect, UIEdgeInsets(top: dTop, left: 0.0, bottom: 0.0, right: 0.0))
         }
@@ -159,14 +159,14 @@ public class MKTextField : UITextField {
     }
 
     override public func editingRectForBounds(bounds: CGRect) -> CGRect {
-        return self.textRectForBounds(bounds)
+        return textRectForBounds(bounds)
     }
 
     // MARK - private
     private func setFloatingLabelOverlapTextField() {
-        let textRect = self.textRectForBounds(self.bounds)
+        let textRect = textRectForBounds(bounds)
         var originX = textRect.origin.x
-        switch self.textAlignment {
+        switch textAlignment {
         case .Center:
             originX += textRect.size.width/2 - floatingLabel.bounds.width/2
         case .Right:
@@ -180,7 +180,7 @@ public class MKTextField : UITextField {
 
     private func showFloatingLabel() {
         let curFrame = floatingLabel.frame
-        floatingLabel.frame = CGRect(x: curFrame.origin.x, y: self.bounds.height/2, width: curFrame.width, height: curFrame.height)
+        floatingLabel.frame = CGRect(x: curFrame.origin.x, y: bounds.height/2, width: curFrame.width, height: curFrame.height)
         UIView.animateWithDuration(0.45, delay: 0.0, options: .CurveEaseOut, animations: {
             self.floatingLabel.alpha = 1.0
             self.floatingLabel.frame = curFrame

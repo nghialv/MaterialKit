@@ -49,7 +49,7 @@ public class MKTableViewCell : UITableViewCell {
     }
 
     private func setupLayer() {
-        self.selectionStyle = .None
+        selectionStyle = .None
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setCircleLayerColor(circleLayerColor)
         mkLayer.circleGrowRatioMax = 1.2
@@ -63,7 +63,7 @@ public class MKTableViewCell : UITableViewCell {
                 mkLayer.superLayerDidResize()
                 contentViewResized = true
             }
-            mkLayer.didChangeTapLocation(firstTouch.locationInView(self.contentView))
+            mkLayer.didChangeTapLocation(firstTouch.locationInView(contentView))
 
             mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval(circleAniDuration))
             mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: CFTimeInterval(backgroundAniDuration))
