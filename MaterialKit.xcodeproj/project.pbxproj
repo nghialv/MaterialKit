@@ -10,6 +10,13 @@
 		B3F896B41AA823C5009D88B4 /* MaterialKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B3F896B31AA823C5009D88B4 /* MaterialKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B3F896BA1AA823C5009D88B4 /* MaterialKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F896AE1AA823C5009D88B4 /* MaterialKit.framework */; };
 		B3F896C11AA823C5009D88B4 /* MaterialKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F896C01AA823C5009D88B4 /* MaterialKitTests.swift */; };
+		B3F896DF1AA8256A009D88B4 /* MKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F896D81AA82569009D88B4 /* MKButton.swift */; };
+		B3F896E01AA8256A009D88B4 /* MKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F896D91AA82569009D88B4 /* MKColor.swift */; };
+		B3F896E11AA8256A009D88B4 /* MKImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F896DA1AA82569009D88B4 /* MKImageView.swift */; };
+		B3F896E21AA8256A009D88B4 /* MKLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F896DB1AA82569009D88B4 /* MKLabel.swift */; };
+		B3F896E31AA8256A009D88B4 /* MKLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F896DC1AA82569009D88B4 /* MKLayer.swift */; };
+		B3F896E41AA8256A009D88B4 /* MKTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F896DD1AA82569009D88B4 /* MKTableViewCell.swift */; };
+		B3F896E51AA8256A009D88B4 /* MKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F896DE1AA82569009D88B4 /* MKTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +36,13 @@
 		B3F896B91AA823C5009D88B4 /* MaterialKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaterialKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3F896BF1AA823C5009D88B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3F896C01AA823C5009D88B4 /* MaterialKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialKitTests.swift; sourceTree = "<group>"; };
+		B3F896D81AA82569009D88B4 /* MKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKButton.swift; sourceTree = "<group>"; };
+		B3F896D91AA82569009D88B4 /* MKColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKColor.swift; sourceTree = "<group>"; };
+		B3F896DA1AA82569009D88B4 /* MKImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKImageView.swift; sourceTree = "<group>"; };
+		B3F896DB1AA82569009D88B4 /* MKLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLabel.swift; sourceTree = "<group>"; };
+		B3F896DC1AA82569009D88B4 /* MKLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLayer.swift; sourceTree = "<group>"; };
+		B3F896DD1AA82569009D88B4 /* MKTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTableViewCell.swift; sourceTree = "<group>"; };
+		B3F896DE1AA82569009D88B4 /* MKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +86,13 @@
 			isa = PBXGroup;
 			children = (
 				B3F896B31AA823C5009D88B4 /* MaterialKit.h */,
+				B3F896D81AA82569009D88B4 /* MKButton.swift */,
+				B3F896D91AA82569009D88B4 /* MKColor.swift */,
+				B3F896DA1AA82569009D88B4 /* MKImageView.swift */,
+				B3F896DB1AA82569009D88B4 /* MKLabel.swift */,
+				B3F896DC1AA82569009D88B4 /* MKLayer.swift */,
+				B3F896DD1AA82569009D88B4 /* MKTableViewCell.swift */,
+				B3F896DE1AA82569009D88B4 /* MKTextField.swift */,
 				B3F896B11AA823C5009D88B4 /* Supporting Files */,
 			);
 			path = MaterialKit;
@@ -209,6 +230,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3F896E21AA8256A009D88B4 /* MKLabel.swift in Sources */,
+				B3F896E31AA8256A009D88B4 /* MKLayer.swift in Sources */,
+				B3F896E51AA8256A009D88B4 /* MKTextField.swift in Sources */,
+				B3F896DF1AA8256A009D88B4 /* MKButton.swift in Sources */,
+				B3F896E01AA8256A009D88B4 /* MKColor.swift in Sources */,
+				B3F896E11AA8256A009D88B4 /* MKImageView.swift in Sources */,
+				B3F896E41AA8256A009D88B4 /* MKTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +347,7 @@
 		B3F896C51AA823C5009D88B4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -328,12 +357,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		B3F896C61AA823C5009D88B4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -395,6 +426,7 @@
 				B3F896C61AA823C5009D88B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B3F896C71AA823C5009D88B4 /* Build configuration list for PBXNativeTarget "MaterialKitTests" */ = {
 			isa = XCConfigurationList;
@@ -403,6 +435,7 @@
 				B3F896C91AA823C5009D88B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
