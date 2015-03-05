@@ -9,6 +9,7 @@ MaterialKit
 )](http://mit-license.org)
 [![Issues](https://img.shields.io/github/issues/nghialv/MaterialKit.svg?style=flat
 )](https://github.com/nghialv/MaterialKit/issues?state=open)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 Material design components (inspired by [Google Material Design](http://www.google.com/design/spec/material-design/introduction.html)) for iOS written in Swift
 
