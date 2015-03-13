@@ -22,7 +22,7 @@ public class MKTextField : UITextField {
     }
 
     @IBInspectable public var aniDuration: Float = 0.65
-    @IBInspectable public var circleAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var shadowAniEnabled: Bool = true
     @IBInspectable public var cornerRadius: CGFloat = 2.5 {
         didSet {
@@ -31,9 +31,9 @@ public class MKTextField : UITextField {
         }
     }
     // color
-    @IBInspectable public var circleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
         didSet {
-            mkLayer.setCircleLayerColor(circleLayerColor)
+            mkLayer.setCircleLayerColor(rippleLayerColor)
         }
     }
     @IBInspectable public var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
@@ -101,9 +101,9 @@ public class MKTextField : UITextField {
         cornerRadius = 2.5
         layer.borderWidth = 1.0
         borderStyle = .None
-        mkLayer.circleGrowRatioMax = 1.0
+        mkLayer.ripplePercent = 1.0
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
-        mkLayer.setCircleLayerColor(circleLayerColor)
+        mkLayer.setCircleLayerColor(rippleLayerColor)
 
         // floating label
         floatingLabel = UILabel()

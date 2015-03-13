@@ -21,9 +21,9 @@ public class MKButton : UIButton
             mkLayer.rippleLocation = rippleLocation
         }
     }
-    @IBInspectable public var circleGrowRatioMax: Float = 0.9 {
+    @IBInspectable public var ripplePercent: Float = 0.9 {
         didSet {
-            mkLayer.circleGrowRatioMax = circleGrowRatioMax
+            mkLayer.ripplePercent = ripplePercent
         }
     }
     @IBInspectable public var backgroundLayerCornerRadius: CGFloat = 0.0 {
@@ -41,7 +41,7 @@ public class MKButton : UIButton
         }
     }
     @IBInspectable public var aniDuration: Float = 0.65
-    @IBInspectable public var circleAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var shadowAniTimingFunction: MKTimingFunction = .EaseOut
 
@@ -52,9 +52,9 @@ public class MKButton : UIButton
         }
     }
     // color
-    @IBInspectable public var circleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
         didSet {
-            mkLayer.setCircleLayerColor(circleLayerColor)
+            mkLayer.setCircleLayerColor(rippleLayerColor)
         }
     }
     @IBInspectable public var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
@@ -86,7 +86,7 @@ public class MKButton : UIButton
         adjustsImageWhenHighlighted = false
         cornerRadius = 2.5
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
-        mkLayer.setCircleLayerColor(circleLayerColor)
+        mkLayer.setCircleLayerColor(rippleLayerColor)
     }
 
     // MARK - location tracking methods
@@ -95,8 +95,8 @@ public class MKButton : UIButton
             mkLayer.didChangeTapLocation(touch.locationInView(self))
         }
 
-        // circleLayer animation
-        mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval(aniDuration))
+        // rippleLayer animation
+        mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(aniDuration))
 
         // backgroundLayer animation
         if backgroundAniEnabled {

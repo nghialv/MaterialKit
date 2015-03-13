@@ -47,7 +47,7 @@ Components
 	let button = MKButton(frame: CGRect(x: 10, y: 10, width: 100, height: 35))
 	button.maskEnabled = true
 	button.rippleLocation = .TapLocation
-	button.circleLayerColor = UIColor.MKColor.LightGreen
+	button.rippleLayerColor = UIColor.MKColor.LightGreen
 ```
 
 #### MKTextField
@@ -68,7 +68,7 @@ Components
 	textField.floatingPlaceholderEnabled = true
 	textField.placeholder = "Description"
 	textField.layer.borderColor = UIColor.MKColor.Green.CGColor
-	textField.circleLayerColor = UIColor.MKColor.LightGreen
+	textField.rippleLayerColor = UIColor.MKColor.LightGreen
 ```
 
 #### MKTableViewCell
@@ -81,7 +81,7 @@ Components
 ``` swift
 	var cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as MyCell
 	cell.rippleLocation = .Center
-	cell.circleLayerColor = UIColor.MKColor.Blue
+	cell.rippleLayerColor = UIColor.MKColor.Blue
 ```
 
 #### MKLabel, MKImageView (BarButtonItem)

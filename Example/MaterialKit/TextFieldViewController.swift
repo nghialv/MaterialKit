@@ -31,7 +31,7 @@ class TextFieldViewController: UIViewController {
         
         // Border, no shadow, floatPlaceHolderDisabled
         textField3.layer.borderColor = UIColor.MKColor.Grey.CGColor
-        textField3.circleLayerColor = UIColor.MKColor.Amber
+        textField3.rippleLayerColor = UIColor.MKColor.Amber
         textField3.tintColor = UIColor.MKColor.DeepOrange
         textField3.rippleLocation = .Left
         
@@ -48,7 +48,7 @@ class TextFieldViewController: UIViewController {
         textField5.layer.borderColor = UIColor.clearColor().CGColor
         textField5.floatingPlaceholderEnabled = true
         textField5.placeholder = "Email account"
-        textField5.circleLayerColor = UIColor.MKColor.LightBlue
+        textField5.rippleLayerColor = UIColor.MKColor.LightBlue
         textField5.tintColor = UIColor.MKColor.Blue
         textField5.backgroundColor = UIColor(hex: 0xE0E0E0)
         
@@ -57,7 +57,7 @@ class TextFieldViewController: UIViewController {
         textField6.cornerRadius = 1.0
         textField6.placeholder = "Description"
         textField6.layer.borderColor = UIColor.MKColor.Green.CGColor
-        textField6.circleLayerColor = UIColor.MKColor.LightGreen
+        textField6.rippleLayerColor = UIColor.MKColor.LightGreen
         textField6.tintColor = UIColor.MKColor.LightGreen
     }
     

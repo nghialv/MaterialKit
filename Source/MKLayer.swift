@@ -38,7 +38,7 @@ public enum MKRippleLocation {
 
 public class MKLayer {
     private var superLayer: CALayer!
-    private let circleLayer = CALayer()
+    private let rippleLayer = CALayer()
     private let backgroundLayer = CALayer()
     private let maskLayer = CAShapeLayer()
     public var rippleLocation: MKRippleLocation = .TapLocation {
@@ -60,15 +60,15 @@ public class MKLayer {
         }
     }
 
-    public var circleGrowRatioMax: Float = 0.9 {
+    public var ripplePercent: Float = 0.9 {
         didSet {
-            if circleGrowRatioMax > 0 {
+            if ripplePercent > 0 {
                 let superLayerWidth = CGRectGetWidth(superLayer.bounds)
                 let superLayerHeight = CGRectGetHeight(superLayer.bounds)
-                let circleSize = CGFloat(max(superLayerWidth, superLayerHeight)) * CGFloat(circleGrowRatioMax)
+                let circleSize = CGFloat(max(superLayerWidth, superLayerHeight)) * CGFloat(ripplePercent)
                 let circleCornerRadius = circleSize/2
 
-                circleLayer.cornerRadius = circleCornerRadius
+                rippleLayer.cornerRadius = circleCornerRadius
                 setCircleLayerLocationAt(CGPoint(x: superLayerWidth/2, y: superLayerHeight/2))
             }
         }
@@ -86,13 +86,13 @@ public class MKLayer {
         superLayer.addSublayer(backgroundLayer)
 
         // circlelayer
-        let circleSize = CGFloat(max(superLayerWidth, superLayerHeight)) * CGFloat(circleGrowRatioMax)
+        let circleSize = CGFloat(max(superLayerWidth, superLayerHeight)) * CGFloat(ripplePercent)
         let circleCornerRadius = circleSize/2
 
-        circleLayer.opacity = 0.0
-        circleLayer.cornerRadius = circleCornerRadius
+        rippleLayer.opacity = 0.0
+        rippleLayer.cornerRadius = circleCornerRadius
         setCircleLayerLocationAt(CGPoint(x: superLayerWidth/2, y: superLayerHeight/2))
-        backgroundLayer.addSublayer(circleLayer)
+        backgroundLayer.addSublayer(rippleLayer)
 
         // mask layer
         setMaskLayerCornerRadius(superLayer.cornerRadius)
@@ -110,7 +110,7 @@ public class MKLayer {
 
     public func enableOnlyCircleLayer() {
         backgroundLayer.removeFromSuperlayer()
-        superLayer.addSublayer(circleLayer)
+        superLayer.addSublayer(rippleLayer)
     }
 
     public func setBackgroundLayerColor(color: UIColor) {
@@ -118,7 +118,7 @@ public class MKLayer {
     }
 
     public func setCircleLayerColor(color: UIColor) {
-        circleLayer.backgroundColor = color.CGColor
+        rippleLayer.backgroundColor = color.CGColor
     }
 
     public func didChangeTapLocation(location: CGPoint) {
@@ -143,23 +143,23 @@ public class MKLayer {
         let bounds = superLayer.bounds
         let width = CGRectGetWidth(bounds)
         let height = CGRectGetHeight(bounds)
-        let subSize = CGFloat(max(width, height)) * CGFloat(circleGrowRatioMax)
+        let subSize = CGFloat(max(width, height)) * CGFloat(ripplePercent)
         let subX = center.x - subSize/2
         let subY = center.y - subSize/2
 
         // disable animation when changing layer frame
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        circleLayer.cornerRadius = subSize / 2
-        circleLayer.frame = CGRect(x: subX, y: subY, width: subSize, height: subSize)
+        rippleLayer.cornerRadius = subSize / 2
+        rippleLayer.frame = CGRect(x: subX, y: subY, width: subSize, height: subSize)
         CATransaction.commit()
     }
 
     // MARK - Animation
     public func animateScaleForCircleLayer(fromScale: Float, toScale: Float, timingFunction: MKTimingFunction, duration: CFTimeInterval) {
-        let circleLayerAnim = CABasicAnimation(keyPath: "transform.scale")
-        circleLayerAnim.fromValue = fromScale
-        circleLayerAnim.toValue = toScale
+        let rippleLayerAnim = CABasicAnimation(keyPath: "transform.scale")
+        rippleLayerAnim.fromValue = fromScale
+        rippleLayerAnim.toValue = toScale
 
         let opacityAnim = CABasicAnimation(keyPath: "opacity")
         opacityAnim.fromValue = 1.0
@@ -171,9 +171,9 @@ public class MKLayer {
         groupAnim.removedOnCompletion = false
         groupAnim.fillMode = kCAFillModeForwards
 
-        groupAnim.animations = [circleLayerAnim, opacityAnim]
+        groupAnim.animations = [rippleLayerAnim, opacityAnim]
 
-        circleLayer.addAnimation(groupAnim, forKey: nil)
+        rippleLayer.addAnimation(groupAnim, forKey: nil)
     }
 
     public func animateAlphaForBackgroundLayer(timingFunction: MKTimingFunction, duration: CFTimeInterval) {

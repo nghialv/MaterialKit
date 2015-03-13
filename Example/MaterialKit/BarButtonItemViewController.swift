@@ -20,7 +20,7 @@ class BarButtonItemViewController: UIViewController {
         imgView.image = UIImage(named: "uibaritem_icon.png")
         imgView.backgroundAniEnabled = false
         imgView.rippleLocation = .Center
-        imgView.circleGrowRatioMax = 1.15
+        imgView.ripplePercent = 1.15
         imgView.userInteractionEnabled = true
         
         let rightButton = UIBarButtonItem(customView: imgView)
@@ -28,14 +28,14 @@ class BarButtonItemViewController: UIViewController {
         
         
         label.rippleLocation = .TapLocation
-        label.circleLayerColor = UIColor.MKColor.LightGreen
+        label.rippleLayerColor = UIColor.MKColor.LightGreen
         label.backgroundLayerColor = UIColor.clearColor()
         //label.userInteractionEnabled = true
         NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: "animateLabelRipple", userInfo: nil, repeats: false)
         
         imageView.layer.borderColor = UIColor.MKColor.Grey.CGColor
         imageView.layer.borderWidth = 1.0
-        imageView.circleGrowRatioMax = 1.2
+        imageView.ripplePercent = 1.2
         imageView.rippleLocation = .Left
         NSTimer.scheduledTimerWithTimeInterval(3.5, target: self, selector: "animateImageRipple", userInfo: nil, repeats: false)
     }

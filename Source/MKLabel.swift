@@ -20,7 +20,7 @@ public class MKLabel: UILabel {
         }
     }
     @IBInspectable public var aniDuration: Float = 0.65
-    @IBInspectable public var circleAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniEnabled: Bool = true {
         didSet {
@@ -29,9 +29,9 @@ public class MKLabel: UILabel {
             }
         }
     }
-    @IBInspectable public var circleGrowRatioMax: Float = 0.9 {
+    @IBInspectable public var ripplePercent: Float = 0.9 {
         didSet {
-            mkLayer.circleGrowRatioMax = circleGrowRatioMax
+            mkLayer.ripplePercent = ripplePercent
         }
     }
 
@@ -42,9 +42,9 @@ public class MKLabel: UILabel {
         }
     }
     // color
-    @IBInspectable public var circleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
         didSet {
-            mkLayer.setCircleLayerColor(circleLayerColor)
+            mkLayer.setCircleLayerColor(rippleLayerColor)
         }
     }
     @IBInspectable public var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
@@ -75,7 +75,7 @@ public class MKLabel: UILabel {
     }
 
     private func setup() {
-        mkLayer.setCircleLayerColor(circleLayerColor)
+        mkLayer.setCircleLayerColor(rippleLayerColor)
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setMaskLayerCornerRadius(cornerRadius)
     }
@@ -87,7 +87,7 @@ public class MKLabel: UILabel {
             rippleLocation = .Center
         }
 
-        mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval(aniDuration))
+        mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(aniDuration))
         mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(aniDuration))
     }
 

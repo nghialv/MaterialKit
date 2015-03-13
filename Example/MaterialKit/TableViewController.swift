@@ -31,7 +31,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.rippleLocation = rippleLocations[indexPath.row]
         
         let index = indexPath.row % circleColors.count
-        cell.circleLayerColor = circleColors[index]
+        cell.rippleLayerColor = circleColors[index]
         
         return cell
     }

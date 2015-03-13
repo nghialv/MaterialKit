@@ -14,15 +14,15 @@ public class MKTableViewCell : UITableViewCell {
             mkLayer.rippleLocation = rippleLocation
         }
     }
-    @IBInspectable public var circleAniDuration: Float = 0.75
+    @IBInspectable public var rippleAniDuration: Float = 0.75
     @IBInspectable public var backgroundAniDuration: Float = 1.0
-    @IBInspectable public var circleAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var shadowAniEnabled: Bool = true
 
     // color
-    @IBInspectable public var circleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
         didSet {
-            mkLayer.setCircleLayerColor(circleLayerColor)
+            mkLayer.setCircleLayerColor(rippleLayerColor)
         }
     }
     @IBInspectable public var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
@@ -51,8 +51,8 @@ public class MKTableViewCell : UITableViewCell {
     private func setupLayer() {
         selectionStyle = .None
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
-        mkLayer.setCircleLayerColor(circleLayerColor)
-        mkLayer.circleGrowRatioMax = 1.2
+        mkLayer.setCircleLayerColor(rippleLayerColor)
+        mkLayer.ripplePercent = 1.2
     }
 
     override public func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -65,7 +65,7 @@ public class MKTableViewCell : UITableViewCell {
             }
             mkLayer.didChangeTapLocation(firstTouch.locationInView(contentView))
 
-            mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: circleAniTimingFunction, duration: CFTimeInterval(circleAniDuration))
+            mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(rippleAniDuration))
             mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: CFTimeInterval(backgroundAniDuration))
         }
     }
