@@ -44,6 +44,7 @@ public class MKButton : UIButton
     @IBInspectable public var backgroundAniDuration: Float = 1.0
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable public var shadowAniDuration: Float = 0.65
     @IBInspectable public var shadowAniTimingFunction: MKTimingFunction = .EaseOut
 
     @IBInspectable public var cornerRadius: CGFloat = 2.5 {
@@ -112,7 +113,7 @@ public class MKButton : UIButton
             //if mkType == .Flat {
             //    mkLayer.animateMaskLayerShadow()
             //} else {
-                mkLayer.animateSuperLayerShadow(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, timingFunction: shadowAniTimingFunction, duration: CFTimeInterval(aniDuration))
+                mkLayer.animateSuperLayerShadow(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, timingFunction: shadowAniTimingFunction, duration: CFTimeInterval(shadowAniDuration))
             //}
         }
 
