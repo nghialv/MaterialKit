@@ -21,7 +21,8 @@ public class MKTextField : UITextField {
         }
     }
 
-    @IBInspectable public var aniDuration: Float = 0.65
+    @IBInspectable public var rippleAniDuration: Float = 0.75
+    @IBInspectable public var backgroundAniDuration: Float = 1.0
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var shadowAniEnabled: Bool = true
     @IBInspectable public var cornerRadius: CGFloat = 2.5 {
@@ -41,6 +42,7 @@ public class MKTextField : UITextField {
             mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         }
     }
+    
 
     // floating label
     @IBInspectable public var floatingLabelFont: UIFont = UIFont.boldSystemFontOfSize(10.0) {
@@ -115,8 +117,8 @@ public class MKTextField : UITextField {
     override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
         mkLayer.didChangeTapLocation(touch.locationInView(self))
 
-        mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: MKTimingFunction.Linear, duration: 0.75)
-        mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: 0.75)
+        mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: MKTimingFunction.Linear, duration: CFTimeInterval(self.rippleAniDuration))
+        mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: CFTimeInterval(self.backgroundAniDuration))
 
         return super.beginTrackingWithTouch(touch, withEvent: event)
     }

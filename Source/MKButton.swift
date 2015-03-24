@@ -40,7 +40,8 @@ public class MKButton : UIButton
             }
         }
     }
-    @IBInspectable public var aniDuration: Float = 0.65
+    @IBInspectable public var rippleAniDuration: Float = 0.75
+    @IBInspectable public var backgroundAniDuration: Float = 1.0
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var shadowAniTimingFunction: MKTimingFunction = .EaseOut
@@ -96,11 +97,11 @@ public class MKButton : UIButton
         }
 
         // rippleLayer animation
-        mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(aniDuration))
+        mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
 
         // backgroundLayer animation
         if backgroundAniEnabled {
-            mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(aniDuration))
+            mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(self.backgroundAniDuration))
         }
 
         // shadow animation for self

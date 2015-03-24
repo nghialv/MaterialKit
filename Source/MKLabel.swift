@@ -19,7 +19,8 @@ public class MKLabel: UILabel {
             mkLayer.rippleLocation = rippleLocation
         }
     }
-    @IBInspectable public var aniDuration: Float = 0.65
+    @IBInspectable public var rippleAniDuration: Float = 0.75
+    @IBInspectable public var backgroundAniDuration: Float = 1.0
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniEnabled: Bool = true {
@@ -87,8 +88,8 @@ public class MKLabel: UILabel {
             rippleLocation = .Center
         }
 
-        mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(aniDuration))
-        mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(aniDuration))
+        mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
+        mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(self.backgroundAniDuration))
     }
 
     override public func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
