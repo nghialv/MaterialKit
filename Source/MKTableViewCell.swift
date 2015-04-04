@@ -37,7 +37,12 @@ public class MKTableViewCell : UITableViewCell {
     override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
-    
+
+    public init(frame: CGRect) {
+        super.init(style: .Default, reuseIdentifier: nil)
+        setupLayer()
+    }
+
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupLayer()
