@@ -61,7 +61,7 @@ class TextFieldViewController: UIViewController {
         textField6.tintColor = UIColor.MKColor.LightGreen
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.view.endEditing(true)
     }
     
