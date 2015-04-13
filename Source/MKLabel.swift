@@ -87,7 +87,7 @@ public class MKLabel: UILabel {
     }
 
     public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        super.touchesBegan(touches as Set<NSObject>, withEvent: event)
+        super.touchesBegan(touches, withEvent: event)
         if let firstTouch = touches.first as? UITouch {
             let location = firstTouch.locationInView(self)
             animateRipple(location: location)
