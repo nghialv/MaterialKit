@@ -72,9 +72,7 @@ public class MKTextField : UITextField {
 
     override public var placeholder: String? {
         didSet {
-            floatingLabel.text = placeholder
-            floatingLabel.sizeToFit()
-            setFloatingLabelOverlapTextField()
+            self.setFloatingLabelTextToPlaceholderText()
         }
     }
     override public var bounds: CGRect {
@@ -109,6 +107,7 @@ public class MKTextField : UITextField {
         floatingLabel = UILabel()
         floatingLabel.font = floatingLabelFont
         floatingLabel.alpha = 0.0
+        self.setFloatingLabelTextToPlaceholderText()
         addSubview(floatingLabel)
     }
 
@@ -189,5 +188,11 @@ public class MKTextField : UITextField {
 
     private func hideFloatingLabel() {
         floatingLabel.alpha = 0.0
+    }
+    
+    private func setFloatingLabelTextToPlaceholderText() {
+        floatingLabel.text = placeholder
+        floatingLabel.sizeToFit()
+        setFloatingLabelOverlapTextField()
     }
 }
