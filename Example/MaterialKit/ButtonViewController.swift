@@ -54,7 +54,6 @@ class ButtonViewController: UIViewController {
         floatButton1.maskEnabled = false
         floatButton1.ripplePercent = 1.75
         floatButton1.rippleLocation = .Center
-        floatButton1.aniDuration = 0.85
         
         floatButton1.layer.shadowOpacity = 0.75
         floatButton1.layer.shadowRadius = 3.5
