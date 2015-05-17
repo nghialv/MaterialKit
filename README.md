@@ -26,10 +26,6 @@ Features
 - [x] MKTableViewCell
 - [x] MKLabel
 - [x] MKImageView
-- [ ] MKTextView **(In progress)**
-- [ ] MKSwitch **(In progress)**
-- [ ] MKAlert **(In progress)**
-- [ ] MKActivityIndicator **(In progress)**
 - [x] MKLayer
 - [x] MKColor
 
@@ -129,7 +125,8 @@ A category for UIColor that adds some methods to get flat colors designed by [Go
 
 TODO
 -----
-- [x] pod file
+- [ ] MKTextView
+- [ ] MKActivityIndicator **(In progress)**
 
 Installation
 -----
