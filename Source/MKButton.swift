@@ -42,9 +42,10 @@ public class MKButton : UIButton
     }
     @IBInspectable public var rippleAniDuration: Float = 0.75
     @IBInspectable public var backgroundAniDuration: Float = 1.0
+    @IBInspectable public var shadowAniDuration: Float = 0.65
+    
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var shadowAniDuration: Float = 0.65
     @IBInspectable public var shadowAniTimingFunction: MKTimingFunction = .EaseOut
 
     @IBInspectable public var cornerRadius: CGFloat = 2.5 {
@@ -109,12 +110,8 @@ public class MKButton : UIButton
         if shadowAniEnabled {
             let shadowRadius = layer.shadowRadius
             let shadowOpacity = layer.shadowOpacity
-
-            //if mkType == .Flat {
-            //    mkLayer.animateMaskLayerShadow()
-            //} else {
-                mkLayer.animateSuperLayerShadow(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, timingFunction: shadowAniTimingFunction, duration: CFTimeInterval(shadowAniDuration))
-            //}
+            let duration = CFTimeInterval(shadowAniDuration)
+            mkLayer.animateSuperLayerShadow(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, timingFunction: shadowAniTimingFunction, duration: duration)
         }
 
         return super.beginTrackingWithTouch(touch, withEvent: event)

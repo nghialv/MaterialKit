@@ -23,8 +23,9 @@ public class MKTextField : UITextField {
 
     @IBInspectable public var rippleAniDuration: Float = 0.75
     @IBInspectable public var backgroundAniDuration: Float = 1.0
-    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var shadowAniEnabled: Bool = true
+    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
+    
     @IBInspectable public var cornerRadius: CGFloat = 2.5 {
         didSet {
             layer.cornerRadius = cornerRadius
@@ -42,7 +43,6 @@ public class MKTextField : UITextField {
             mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         }
     }
-    
 
     // floating label
     @IBInspectable public var floatingLabelFont: UIFont = UIFont.boldSystemFontOfSize(10.0) {
@@ -185,9 +185,10 @@ private extension MKTextField {
     private func showFloatingLabel() {
         let curFrame = floatingLabel.frame
         floatingLabel.frame = CGRect(x: curFrame.origin.x, y: bounds.height/2, width: curFrame.width, height: curFrame.height)
-        UIView.animateWithDuration(0.45, delay: 0.0, options: .CurveEaseOut, animations: {
-            self.floatingLabel.alpha = 1.0
-            self.floatingLabel.frame = curFrame
+        UIView.animateWithDuration(0.45, delay: 0.0, options: .CurveEaseOut,
+            animations: {
+                self.floatingLabel.alpha = 1.0
+                self.floatingLabel.frame = curFrame
             }, completion: nil)
     }
 
