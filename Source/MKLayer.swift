@@ -41,21 +41,25 @@ public class MKLayer {
     private let rippleLayer = CALayer()
     private let backgroundLayer = CALayer()
     private let maskLayer = CAShapeLayer()
+    
     public var rippleLocation: MKRippleLocation = .TapLocation {
         didSet {
-            var origin: CGPoint?
+            let origin: CGPoint?
+            let sw = CGRectGetWidth(superLayer.bounds)
+            let sh = CGRectGetHeight(superLayer.bounds)
+            
             switch rippleLocation {
             case .Center:
-                origin = CGPoint(x: superLayer.bounds.width/2, y: superLayer.bounds.height/2)
+                origin = CGPoint(x: sw/2, y: sh/2)
             case .Left:
-                origin = CGPoint(x: superLayer.bounds.width * 0.25, y: superLayer.bounds.height/2)
+                origin = CGPoint(x: sw*0.25, y: sh/2)
             case .Right:
-                origin = CGPoint(x: superLayer.bounds.width * 0.75, y: superLayer.bounds.height/2)
+                origin = CGPoint(x: sw*0.75, y: sh/2)
             default:
                 origin = nil
             }
-            if let originPoint = origin {
-                setCircleLayerLocationAt(originPoint)
+            if let origin = origin {
+                setCircleLayerLocationAt(origin)
             }
         }
     }
@@ -63,13 +67,13 @@ public class MKLayer {
     public var ripplePercent: Float = 0.9 {
         didSet {
             if ripplePercent > 0 {
-                let superLayerWidth = CGRectGetWidth(superLayer.bounds)
-                let superLayerHeight = CGRectGetHeight(superLayer.bounds)
-                let circleSize = CGFloat(max(superLayerWidth, superLayerHeight)) * CGFloat(ripplePercent)
+                let sw = CGRectGetWidth(superLayer.bounds)
+                let sh = CGRectGetHeight(superLayer.bounds)
+                let circleSize = CGFloat(max(sw, sh)) * CGFloat(ripplePercent)
                 let circleCornerRadius = circleSize/2
 
                 rippleLayer.cornerRadius = circleCornerRadius
-                setCircleLayerLocationAt(CGPoint(x: superLayerWidth/2, y: superLayerHeight/2))
+                setCircleLayerLocationAt(CGPoint(x: sw/2, y: sh/2))
             }
         }
     }
@@ -77,21 +81,21 @@ public class MKLayer {
     public init(superLayer: CALayer) {
         self.superLayer = superLayer
 
-        let superLayerWidth = CGRectGetWidth(superLayer.bounds)
-        let superLayerHeight = CGRectGetHeight(superLayer.bounds)
+        let sw = CGRectGetWidth(superLayer.bounds)
+        let sh = CGRectGetHeight(superLayer.bounds)
 
         // background layer
         backgroundLayer.frame = superLayer.bounds
         backgroundLayer.opacity = 0.0
         superLayer.addSublayer(backgroundLayer)
 
-        // circlelayer
-        let circleSize = CGFloat(max(superLayerWidth, superLayerHeight)) * CGFloat(ripplePercent)
-        let circleCornerRadius = circleSize/2
+        // ripple layer
+        let circleSize = CGFloat(max(sw, sh)) * CGFloat(ripplePercent)
+        let rippleCornerRadius = circleSize/2
 
         rippleLayer.opacity = 0.0
-        rippleLayer.cornerRadius = circleCornerRadius
-        setCircleLayerLocationAt(CGPoint(x: superLayerWidth/2, y: superLayerHeight/2))
+        rippleLayer.cornerRadius = rippleCornerRadius
+        setCircleLayerLocationAt(CGPoint(x: sw/2, y: sh/2))
         backgroundLayer.addSublayer(rippleLayer)
 
         // mask layer
