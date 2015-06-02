@@ -215,4 +215,10 @@ public class MKLayer {
 
         layer.addAnimation(groupAnimation, forKey: nil)
     }
+    
+    public func removeAllAnimations() {
+        self.backgroundLayer.removeAllAnimations()
+        self.rippleLayer.removeAllAnimations()
+    }
+    
 }
