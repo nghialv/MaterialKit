@@ -50,6 +50,10 @@ public class MKTableViewCell : UITableViewCell {
         mkLayer.ripplePercent = 1.2
     }
 
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        self.mkLayer.removeAllAnimations()
+    }
     
     override public func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         super.touchesBegan(touches, withEvent: event)
