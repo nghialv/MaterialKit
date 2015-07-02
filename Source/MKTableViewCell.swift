@@ -51,9 +51,9 @@ public class MKTableViewCell : UITableViewCell {
     }
 
     
-    override public func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
-        if let firstTouch = touches.first as? UITouch {
+        if let firstTouch = touches.first as UITouch? {
             if !contentViewResized {
                 mkLayer.superLayerDidResize()
                 contentViewResized = true
