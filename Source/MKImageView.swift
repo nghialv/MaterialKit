@@ -13,7 +13,7 @@ public class MKImageView: UIImageView
 {
     @IBInspectable public var maskEnabled: Bool = true {
         didSet {
-            mkLayer.enableMask(enable: maskEnabled)
+            mkLayer.enableMask(maskEnabled)
         }
     }
     @IBInspectable public var rippleLocation: MKRippleLocation = .TapLocation {
@@ -101,9 +101,9 @@ public class MKImageView: UIImageView
 
     override public func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         super.touchesBegan(touches, withEvent: event)
-        if let firstTouch = touches.first as? UITouch {
+        if let firstTouch = touches.first as UITouch? {
             let location = firstTouch.locationInView(self)
-            animateRipple(location: location)
+            animateRipple(location)
         }
     }
 }
