@@ -99,7 +99,7 @@ public class MKImageView: UIImageView
         mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(self.backgroundAniDuration))
     }
 
-    override public func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
         if let firstTouch = touches.first as UITouch? {
             let location = firstTouch.locationInView(self)
