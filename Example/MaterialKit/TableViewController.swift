@@ -18,7 +18,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return labels.count
+        return 100
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -27,8 +27,8 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as! MyCell
-        cell.setMessage(labels[indexPath.row])
-        cell.rippleLocation = rippleLocations[indexPath.row]
+        cell.setMessage(labels[indexPath.row % labels.count])
+        cell.rippleLocation = rippleLocations[indexPath.row % labels.count]
         
         let index = indexPath.row % circleColors.count
         cell.rippleLayerColor = circleColors[index]
