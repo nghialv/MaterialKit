@@ -60,6 +60,11 @@ public class MKLabel: UILabel {
     }
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
 
+    public init() {
+        super.init(frame: CGRectZero)
+        setup()
+    }
+
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
