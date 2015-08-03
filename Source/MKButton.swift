@@ -79,7 +79,7 @@ public class MKButton : UIButton
         setupLayer()
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupLayer()
     }
