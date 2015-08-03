@@ -62,7 +62,7 @@ public class MKImageView: UIImageView
     }
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
