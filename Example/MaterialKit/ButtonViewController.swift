@@ -68,7 +68,7 @@ class ButtonViewController: UIViewController {
     }
 
     func buttonPressed() {
-        println("Button pressed")
+        print("Button pressed")
     }
     
     override func didReceiveMemoryWarning() {
