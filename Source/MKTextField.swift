@@ -64,7 +64,7 @@ public class MKTextField : UITextField {
                 bottomBorderLayer = CALayer()
                 bottomBorderLayer?.frame = CGRect(x: 0, y: layer.bounds.height - 1, width: bounds.width, height: 1)
                 bottomBorderLayer?.backgroundColor = UIColor.MKColor.Grey.CGColor
-                layer.addSublayer(bottomBorderLayer)
+                layer.addSublayer(bottomBorderLayer!)
             }
         }
     }
@@ -92,7 +92,7 @@ public class MKTextField : UITextField {
         setupLayer()
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupLayer()
     }
@@ -114,7 +114,7 @@ public class MKTextField : UITextField {
         addSubview(floatingLabel)
     }
 
-    override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
+    override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
         mkLayer.didChangeTapLocation(touch.locationInView(self))
 
         mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: MKTimingFunction.Linear, duration: CFTimeInterval(self.rippleAniDuration))
@@ -130,7 +130,7 @@ public class MKTextField : UITextField {
             return
         }
 
-        if !text.isEmpty {
+        if let text = text where text.isEmpty == false {
             floatingLabel.textColor = isFirstResponder() ? tintColor : floatingLabelTextColor
             if floatingLabel.alpha == 0 {
                 showFloatingLabel()
@@ -153,10 +153,11 @@ public class MKTextField : UITextField {
             return newRect
         }
 
-        if !text.isEmpty {
+        if let text = text where text.isEmpty == false {
             let dTop = floatingLabel.font.lineHeight + floatingLabelBottomMargin
             newRect = UIEdgeInsetsInsetRect(newRect, UIEdgeInsets(top: dTop, left: 0.0, bottom: 0.0, right: 0.0))
         }
+
         return newRect
     }
 

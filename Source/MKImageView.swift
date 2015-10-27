@@ -13,7 +13,7 @@ public class MKImageView: UIImageView
 {
     @IBInspectable public var maskEnabled: Bool = true {
         didSet {
-            mkLayer.enableMask(enable: maskEnabled)
+            mkLayer.enableMask(maskEnabled)
         }
     }
     @IBInspectable public var rippleLocation: MKRippleLocation = .TapLocation {
@@ -62,7 +62,7 @@ public class MKImageView: UIImageView
     }
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
@@ -72,12 +72,12 @@ public class MKImageView: UIImageView
         setup()
     }
 
-    override public init(image: UIImage!) {
+    override public init(image: UIImage?) {
         super.init(image: image)
         setup()
     }
 
-    override public init(image: UIImage!, highlightedImage: UIImage?) {
+    override public init(image: UIImage?, highlightedImage: UIImage?) {
         super.init(image: image, highlightedImage: highlightedImage)
         setup()
     }
@@ -99,11 +99,11 @@ public class MKImageView: UIImageView
         mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(self.backgroundAniDuration))
     }
 
-    override public func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
-        if let firstTouch = touches.first as? UITouch {
+        if let firstTouch = touches.first {
             let location = firstTouch.locationInView(self)
-            animateRipple(location: location)
+            animateRipple(location)
         }
     }
 }
