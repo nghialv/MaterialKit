@@ -20,7 +20,7 @@ extension UIColor {
         public static let Red = UIColor(hex: 0xF44336)
         public static let Pink = UIColor(hex: 0xE91E63)
         public static let Purple = UIColor(hex: 0x9C27B0)
-        public static let DeepPurple = UIColor(hex: 0x67AB7)
+        public static let DeepPurple = UIColor(hex: 0x673AB7)
         public static let Indigo = UIColor(hex: 0x3F51B5)
         public static let Blue = UIColor(hex: 0x2196F3)
         public static let LightBlue = UIColor(hex: 0x03A9F4)
