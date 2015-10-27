@@ -26,7 +26,7 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as! MyCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as! MyCell
         cell.setMessage(labels[indexPath.row % labels.count])
         cell.rippleLocation = rippleLocations[indexPath.row % labels.count]
         
