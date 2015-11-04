@@ -32,7 +32,7 @@ public class MKNavigationBar: UINavigationBar {
     
     @IBInspectable public var darkColor: UIColor = UIColor.grayColor() {
         didSet {
-            self.barTintColor = self.darkColor
+            self.statusView.backgroundColor = self.darkColor
         }
     }
     
