@@ -25,7 +25,7 @@
 import UIKit
 
 @IBDesignable
-public class MKCardView: UIView {
+public class MKCardView: UIControl {
     
     @IBInspectable public var elevation: CGFloat = 2 {
         didSet {
@@ -104,16 +104,25 @@ public class MKCardView: UIView {
         mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(self.backgroundAniDuration))
     }
     
-    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
-        if let firstTouch = touches.first {
-            let location = firstTouch.locationInView(self)
-            animateRipple(location)
+    // MARK - location tracking methods
+    override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
+        if !super.beginTrackingWithTouch(touch, withEvent: event) {
+            mkLayer.removeAllAnimations()
+            return false
         }
+        
+        if rippleLocation == .TapLocation {
+            mkLayer.didChangeTapLocation(touch.locationInView(self))
+        }
+        
+        // rippleLayer animation
+        mkLayer.animateRipple(rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
+        
+        return true
     }
     
-    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesEnded(touches, withEvent: event)
+    public override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
+        super.endTrackingWithTouch(touch, withEvent: event)
         mkLayer.removeAllAnimations()
     }
     
