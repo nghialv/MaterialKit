@@ -21,40 +21,24 @@ public class MKImageView: UIImageView
             mkLayer.rippleLocation = rippleLocation
         }
     }
-    @IBInspectable public var rippleAniDuration: Float = 0.75
+    @IBInspectable public var rippleAniDuration: Float = 0.35
     @IBInspectable public var backgroundAniDuration: Float = 1.0
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var backgroundAniEnabled: Bool = true {
+    @IBInspectable public var cornerRadius: CGFloat = 0 {
         didSet {
-            if !backgroundAniEnabled {
-                mkLayer.enableOnlyCircleLayer()
-            }
+            self.layer.cornerRadius = self.cornerRadius
+            mkLayer.setCornerRadius(self.cornerRadius)
         }
     }
-    @IBInspectable public var ripplePercent: Float = 0.9 {
-        didSet {
-            mkLayer.ripplePercent = ripplePercent
-        }
-    }
-
-    @IBInspectable public var cornerRadius: CGFloat = 2.5 {
-        didSet {
-            layer.cornerRadius = cornerRadius
-            mkLayer.setMaskLayerCornerRadius(cornerRadius)
-        }
-    }
+    
     // color
-    @IBInspectable public var rippleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0, alpha: 0.5) {
         didSet {
             mkLayer.setCircleLayerColor(rippleLayerColor)
         }
     }
-    @IBInspectable public var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
-        didSet {
-            mkLayer.setBackgroundLayerColor(backgroundLayerColor)
-        }
-    }
+
     override public var bounds: CGRect {
         didSet {
             mkLayer.superLayerDidResize()
@@ -83,9 +67,8 @@ public class MKImageView: UIImageView
     }
 
     private func setup() {
+        self.clipsToBounds = true
         mkLayer.setCircleLayerColor(rippleLayerColor)
-        mkLayer.setBackgroundLayerColor(backgroundLayerColor)
-        mkLayer.setMaskLayerCornerRadius(cornerRadius)
     }
 
     public func animateRipple(location: CGPoint? = nil) {
@@ -95,7 +78,7 @@ public class MKImageView: UIImageView
             rippleLocation = .Center
         }
 
-        mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
+        mkLayer.animateRipple(rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
         mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(self.backgroundAniDuration))
     }
 
@@ -105,5 +88,15 @@ public class MKImageView: UIImageView
             let location = firstTouch.locationInView(self)
             animateRipple(location)
         }
+    }
+    
+    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesEnded(touches, withEvent: event)
+        mkLayer.removeAllAnimations()
+    }
+    
+    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        super.touchesCancelled(touches, withEvent: event)
+        mkLayer.removeAllAnimations()
     }
 }

@@ -19,40 +19,39 @@ public class MKLabel: UILabel {
             mkLayer.rippleLocation = rippleLocation
         }
     }
-    @IBInspectable public var rippleAniDuration: Float = 0.75
+    @IBInspectable public var rippleAniDuration: Float = 0.35
     @IBInspectable public var backgroundAniDuration: Float = 1.0
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var backgroundAniEnabled: Bool = true {
-        didSet {
-            if !backgroundAniEnabled {
-                mkLayer.enableOnlyCircleLayer()
-            }
-        }
-    }
     @IBInspectable public var ripplePercent: Float = 0.9 {
         didSet {
             mkLayer.ripplePercent = ripplePercent
         }
     }
-
-    @IBInspectable public var cornerRadius: CGFloat = 2.5 {
+    @IBInspectable public var cornerRadius: CGFloat = 0 {
         didSet {
-            layer.cornerRadius = cornerRadius
-            mkLayer.setMaskLayerCornerRadius(cornerRadius)
+            self.layer.cornerRadius = self.cornerRadius
+            mkLayer.setCornerRadius(self.cornerRadius)
         }
     }
+    @IBInspectable public var elevation: CGFloat = 0 {
+        didSet {
+            drawShadow()
+        }
+    }
+    @IBInspectable public var shadowOpacity: Float = 0.5 {
+        didSet {
+            drawShadow()
+        }
+    }
+
     // color
-    @IBInspectable public var rippleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0, alpha: 0.5) {
         didSet {
             mkLayer.setCircleLayerColor(rippleLayerColor)
         }
     }
-    @IBInspectable public var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
-        didSet {
-            mkLayer.setBackgroundLayerColor(backgroundLayerColor)
-        }
-    }
+
     override public var bounds: CGRect {
         didSet {
             mkLayer.superLayerDidResize()
@@ -72,8 +71,20 @@ public class MKLabel: UILabel {
 
     private func setup() {
         mkLayer.setCircleLayerColor(rippleLayerColor)
-        mkLayer.setBackgroundLayerColor(backgroundLayerColor)
-        mkLayer.setMaskLayerCornerRadius(cornerRadius)
+        drawShadow()
+    }
+    
+    private func drawShadow() {
+        if elevation > 0 {
+            let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+            layer.masksToBounds = false
+            layer.cornerRadius = cornerRadius
+            layer.shadowRadius = elevation
+            layer.shadowColor = UIColor.blackColor().CGColor
+            layer.shadowOffset = CGSize(width: 1, height: 1)
+            layer.shadowOpacity = shadowOpacity
+            layer.shadowPath = shadowPath.CGPath
+        }
     }
 
     public func animateRipple(location: CGPoint? = nil) {
@@ -83,7 +94,7 @@ public class MKLabel: UILabel {
             rippleLocation = .Center
         }
 
-        mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
+        mkLayer.animateRipple(rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
         mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(self.backgroundAniDuration))
     }
 
@@ -93,5 +104,15 @@ public class MKLabel: UILabel {
             let location = firstTouch.locationInView(self)
             animateRipple(location)
         }
+    }
+    
+    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesEnded(touches, withEvent: event)
+        mkLayer.removeAllAnimations()
+    }
+    
+    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        super.touchesCancelled(touches, withEvent: event)
+        mkLayer.removeAllAnimations()
     }
 }

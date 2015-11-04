@@ -14,20 +14,15 @@ public class MKTableViewCell : UITableViewCell {
             mkLayer.rippleLocation = rippleLocation
         }
     }
-    @IBInspectable public var rippleAniDuration: Float = 0.75
+    @IBInspectable public var rippleAniDuration: Float = 0.35
     @IBInspectable public var backgroundAniDuration: Float = 1.0
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var shadowAniEnabled: Bool = true
 
     // color
-    @IBInspectable public var rippleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0, alpha: 0.5) {
         didSet {
             mkLayer.setCircleLayerColor(rippleLayerColor)
-        }
-    }
-    @IBInspectable public var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
-        didSet {
-            mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         }
     }
 
@@ -45,7 +40,6 @@ public class MKTableViewCell : UITableViewCell {
 
     private func setupLayer() {
         selectionStyle = .None
-        mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setCircleLayerColor(rippleLayerColor)
         mkLayer.ripplePercent = 1.2
     }
@@ -64,8 +58,18 @@ public class MKTableViewCell : UITableViewCell {
             }
             mkLayer.didChangeTapLocation(firstTouch.locationInView(contentView))
 
-            mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(rippleAniDuration))
+            mkLayer.animateRipple(rippleAniTimingFunction, duration: CFTimeInterval(rippleAniDuration))
             mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: CFTimeInterval(backgroundAniDuration))
         }
+    }
+    
+    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesEnded(touches, withEvent: event)
+        mkLayer.removeAllAnimations()
+    }
+    
+    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        super.touchesCancelled(touches, withEvent: event)
+        mkLayer.removeAllAnimations()
     }
 }

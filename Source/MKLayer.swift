@@ -38,9 +38,13 @@ public enum MKRippleLocation {
 
 public class MKLayer {
     private var superLayer: CALayer!
-    private let rippleLayer = CALayer()
-    private let backgroundLayer = CALayer()
-    private let maskLayer = CAShapeLayer()
+    private let rippleLayer = CAShapeLayer()
+    private var maskEnabled = false
+    private var removeAnimation = false
+    private var animationRunning = false
+    private var circleCenter = CGPoint()
+    private var endRadius: CGFloat = 0
+    private var cornerRadius: CGFloat = 0
     
     public var rippleLocation: MKRippleLocation = .TapLocation {
         didSet {
@@ -69,10 +73,6 @@ public class MKLayer {
             if ripplePercent > 0 {
                 let sw = CGRectGetWidth(superLayer.bounds)
                 let sh = CGRectGetHeight(superLayer.bounds)
-                let circleSize = CGFloat(max(sw, sh)) * CGFloat(ripplePercent)
-                let circleCornerRadius = circleSize/2
-
-                rippleLayer.cornerRadius = circleCornerRadius
                 setCircleLayerLocationAt(CGPoint(x: sw/2, y: sh/2))
             }
         }
@@ -84,45 +84,31 @@ public class MKLayer {
         let sw = CGRectGetWidth(superLayer.bounds)
         let sh = CGRectGetHeight(superLayer.bounds)
 
-        // background layer
-        backgroundLayer.frame = superLayer.bounds
-        backgroundLayer.opacity = 0.0
-        superLayer.addSublayer(backgroundLayer)
-
         // ripple layer
-        let circleSize = CGFloat(max(sw, sh)) * CGFloat(ripplePercent)
-        let rippleCornerRadius = circleSize/2
-
         rippleLayer.opacity = 0.0
-        rippleLayer.cornerRadius = rippleCornerRadius
+        rippleLayer.strokeColor = UIColor.clearColor().CGColor
+        rippleLayer.frame = superLayer.bounds
+        enableMask(maskEnabled)
         setCircleLayerLocationAt(CGPoint(x: sw/2, y: sh/2))
-        backgroundLayer.addSublayer(rippleLayer)
-
-        // mask layer
-        setMaskLayerCornerRadius(superLayer.cornerRadius)
-        backgroundLayer.mask = maskLayer
+        superLayer.addSublayer(rippleLayer)
     }
 
     public func superLayerDidResize() {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        backgroundLayer.frame = superLayer.bounds
-        setMaskLayerCornerRadius(superLayer.cornerRadius)
+        rippleLayer.frame = superLayer.bounds
+        enableMask(maskEnabled)
         CATransaction.commit()
         setCircleLayerLocationAt(CGPoint(x: superLayer.bounds.width/2, y: superLayer.bounds.height/2))
     }
 
-    public func enableOnlyCircleLayer() {
-        backgroundLayer.removeFromSuperlayer()
-        superLayer.addSublayer(rippleLayer)
-    }
-
-    public func setBackgroundLayerColor(color: UIColor) {
-        backgroundLayer.backgroundColor = color.CGColor
-    }
-
     public func setCircleLayerColor(color: UIColor) {
-        rippleLayer.backgroundColor = color.CGColor
+        rippleLayer.fillColor = color.CGColor
+    }
+    
+    public func setCornerRadius(cornerRadius: CGFloat) {
+        self.cornerRadius = cornerRadius
+        self.enableMask(maskEnabled)
     }
 
     public func didChangeTapLocation(location: CGPoint) {
@@ -131,62 +117,68 @@ public class MKLayer {
         }
     }
 
-    public func setMaskLayerCornerRadius(cornerRadius: CGFloat) {
-        maskLayer.path = UIBezierPath(roundedRect: backgroundLayer.bounds, cornerRadius: cornerRadius).CGPath
-    }
-
     public func enableMask(enable: Bool = true) {
-        backgroundLayer.mask = enable ? maskLayer : nil
-    }
-
-    public func setBackgroundLayerCornerRadius(cornerRadius: CGFloat) {
-        backgroundLayer.cornerRadius = cornerRadius
+        let mask = CAShapeLayer()
+        if enable {
+            mask.path = UIBezierPath(arcCenter: CGPointMake(superLayer.bounds.width / 2, superLayer.bounds.height / 2),
+                radius: max(superLayer.bounds.width, superLayer.bounds.height) / 2,
+                startAngle: 0,
+                endAngle: CGFloat(2 * M_PI),
+                clockwise: true).CGPath
+        } else {
+            mask.path = UIBezierPath(roundedRect: superLayer.bounds, cornerRadius: cornerRadius).CGPath
+        }
+        rippleLayer.mask = mask
+        maskEnabled = enable
     }
 
     private func setCircleLayerLocationAt(center: CGPoint) {
-        let bounds = superLayer.bounds
-        let width = CGRectGetWidth(bounds)
-        let height = CGRectGetHeight(bounds)
-        let subSize = CGFloat(max(width, height)) * CGFloat(ripplePercent)
-        let subX = center.x - subSize/2
-        let subY = center.y - subSize/2
-
         // disable animation when changing layer frame
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        rippleLayer.cornerRadius = subSize / 2
-        rippleLayer.frame = CGRect(x: subX, y: subY, width: subSize, height: subSize)
+        circleCenter = center
+        
+        let halfWidth = superLayer.bounds.width / 2
+        let halfHeight = superLayer.bounds.height / 2
+        
+        let radiusX = halfWidth > circleCenter.x ? superLayer.bounds.width - circleCenter.x : circleCenter.x
+        let radiusY = halfHeight > circleCenter.y ? superLayer.bounds.height - circleCenter.y : circleCenter.y
+        
+        endRadius = sqrt(radiusX * radiusX + radiusY * radiusY) * CGFloat(1.2)
         CATransaction.commit()
     }
 
     // MARK - Animation
-    public func animateScaleForCircleLayer(fromScale: Float, toScale: Float, timingFunction: MKTimingFunction, duration: CFTimeInterval) {
-        let rippleLayerAnim = CABasicAnimation(keyPath: "transform.scale")
-        rippleLayerAnim.fromValue = fromScale
-        rippleLayerAnim.toValue = toScale
+    public func animateRipple(timingFunction: MKTimingFunction, duration: CFTimeInterval) {
+        if self.animationRunning {
+            return
+        }
+        
+        CATransaction.begin()
+        CATransaction.setCompletionBlock { () -> Void in
+            self.animationRunning = false
+            if self.removeAnimation {
+                self.reset()
+            }
+        }
+        rippleLayer.opacity = 0.4
+        
+        let rippleLayerAnim = CABasicAnimation(keyPath: "path")
+        rippleLayerAnim.fromValue = UIBezierPath(arcCenter: circleCenter, radius: 0, startAngle: 0, endAngle: CGFloat(2 * M_PI), clockwise: true).CGPath
+        rippleLayerAnim.toValue = UIBezierPath(arcCenter: circleCenter, radius: endRadius, startAngle: 0, endAngle: CGFloat(2 * M_PI), clockwise: true).CGPath
+        rippleLayerAnim.duration = duration
+        rippleLayerAnim.timingFunction = timingFunction.function
+        rippleLayerAnim.removedOnCompletion = false
+        rippleLayerAnim.fillMode = kCAFillModeForwards
 
-        let opacityAnim = CABasicAnimation(keyPath: "opacity")
-        opacityAnim.fromValue = 1.0
-        opacityAnim.toValue = 0.0
+        rippleLayer.addAnimation(rippleLayerAnim, forKey: nil)
 
-        let groupAnim = CAAnimationGroup()
-        groupAnim.duration = duration
-        groupAnim.timingFunction = timingFunction.function
-        groupAnim.removedOnCompletion = false
-        groupAnim.fillMode = kCAFillModeForwards
-
-        groupAnim.animations = [rippleLayerAnim, opacityAnim]
-
-        rippleLayer.addAnimation(groupAnim, forKey: nil)
+        self.animationRunning = true
+        CATransaction.commit()
     }
 
     public func animateAlphaForBackgroundLayer(timingFunction: MKTimingFunction, duration: CFTimeInterval) {
-        let backgroundLayerAnim = CABasicAnimation(keyPath: "opacity")
-        backgroundLayerAnim.fromValue = 1.0
-        backgroundLayerAnim.toValue = 0.0
-        backgroundLayerAnim.duration = duration
-        backgroundLayerAnim.timingFunction = timingFunction.function
-        backgroundLayer.addAnimation(backgroundLayerAnim, forKey: nil)
+
     }
 
     public func animateSuperLayerShadow(fromRadius: CGFloat, toRadius: CGFloat, fromOpacity: Float, toOpacity: Float, timingFunction: MKTimingFunction, duration: CFTimeInterval) {
@@ -217,8 +209,16 @@ public class MKLayer {
     }
     
     public func removeAllAnimations() {
-        self.backgroundLayer.removeAllAnimations()
-        self.rippleLayer.removeAllAnimations()
+        removeAnimation = true
+        if !animationRunning {
+            reset()
+        }
+    }
+    
+    private func reset() {
+        rippleLayer.opacity = 0
+        removeAnimation = false
+        animationRunning = false
     }
     
 }

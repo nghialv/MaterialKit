@@ -1,0 +1,79 @@
+//
+//  MKNavigationBar.swift
+//  Cityflo
+//
+//  Created by Rahul Iyer on 02/11/15.
+//  Copyright © 2015 Cityflo. All rights reserved.
+//
+
+import UIKit
+
+@IBDesignable
+public class MKNavigationBar: UINavigationBar {
+
+    let statusView = UIView(frame: CGRectMake(0, -20, UIScreen.mainScreen().bounds.size.width, 20))
+    
+    @IBInspectable public var elevation: CGFloat = 0 {
+        didSet {
+            drawShadow()
+        }
+    }
+    @IBInspectable public var shadowOpacity: Float = 0.5 {
+        didSet {
+            drawShadow()
+        }
+    }
+    
+    @IBInspectable public var color: UIColor = UIColor.whiteColor() {
+        didSet {
+            self.backgroundColor = self.color
+        }
+    }
+    
+    @IBInspectable public var darkColor: UIColor = UIColor.grayColor() {
+        didSet {
+            self.barTintColor = self.darkColor
+        }
+    }
+    
+    @IBInspectable public override var tintColor: UIColor! {
+        didSet {
+            super.tintColor = self.tintColor
+        }
+    }
+
+    
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    override public func layoutSubviews() {
+        drawShadow()
+        super.layoutSubviews()
+    }
+    
+    private func setup() {
+        self.statusView.backgroundColor = self.darkColor
+        self.addSubview(self.statusView)
+        self.backgroundColor = self.color
+    }
+    
+    private func drawShadow() {
+        if elevation > 0 {
+            let shadowPath = UIBezierPath(rect: bounds)
+            layer.masksToBounds = false
+            layer.shadowRadius = elevation
+            layer.shadowColor = UIColor.blackColor().CGColor
+            layer.shadowOffset = CGSize(width: 1, height: 1);
+            layer.shadowOpacity = shadowOpacity
+            layer.shadowPath = shadowPath.CGPath
+        }
+    }
+    
+}

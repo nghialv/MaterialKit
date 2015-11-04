@@ -41,7 +41,6 @@ class TextFieldViewController: UIViewController {
         textField4.placeholder = "Github"
         textField4.tintColor = UIColor.MKColor.Blue
         textField4.rippleLocation = .Right
-        textField4.cornerRadius = 0
         textField4.bottomBorderEnabled = true
         
         // No border, shadow, floatingPlaceholderEnabled

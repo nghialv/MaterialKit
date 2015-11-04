@@ -25,33 +25,19 @@ class ButtonViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-      
-        raisedButton.layer.shadowOpacity = 0.55
-        raisedButton.layer.shadowRadius = 5.0
-        raisedButton.layer.shadowColor = UIColor.grayColor().CGColor
-        raisedButton.layer.shadowOffset = CGSize(width: 0, height: 2.5)
-        
-        flatButton1.backgroundLayerColor = UIColor.MKColor.Lime
-        flatButton1.layer.shadowOpacity = 0.5
-        flatButton1.layer.shadowRadius = 5.0
-        flatButton1.layer.shadowColor = UIColor.blackColor().CGColor
-        flatButton1.layer.shadowOffset = CGSize(width: 0, height: 2.5)
-        
-        flatButton2.maskEnabled = false
+            
+        flatButton2.maskEnabled = true
         flatButton2.ripplePercent = 0.5
-        flatButton2.backgroundAniEnabled = false
         flatButton2.rippleLocation = .Center
         
         imageButton1.rippleLayerColor = UIColor.MKColor.DeepOrange
+        imageButton1.maskEnabled = true
         
-        imageButton2.maskEnabled = false
         imageButton2.ripplePercent = 1.2
-        imageButton2.backgroundAniEnabled = false
         imageButton2.rippleLocation = .Center
         
         floatButton1.cornerRadius = 40.0
-        floatButton1.backgroundLayerCornerRadius = 40.0
-        floatButton1.maskEnabled = false
+        floatButton1.maskEnabled = true
         floatButton1.ripplePercent = 1.75
         floatButton1.rippleLocation = .Center
         

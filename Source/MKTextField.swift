@@ -21,26 +21,25 @@ public class MKTextField : UITextField {
         }
     }
 
-    @IBInspectable public var rippleAniDuration: Float = 0.75
+    @IBInspectable public var rippleAniDuration: Float = 0.35
     @IBInspectable public var backgroundAniDuration: Float = 1.0
     @IBInspectable public var shadowAniEnabled: Bool = true
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
-    
-    @IBInspectable public var cornerRadius: CGFloat = 2.5 {
+    @IBInspectable public var elevation: CGFloat = 0 {
         didSet {
-            layer.cornerRadius = cornerRadius
-            mkLayer.setMaskLayerCornerRadius(cornerRadius)
+            drawShadow()
         }
     }
+    @IBInspectable public var shadowOpacity: Float = 0.5 {
+        didSet {
+            drawShadow()
+        }
+    }
+    
     // color
-    @IBInspectable public var rippleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0, alpha: 0.5) {
         didSet {
             mkLayer.setCircleLayerColor(rippleLayerColor)
-        }
-    }
-    @IBInspectable public var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
-        didSet {
-            mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         }
     }
 
@@ -71,7 +70,13 @@ public class MKTextField : UITextField {
     @IBInspectable public var bottomBorderWidth: CGFloat = 1.0
     @IBInspectable public var bottomBorderColor: UIColor = UIColor.lightGrayColor()
     @IBInspectable public var bottomBorderHighlightWidth: CGFloat = 1.75
-
+    @IBInspectable public var cornerRadius: CGFloat = 0 {
+        didSet {
+            self.layer.cornerRadius = self.cornerRadius
+            mkLayer.setCornerRadius(self.cornerRadius)
+        }
+    }
+    
     override public var placeholder: String? {
         didSet {
             updateFloatingLabelText()
@@ -98,11 +103,9 @@ public class MKTextField : UITextField {
     }
 
     private func setupLayer() {
-        cornerRadius = 2.5
         layer.borderWidth = 1.0
         borderStyle = .None
         mkLayer.ripplePercent = 1.0
-        mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setCircleLayerColor(rippleLayerColor)
 
         // floating label
@@ -112,12 +115,26 @@ public class MKTextField : UITextField {
         updateFloatingLabelText()
         
         addSubview(floatingLabel)
+        drawShadow()
+    }
+    
+    private func drawShadow() {
+        if elevation > 0 {
+            let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+            layer.masksToBounds = false
+            layer.cornerRadius = cornerRadius
+            layer.shadowRadius = elevation
+            layer.shadowColor = UIColor.blackColor().CGColor
+            layer.shadowOffset = CGSize(width: 1, height: 1)
+            layer.shadowOpacity = shadowOpacity
+            layer.shadowPath = shadowPath.CGPath
+        }
     }
 
     override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
         mkLayer.didChangeTapLocation(touch.locationInView(self))
 
-        mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: MKTimingFunction.Linear, duration: CFTimeInterval(self.rippleAniDuration))
+        mkLayer.animateRipple(MKTimingFunction.Linear, duration: CFTimeInterval(self.rippleAniDuration))
         mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: CFTimeInterval(self.backgroundAniDuration))
 
         return super.beginTrackingWithTouch(touch, withEvent: event)
@@ -163,6 +180,16 @@ public class MKTextField : UITextField {
 
     override public func editingRectForBounds(bounds: CGRect) -> CGRect {
         return textRectForBounds(bounds)
+    }
+    
+    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesEnded(touches, withEvent: event)
+        mkLayer.removeAllAnimations()
+    }
+    
+    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        super.touchesCancelled(touches, withEvent: event)
+        mkLayer.removeAllAnimations()
     }
 }
 

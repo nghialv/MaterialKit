@@ -29,6 +29,9 @@
 		8C780DD31A16203100C9DEB9 /* MKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C780DD21A16203100C9DEB9 /* MKButton.swift */; };
 		8C780DD51A16205100C9DEB9 /* MKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C780DD41A16205100C9DEB9 /* MKTextField.swift */; };
 		8C780DD71A16209200C9DEB9 /* MKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C780DD61A16209200C9DEB9 /* MKColor.swift */; };
+		907589831BEA696E0025DC73 /* MKCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9075897F1BEA696E0025DC73 /* MKCardView.swift */; };
+		907589851BEA696E0025DC73 /* MKNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907589811BEA696E0025DC73 /* MKNavigationBar.swift */; };
+		907589861BEA696E0025DC73 /* MKProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907589821BEA696E0025DC73 /* MKProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +71,9 @@
 		8C780DD21A16203100C9DEB9 /* MKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKButton.swift; sourceTree = "<group>"; };
 		8C780DD41A16205100C9DEB9 /* MKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTextField.swift; sourceTree = "<group>"; };
 		8C780DD61A16209200C9DEB9 /* MKColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKColor.swift; sourceTree = "<group>"; };
+		9075897F1BEA696E0025DC73 /* MKCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKCardView.swift; sourceTree = "<group>"; };
+		907589811BEA696E0025DC73 /* MKNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKNavigationBar.swift; sourceTree = "<group>"; };
+		907589821BEA696E0025DC73 /* MKProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +203,9 @@
 		8C780DCF1A160D5000C9DEB9 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				9075897F1BEA696E0025DC73 /* MKCardView.swift */,
+				907589811BEA696E0025DC73 /* MKNavigationBar.swift */,
+				907589821BEA696E0025DC73 /* MKProgressView.swift */,
 				8C780DD21A16203100C9DEB9 /* MKButton.swift */,
 				8C780DD41A16205100C9DEB9 /* MKTextField.swift */,
 				86FE3A341A178863004A0CD5 /* MKTableViewCell.swift */,
@@ -318,6 +327,8 @@
 			files = (
 				8C780DD31A16203100C9DEB9 /* MKButton.swift in Sources */,
 				8C780DD51A16205100C9DEB9 /* MKTextField.swift in Sources */,
+				907589831BEA696E0025DC73 /* MKCardView.swift in Sources */,
+				907589861BEA696E0025DC73 /* MKProgressView.swift in Sources */,
 				86EA09681A29990D008EDEF8 /* MKImageView.swift in Sources */,
 				86FE3A2F1A1755CF004A0CD5 /* TextFieldViewController.swift in Sources */,
 				86EA09661A298A6A008EDEF8 /* BarButtonItemViewController.swift in Sources */,
@@ -325,6 +336,7 @@
 				86FE3A351A178863004A0CD5 /* MKTableViewCell.swift in Sources */,
 				866D968B1A17CE2700897451 /* MyCell.swift in Sources */,
 				8667C0111A299B7200025664 /* MKLabel.swift in Sources */,
+				907589851BEA696E0025DC73 /* MKNavigationBar.swift in Sources */,
 				8C4D63961A160C95003629F6 /* ButtonViewController.swift in Sources */,
 				86FE3A311A175604004A0CD5 /* ViewController.swift in Sources */,
 				8C780DD71A16209200C9DEB9 /* MKColor.swift in Sources */,
