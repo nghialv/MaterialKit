@@ -37,7 +37,7 @@ public class MKTextField : UITextField {
     }
     
     // color
-    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0, alpha: 0.5) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0) {
         didSet {
             mkLayer.setCircleLayerColor(rippleLayerColor)
         }
