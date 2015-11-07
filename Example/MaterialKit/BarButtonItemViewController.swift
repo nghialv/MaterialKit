@@ -11,7 +11,7 @@ import UIKit
 class BarButtonItemViewController: UIViewController {
     @IBOutlet var label: MKLabel!
     @IBOutlet var imageView: MKImageView!
-    @IBOutlet var progressView: MKProgressView!
+    @IBOutlet var progressView: MKActivityIndicator!
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -231,7 +231,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="npW-gx-EJH" customClass="MKProgressView" customModule="MaterialKit" customModuleProvider="target">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="npW-gx-EJH" customClass="MKActivityIndicator" customModule="MaterialKit" customModuleProvider="target">
                                 <rect key="frame" x="20" y="329" width="64" height="64"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-public class MKProgressView: UIView {
+public class MKActivityIndicator: UIView {
 
     private let drawableLayer = CAShapeLayer()
     private var animating = false
@@ -20,7 +20,7 @@ public class MKProgressView: UIView {
         }
     }
     
-    @IBInspectable var lineWidth: CGFloat = 7.5 {
+    @IBInspectable var lineWidth: CGFloat = 6 {
         didSet {
             drawableLayer.lineWidth = self.lineWidth
             self.updatePath()
@@ -73,7 +73,7 @@ public class MKProgressView: UIView {
         self.drawableLayer.lineWidth = self.lineWidth
         self.drawableLayer.fillColor = UIColor.clearColor().CGColor
         self.drawableLayer.lineCap = kCALineJoinRound
-        self.drawableLayer.strokeStart = 0.95
+        self.drawableLayer.strokeStart = 0.99
         self.drawableLayer.strokeEnd = 1
         updateFrame()
         updatePath()
@@ -106,14 +106,14 @@ public class MKProgressView: UIView {
         rotationAnim.removedOnCompletion = false
         
         let startHeadAnim = CABasicAnimation(keyPath: "strokeStart")
-        startHeadAnim.beginTime = 0.15
+        startHeadAnim.beginTime = 0.1
         startHeadAnim.fromValue = 0
         startHeadAnim.toValue = 0.25
         startHeadAnim.duration = 1
         startHeadAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         
         let startTailAnim = CABasicAnimation(keyPath: "strokeEnd")
-        startTailAnim.beginTime = 0.15
+        startTailAnim.beginTime = 0.1
         startTailAnim.fromValue = 0
         startTailAnim.toValue = 1
         startTailAnim.duration = 1
@@ -122,7 +122,7 @@ public class MKProgressView: UIView {
         let endHeadAnim = CABasicAnimation(keyPath: "strokeStart")
         endHeadAnim.beginTime = 1
         endHeadAnim.fromValue = 0.25
-        endHeadAnim.toValue = 0.95
+        endHeadAnim.toValue = 0.99
         endHeadAnim.duration = 0.5
         endHeadAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         
