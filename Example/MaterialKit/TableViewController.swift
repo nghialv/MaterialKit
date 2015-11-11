@@ -14,7 +14,13 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var rippleLocations: [MKRippleLocation] = [.TapLocation, .TapLocation, .Center, .Left, .Right, .TapLocation, .TapLocation, .TapLocation]
     var circleColors = [UIColor.MKColor.LightBlue, UIColor.MKColor.Grey, UIColor.MKColor.LightGreen]
     
+    var refreshView: MKRefreshControl?
+    
     override func viewDidLoad() {
+        refreshView = MKRefreshControl()
+        refreshView!.addToScrollView(self.tableView, withRefreshBlock: { () -> Void in
+            self.tableViewRefresh()
+        })
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -34,5 +40,13 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.rippleLayerColor = circleColors[index]
         
         return cell
+    }
+    
+    func tableViewRefresh() {
+        NSLog("Refresh Block")
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), { () -> Void in
+            NSLog("End refreshing")
+            self.refreshView!.endRefreshing()
+        })
     }
 }
