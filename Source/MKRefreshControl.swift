@@ -17,16 +17,12 @@ public class MKRefreshControl: UIControl {
     private var progressPath: UIBezierPath = UIBezierPath()
     private var progressLayer: CAShapeLayer = CAShapeLayer()
     private var refreshBlock: (() -> Void) = {() -> Void in}
-    private var startPercent: CGFloat = 0
-    private var endPercent: CGFloat = 0
-    private var fillPercent: CGFloat = 0
     private var radius: CGFloat = 0
     private var rotation: CGFloat = 0
     private var rotationIncrement: CGFloat = 0
-    private var filling: Bool = false
     
     public private(set) var refreshing: Bool = false
-    public var height: CGFloat = 60
+    public var height: CGFloat = 45
     public var color: UIColor = UIColor.MKColor.Blue {
         didSet {
             self.progressLayer.strokeColor = self.color.CGColor
@@ -56,12 +52,12 @@ public class MKRefreshControl: UIControl {
         self.parentScrollView.addObserver(self, forKeyPath: "contentOffset", options: .New, context: nil)
     }
     
-    public func startRefreshing() {
+    public func beginRefreshing() {
         self.refresh()
     }
     
     public func endRefreshing() {
-        self.refreshing = false
+        self.resetAnimation()
     }
     
     // MARK: Private functions
@@ -77,13 +73,9 @@ public class MKRefreshControl: UIControl {
     private func setup() {
         self.backgroundColor = UIColor.whiteColor()
         
-        self.startPercent = 1 / 16.0
-        self.endPercent = 13 / 16.0
-        self.fillPercent = self.endPercent - self.startPercent
         self.rotation = 0
         self.rotationIncrement = CGFloat(14 * M_PI / 8.0)
         self.radius = 15.0
-        self.filling = false
         let center = CGPointMake(CGRectGetWidth(UIScreen.mainScreen().bounds) / 2, self.height / 2)
         
         self.circleView = UIView(frame: CGRectMake(0, 0, self.radius * 2, self.radius * 2))
@@ -97,9 +89,9 @@ public class MKRefreshControl: UIControl {
         self.progressLayer.path = self.progressPath.CGPath
         self.progressLayer.strokeColor = self.color.CGColor
         self.progressLayer.fillColor = UIColor.clearColor().CGColor
-        self.progressLayer.lineWidth = 0.1 * self.radius * 2
+        self.progressLayer.lineWidth = 0.1 * radius * 2
         self.progressLayer.strokeStart = 0
-        self.progressLayer.strokeEnd = self.startPercent
+        self.progressLayer.strokeEnd = 0
         self.progressLayer.frame = self.circleView.bounds
         self.circleView.layer.insertSublayer(self.progressLayer, atIndex: 0)
         
@@ -122,13 +114,15 @@ public class MKRefreshControl: UIControl {
         self.animateRefreshView()
     }
     
-    private func handleScrollingOnAnimationView(animationView: UIView, withPullDistance pullDistance:   CGFloat, withPullRatio pullRatio: CGFloat, withPullVelocity pullVelocity: CGFloat) {
-        let startPullRatio: CGFloat = 0.5
-        let startPullRatioMultiplier: CGFloat = (pullRatio - startPullRatio) / startPullRatio
-        if pullRatio > startPullRatio {
-            self.progressLayer.strokeEnd = startPullRatioMultiplier * pullRatio * fillPercent + startPercent
+    private func handleScrollingOnAnimationView(animationView: UIView, withPullDistance pullDistance: CGFloat, withPullRatio pullRatio: CGFloat, withPullVelocity pullVelocity: CGFloat) {
+        if pullDistance < 60 {
+            self.circleView.alpha = pullDistance / 60
+            self.progressLayer.strokeEnd = pullDistance / 60 * 0.9
+        } else {
+            self.circleView.alpha = 1
+            self.progressLayer.strokeEnd = 0.9
         }
-        self.rotation = CGFloat(M_PI) * pullDistance / self.height * 0.75
+        self.rotation = CGFloat(M_PI) * pullDistance / self.height * 0.5
         self.circleView.transform = CGAffineTransformMakeRotation(self.rotation)
     }
     
@@ -150,89 +144,95 @@ public class MKRefreshControl: UIControl {
         self.rotation = 0
         self.circleView.alpha = 1
         self.circleView.transform = CGAffineTransformMakeRotation(self.rotation)
-        self.progressLayer.strokeEnd = self.startPercent
+        self.progressLayer.strokeStart = 0
+        self.progressLayer.strokeEnd = 0
         self.progressLayer.removeAllAnimations()
     }
     
     private func setupRefreshControl(forAnimationView animationView: UIView) {
-        self.progressLayer.strokeEnd = self.filling ? self.endPercent : self.startPercent
+        CATransaction.begin()
+        CATransaction.setCompletionBlock { () -> Void in
+            self.animationSecondPhase()
+        }
+        
+        self.progressLayer.strokeStart = 0.99
+        self.progressLayer.strokeEnd = 1
+        
+        CATransaction.commit()
+    }
+    
+    private func animationSecondPhase() {
+        CATransaction.begin()
+        
+        let rotationAnim = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotationAnim.fromValue = 0
+        rotationAnim.duration = 4
+        rotationAnim.toValue = 2 * M_PI
+        rotationAnim.repeatCount = Float.infinity
+        rotationAnim.removedOnCompletion = false
+        
+        let startHeadAnim = CABasicAnimation(keyPath: "strokeStart")
+        startHeadAnim.beginTime = 0.1
+        startHeadAnim.fromValue = 0
+        startHeadAnim.toValue = 0.25
+        startHeadAnim.duration = 1
+        startHeadAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        
+        let startTailAnim = CABasicAnimation(keyPath: "strokeEnd")
+        startTailAnim.beginTime = 0.1
+        startTailAnim.fromValue = 0
+        startTailAnim.toValue = 1
+        startTailAnim.duration = 1
+        startTailAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        
+        let endHeadAnim = CABasicAnimation(keyPath: "strokeStart")
+        endHeadAnim.beginTime = 1
+        endHeadAnim.fromValue = 0.25
+        endHeadAnim.toValue = 0.99
+        endHeadAnim.duration = 0.5
+        endHeadAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        
+        let endTailAnim = CABasicAnimation(keyPath: "strokeEnd")
+        endTailAnim.beginTime = 1
+        endTailAnim.fromValue = 1
+        endTailAnim.toValue = 1
+        endTailAnim.duration = 0.5
+        endTailAnim.toValue = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        
+        let strokeAnimGroup = CAAnimationGroup()
+        strokeAnimGroup.duration = 1.5
+        strokeAnimGroup.animations = [startHeadAnim, startTailAnim, endHeadAnim, endTailAnim]
+        strokeAnimGroup.repeatCount = Float.infinity
+        strokeAnimGroup.removedOnCompletion = false
+        
+        self.progressLayer.addAnimation(rotationAnim, forKey: "rotation")
+        self.progressLayer.addAnimation(strokeAnimGroup, forKey: "stroke")
+        
+        CATransaction.commit()
     }
     
     private func animateRefreshView() {
         self.setupRefreshControl(forAnimationView: self.animationView)
-        CATransaction.begin()
-        
-        CATransaction.setCompletionBlock { () -> Void in
-            self.filling = !self.filling
-            self.progressLayer.removeAnimationForKey("refresh")
-            self.rotation += self.rotationIncrement
-            self.rotationIncrement = self.filling ? CGFloat(M_PI) * 5 / 8.0 : CGFloat(M_PI) * 15 / 8.0
-            self.animateRefreshViewEnded()
-        }
-        
-        let strokeStartVal: CGFloat = self.filling ? self.startPercent : self.endPercent
-        let strokeEndVal: CGFloat = self.filling ? self.endPercent : self.startPercent
-        
-        let strokeFillAnimation: CABasicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        strokeFillAnimation.fromValue = strokeStartVal
-        strokeFillAnimation.toValue = strokeEndVal
-        
-        let rotationAnimation: CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotationAnimation.fromValue = self.rotation
-        rotationAnimation.toValue = self.rotation + self.rotationIncrement
-        
-        let animationGroup: CAAnimationGroup = CAAnimationGroup()
-        animationGroup.animations = [strokeFillAnimation, rotationAnimation]
-        animationGroup.duration = 0.6
-        animationGroup.removedOnCompletion = false
-        animationGroup.fillMode = kCAFillModeForwards
-        
-        self.progressLayer.addAnimation(animationGroup, forKey: "refresh")
-        
-        CATransaction.commit()
     }
     
     private func exitAnimation(forRefreshView view: UIView, withCompletionBlock block: ( () -> Void)) {
-        
         CATransaction.begin()
         CATransaction.setCompletionBlock { () -> Void in
             self.circleView.alpha = 0
-            self.progressLayer.removeAnimationForKey("refresh")
+            self.progressLayer.removeAllAnimations()
             block()
         }
-        
-        let strokeStartVal: CGFloat = self.progressLayer.strokeEnd
-        let strokeEndVal: CGFloat = 0
-        
-        let strokeFillAnimation: CABasicAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        strokeFillAnimation.fromValue = strokeStartVal
-        strokeFillAnimation.toValue = strokeEndVal
-        
-        let rotationAnimation: CABasicAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotationAnimation.fromValue = self.rotation
-        rotationAnimation.toValue  = self.rotation + self.rotationIncrement
         
         let opacityAnimation: CABasicAnimation = CABasicAnimation(keyPath: "opacity")
         opacityAnimation.fromValue = 1
         opacityAnimation.toValue = 0
+        opacityAnimation.duration = 0.25
+        opacityAnimation.removedOnCompletion = false
+        opacityAnimation.fillMode = kCAFillModeForwards
         
-        let animationGroup: CAAnimationGroup = CAAnimationGroup()
-        animationGroup.animations = [strokeFillAnimation, rotationAnimation, opacityAnimation]
-        animationGroup.duration = 0.6
-        animationGroup.removedOnCompletion = false
-        animationGroup.fillMode = kCAFillModeForwards
-        
-        self.progressLayer.addAnimation(animationGroup, forKey: "refresh")
+        self.progressLayer.addAnimation(opacityAnimation, forKey: "opacity")
         
         CATransaction.commit()
-    }
-    
-    private func animateRefreshViewEnded() {
-        if self.refreshing {
-            self.animateRefreshView()
-        } else {
-            self.resetAnimation()
-        }
     }
     
     // MARK: ScrollView Observers
@@ -270,7 +270,7 @@ public class MKRefreshControl: UIControl {
     
     private func containingScrollViewDidEndDragging(scrollView: UIScrollView) {
         let actualOffset: CGFloat = scrollView.contentOffset.y
-        if !self.refreshing && -actualOffset > self.height {
+        if !self.refreshing && -actualOffset > 60 {
             self.refresh()
         }
     }
