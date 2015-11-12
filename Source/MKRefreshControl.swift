@@ -22,7 +22,7 @@ public class MKRefreshControl: UIControl {
     private var rotationIncrement: CGFloat = 0
     
     public private(set) var refreshing: Bool = false
-    public var height: CGFloat = 45
+    public var height: CGFloat = 60
     public var color: UIColor = UIColor.MKColor.Blue {
         didSet {
             self.progressLayer.strokeColor = self.color.CGColor
@@ -53,7 +53,8 @@ public class MKRefreshControl: UIControl {
     }
     
     public func beginRefreshing() {
-        self.refresh()
+        self.refreshing = true
+        self.startRefreshing()
     }
     
     public func endRefreshing() {
@@ -108,6 +109,10 @@ public class MKRefreshControl: UIControl {
         self.refreshing = true
         self.sendActionsForControlEvents(.ValueChanged)
         self.refreshBlock()
+        self.startRefreshing()
+    }
+    
+    private func startRefreshing() {
         UIView.animateWithDuration(0.25) { () -> Void in
             self.setScrollViewTopInsets(withOffset: self.height)
         }
@@ -115,9 +120,9 @@ public class MKRefreshControl: UIControl {
     }
     
     private func handleScrollingOnAnimationView(animationView: UIView, withPullDistance pullDistance: CGFloat, withPullRatio pullRatio: CGFloat, withPullVelocity pullVelocity: CGFloat) {
-        if pullDistance < 60 {
-            self.circleView.alpha = pullDistance / 60
-            self.progressLayer.strokeEnd = pullDistance / 60 * 0.9
+        if pullDistance < self.height {
+            self.circleView.alpha = pullDistance / self.height
+            self.progressLayer.strokeEnd = pullDistance / self.height * 0.9
         } else {
             self.circleView.alpha = 1
             self.progressLayer.strokeEnd = 0.9
@@ -270,7 +275,7 @@ public class MKRefreshControl: UIControl {
     
     private func containingScrollViewDidEndDragging(scrollView: UIScrollView) {
         let actualOffset: CGFloat = scrollView.contentOffset.y
-        if !self.refreshing && -actualOffset > 60 {
+        if !self.refreshing && -actualOffset > self.height {
             self.refresh()
         }
     }
