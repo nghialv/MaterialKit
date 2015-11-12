@@ -123,9 +123,6 @@ public class MKRefreshControl: UIControl {
         if pullDistance < self.height {
             self.circleView.alpha = pullDistance / self.height
             self.progressLayer.strokeEnd = pullDistance / self.height * 0.9
-        } else {
-            self.circleView.alpha = 1
-            self.progressLayer.strokeEnd = 0.9
         }
         self.rotation = CGFloat(M_PI) * pullDistance / self.height * 0.5
         self.circleView.transform = CGAffineTransformMakeRotation(self.rotation)
@@ -162,6 +159,7 @@ public class MKRefreshControl: UIControl {
         
         self.progressLayer.strokeStart = 0.99
         self.progressLayer.strokeEnd = 1
+        self.circleView.alpha = 1
         
         CATransaction.commit()
     }
