@@ -31,6 +31,7 @@ public class MKLabel: UILabel {
     @IBInspectable public var cornerRadius: CGFloat = 0 {
         didSet {
             self.layer.cornerRadius = self.cornerRadius
+            self.layer.masksToBounds = true
             mkLayer.setCornerRadius(self.cornerRadius)
         }
     }

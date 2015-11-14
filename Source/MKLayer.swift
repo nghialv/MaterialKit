@@ -88,6 +88,7 @@ public class MKLayer {
         rippleLayer.opacity = 0.0
         rippleLayer.strokeColor = UIColor.clearColor().CGColor
         rippleLayer.frame = superLayer.bounds
+        rippleLayer.masksToBounds = true
         enableMask(maskEnabled)
         setCircleLayerLocationAt(CGPoint(x: sw/2, y: sh/2))
         superLayer.addSublayer(rippleLayer)

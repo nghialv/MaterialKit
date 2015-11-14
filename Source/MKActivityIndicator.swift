@@ -14,13 +14,13 @@ public class MKActivityIndicator: UIView {
     private let drawableLayer = CAShapeLayer()
     private var animating = false
     
-    @IBInspectable var color: UIColor = UIColor.MKColor.Blue {
+    @IBInspectable public var color: UIColor = UIColor.MKColor.Blue {
         didSet {
             drawableLayer.strokeColor = self.color.CGColor
         }
     }
     
-    @IBInspectable var lineWidth: CGFloat = 6 {
+    @IBInspectable public var lineWidth: CGFloat = 6 {
         didSet {
             drawableLayer.lineWidth = self.lineWidth
             self.updatePath()
@@ -131,7 +131,7 @@ public class MKActivityIndicator: UIView {
         endTailAnim.fromValue = 1
         endTailAnim.toValue = 1
         endTailAnim.duration = 0.5
-        endTailAnim.toValue = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        endTailAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         
         let strokeAnimGroup = CAAnimationGroup()
         strokeAnimGroup.duration = 1.5

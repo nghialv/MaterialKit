@@ -26,7 +26,7 @@ public class MKNavigationBar: UINavigationBar {
     
     @IBInspectable public var color: UIColor = UIColor.whiteColor() {
         didSet {
-            self.backgroundColor = self.color
+            UINavigationBar.appearance().barTintColor = self.color
         }
     }
     
@@ -38,11 +38,11 @@ public class MKNavigationBar: UINavigationBar {
     
     @IBInspectable public override var tintColor: UIColor! {
         didSet {
-            super.tintColor = self.tintColor
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: self.tintColor]
+            UINavigationBar.appearance().tintColor = self.tintColor
         }
     }
 
-    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -61,7 +61,10 @@ public class MKNavigationBar: UINavigationBar {
     private func setup() {
         self.statusView.backgroundColor = self.darkColor
         self.addSubview(self.statusView)
-        self.backgroundColor = self.color
+        UINavigationBar.appearance().barTintColor = self.color
+        UINavigationBar.appearance().backgroundColor = self.tintColor
+        UINavigationBar.appearance().tintColor = self.tintColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: self.tintColor]
     }
     
     private func drawShadow() {
