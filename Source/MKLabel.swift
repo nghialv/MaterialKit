@@ -9,7 +9,7 @@
 import UIKit
 
 public class MKLabel: UILabel {
-    @IBInspectable public var maskEnabled: Bool = true {
+    @IBInspectable public var maskEnabled: Bool = false {
         didSet {
             mkLayer.enableMask(maskEnabled)
         }
@@ -43,6 +43,11 @@ public class MKLabel: UILabel {
     @IBInspectable public var shadowOpacity: Float = 0.5 {
         didSet {
             drawShadow()
+        }
+    }
+    @IBInspectable public var rippleAnimationEnabled = true {
+        didSet {
+            mkLayer.setRippleAnimation(self.rippleAnimationEnabled)
         }
     }
 

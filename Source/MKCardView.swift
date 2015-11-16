@@ -46,7 +46,7 @@ public class MKCardView: UIControl {
         }
     }
     
-    @IBInspectable public var maskEnabled: Bool = true {
+    @IBInspectable public var maskEnabled: Bool = false {
         didSet {
             mkLayer.enableMask(maskEnabled)
         }
@@ -60,6 +60,11 @@ public class MKCardView: UIControl {
     @IBInspectable public var backgroundAniDuration: Float = 1.0
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable public var rippleAnimationEnabled = true {
+        didSet {
+            mkLayer.setRippleAnimation(self.rippleAnimationEnabled)
+        }
+    }
     
     // color
     @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xd3d3d3) {

@@ -45,6 +45,7 @@ public class MKLayer {
     private var circleCenter = CGPoint()
     private var endRadius: CGFloat = 0
     private var cornerRadius: CGFloat = 0
+    private var rippleAnimationEnabled: Bool = true
     
     public var rippleLocation: MKRippleLocation = .TapLocation {
         didSet {
@@ -100,7 +101,7 @@ public class MKLayer {
         rippleLayer.frame = superLayer.bounds
         enableMask(maskEnabled)
         CATransaction.commit()
-        setCircleLayerLocationAt(CGPoint(x: superLayer.bounds.width/2, y: superLayer.bounds.height/2))
+        setCircleLayerLocationAt(CGPoint(x: CGRectGetWidth(superLayer.bounds) / 2, y: CGRectGetWidth(superLayer.bounds) / 2))
     }
 
     public func setCircleLayerColor(color: UIColor) {
@@ -121,8 +122,8 @@ public class MKLayer {
     public func enableMask(enable: Bool = true) {
         let mask = CAShapeLayer()
         if enable {
-            mask.path = UIBezierPath(arcCenter: CGPointMake(superLayer.bounds.width / 2, superLayer.bounds.height / 2),
-                radius: max(superLayer.bounds.width, superLayer.bounds.height) / 2,
+            mask.path = UIBezierPath(arcCenter: CGPointMake(CGRectGetWidth(superLayer.bounds) / 2, CGRectGetHeight(superLayer.bounds) / 2),
+                radius: min(CGRectGetWidth(superLayer.bounds), CGRectGetHeight(superLayer.bounds)) / 2,
                 startAngle: 0,
                 endAngle: CGFloat(2 * M_PI),
                 clockwise: true).CGPath
@@ -132,6 +133,10 @@ public class MKLayer {
         rippleLayer.mask = mask
         maskEnabled = enable
     }
+    
+    public func setRippleAnimation(enabled: Bool) {
+        self.rippleAnimationEnabled = enabled
+    }
 
     private func setCircleLayerLocationAt(center: CGPoint) {
         // disable animation when changing layer frame
@@ -139,11 +144,11 @@ public class MKLayer {
         CATransaction.setDisableActions(true)
         circleCenter = center
         
-        let halfWidth = superLayer.bounds.width / 2
-        let halfHeight = superLayer.bounds.height / 2
+        let halfWidth = CGRectGetWidth(superLayer.bounds) / 2
+        let halfHeight = CGRectGetHeight(superLayer.bounds) / 2
         
-        let radiusX = halfWidth > circleCenter.x ? superLayer.bounds.width - circleCenter.x : circleCenter.x
-        let radiusY = halfHeight > circleCenter.y ? superLayer.bounds.height - circleCenter.y : circleCenter.y
+        let radiusX = halfWidth > circleCenter.x ? CGRectGetWidth(superLayer.bounds) - circleCenter.x : circleCenter.x
+        let radiusY = halfHeight > circleCenter.y ? CGRectGetHeight(superLayer.bounds) - circleCenter.y : circleCenter.y
         
         endRadius = sqrt(radiusX * radiusX + radiusY * radiusY) * CGFloat(1.2)
         CATransaction.commit()
@@ -151,7 +156,7 @@ public class MKLayer {
 
     // MARK - Animation
     public func animateRipple(timingFunction: MKTimingFunction, duration: CFTimeInterval) {
-        if self.animationRunning {
+        if self.animationRunning || !self.rippleAnimationEnabled {
             return
         }
         

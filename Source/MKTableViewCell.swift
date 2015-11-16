@@ -18,7 +18,12 @@ public class MKTableViewCell : UITableViewCell {
     @IBInspectable public var backgroundAniDuration: Float = 1.0
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var shadowAniEnabled: Bool = true
-
+    @IBInspectable public var rippleAnimationEnabled = true {
+        didSet {
+            mkLayer.setRippleAnimation(self.rippleAnimationEnabled)
+        }
+    }
+    
     // color
     @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0) {
         didSet {

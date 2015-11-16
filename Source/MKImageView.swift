@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable
 public class MKImageView: UIImageView
 {
-    @IBInspectable public var maskEnabled: Bool = true {
+    @IBInspectable public var maskEnabled: Bool = false {
         didSet {
             mkLayer.enableMask(maskEnabled)
         }
@@ -29,6 +29,11 @@ public class MKImageView: UIImageView
         didSet {
             self.layer.cornerRadius = self.cornerRadius
             mkLayer.setCornerRadius(self.cornerRadius)
+        }
+    }
+    @IBInspectable public var rippleAnimationEnabled = true {
+        didSet {
+            mkLayer.setRippleAnimation(self.rippleAnimationEnabled)
         }
     }
     

@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable
 public class MKButton : UIButton
 {
-    @IBInspectable public var maskEnabled: Bool = true {
+    @IBInspectable public var maskEnabled: Bool = false {
         didSet {
             mkLayer.enableMask(maskEnabled)
         }
@@ -42,7 +42,11 @@ public class MKButton : UIButton
             drawShadow()
         }
     }
-    
+    @IBInspectable public var rippleAnimationEnabled = true {
+        didSet {
+            mkLayer.setRippleAnimation(self.rippleAnimationEnabled)
+        }
+    }
     
     // animations
     @IBInspectable public var shadowAniEnabled: Bool = true

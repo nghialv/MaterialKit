@@ -76,6 +76,11 @@ public class MKTextField : UITextField {
             mkLayer.setCornerRadius(self.cornerRadius)
         }
     }
+    @IBInspectable public var rippleAnimationEnabled = true {
+        didSet {
+            mkLayer.setRippleAnimation(self.rippleAnimationEnabled)
+        }
+    }
     
     override public var placeholder: String? {
         didSet {
