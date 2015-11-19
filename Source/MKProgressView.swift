@@ -16,7 +16,6 @@ class MKProgressView : UIView {
 
     private let shapeLayer = MKPogressLayer()
     
-    /// Line Color. Animatable.
     @IBInspectable var lineColor:UIColor {
         get{
             return shapeLayer.lineColor
@@ -25,7 +24,6 @@ class MKProgressView : UIView {
         }
     }
     
-    /// Line Width. Animatable.
     @IBInspectable var lineWidth:CGFloat {
         get{
             return shapeLayer.lineWidth
