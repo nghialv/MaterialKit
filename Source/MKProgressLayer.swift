@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-/// Layer that defines an animatable arc circle
 class MKPogressLayer: CALayer {
     
     /// Defines the different states of
@@ -86,11 +85,11 @@ class MKPogressLayer: CALayer {
             )
         })
     
-    dynamic var angleOffSet: Float = 0
     dynamic var lineColor = UIColor.MKColor.Blue
     dynamic var lineWidth: CGFloat = 8
-    dynamic var stateId = StateId.Collapsed
-    dynamic var t:Float = 0
+    private dynamic var angleOffSet: Float = 0
+    private dynamic var stateId = StateId.Collapsed
+    private dynamic var t:Float = 0
     
     private let path = UIBezierPath()
     
