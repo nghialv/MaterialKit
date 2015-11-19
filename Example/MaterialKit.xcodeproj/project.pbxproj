@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06B58EB51BFD75BA00222E50 /* MKProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B58EB31BFD75BA00222E50 /* MKProgressView.swift */; };
+		06B58EB61BFD75BA00222E50 /* MKProgressLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B58EB41BFD75BA00222E50 /* MKProgressLayer.swift */; };
 		8667C0111A299B7200025664 /* MKLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8667C0101A299B7200025664 /* MKLabel.swift */; };
 		8667C0131A29A53100025664 /* uibaritem_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8667C0121A29A53100025664 /* uibaritem_icon.png */; };
 		866D96861A17B12500897451 /* icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 866D96841A17B12500897451 /* icon1.png */; };
@@ -42,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		06B58EB31BFD75BA00222E50 /* MKProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKProgressView.swift; sourceTree = "<group>"; };
+		06B58EB41BFD75BA00222E50 /* MKProgressLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKProgressLayer.swift; sourceTree = "<group>"; };
 		8667C0101A299B7200025664 /* MKLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLabel.swift; sourceTree = "<group>"; };
 		8667C0121A29A53100025664 /* uibaritem_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uibaritem_icon.png; sourceTree = "<group>"; };
 		866D96841A17B12500897451 /* icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1.png; sourceTree = "<group>"; };
@@ -204,6 +208,8 @@
 				86EA09671A29990D008EDEF8 /* MKImageView.swift */,
 				86FE3A361A1788FF004A0CD5 /* MKLayer.swift */,
 				8C780DD61A16209200C9DEB9 /* MKColor.swift */,
+				06B58EB31BFD75BA00222E50 /* MKProgressView.swift */,
+				06B58EB41BFD75BA00222E50 /* MKProgressLayer.swift */,
 			);
 			name = Source;
 			path = ../../Source;
@@ -322,9 +328,11 @@
 				86FE3A2F1A1755CF004A0CD5 /* TextFieldViewController.swift in Sources */,
 				86EA09661A298A6A008EDEF8 /* BarButtonItemViewController.swift in Sources */,
 				866D96891A17C21D00897451 /* TableViewController.swift in Sources */,
+				06B58EB51BFD75BA00222E50 /* MKProgressView.swift in Sources */,
 				86FE3A351A178863004A0CD5 /* MKTableViewCell.swift in Sources */,
 				866D968B1A17CE2700897451 /* MyCell.swift in Sources */,
 				8667C0111A299B7200025664 /* MKLabel.swift in Sources */,
+				06B58EB61BFD75BA00222E50 /* MKProgressLayer.swift in Sources */,
 				8C4D63961A160C95003629F6 /* ButtonViewController.swift in Sources */,
 				86FE3A311A175604004A0CD5 /* ViewController.swift in Sources */,
 				8C780DD71A16209200C9DEB9 /* MKColor.swift in Sources */,
