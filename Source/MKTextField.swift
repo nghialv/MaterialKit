@@ -68,7 +68,13 @@ public class MKTextField : UITextField {
         }
     }
     @IBInspectable public var bottomBorderWidth: CGFloat = 1.0
-    @IBInspectable public var bottomBorderColor: UIColor = UIColor.lightGrayColor()
+    @IBInspectable public var bottomBorderColor: UIColor = UIColor.lightGrayColor() {
+        didSet {
+            if bottomBorderEnabled {
+                bottomBorderLayer?.backgroundColor = bottomBorderColor.CGColor
+            }
+        }
+    }
     @IBInspectable public var bottomBorderHighlightWidth: CGFloat = 1.75
     @IBInspectable public var cornerRadius: CGFloat = 0 {
         didSet {
