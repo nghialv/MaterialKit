@@ -198,7 +198,7 @@ private extension MKTextField {
     }
     
     private func updateFloatingLabelText() {
-        floatingLabel.text = placeholder
+        floatingLabel.attributedText = attributedPlaceholder
         floatingLabel.sizeToFit()
         setFloatingLabelOverlapTextField()
     }
