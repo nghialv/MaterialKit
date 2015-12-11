@@ -90,7 +90,6 @@ public class MKCardView: UIControl {
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupLayer()
-        drawShadow()
     }
     
     public override func layoutSubviews() {
