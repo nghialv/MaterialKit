@@ -67,7 +67,7 @@ public class MKCardView: UIControl {
     }
     
     // color
-    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xd3d3d3) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xe0e0e0) {
         didSet {
             mkLayer.setCircleLayerColor(rippleLayerColor)
         }
@@ -81,8 +81,25 @@ public class MKCardView: UIControl {
     
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
     
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
+        setupLayer()
+        drawShadow()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupLayer()
+        drawShadow()
+    }
+    
     public override func layoutSubviews() {
         drawShadow()
+        super.layoutSubviews()
+    }
+    
+    private func setupLayer() {
+        mkLayer.setCircleLayerColor(rippleLayerColor)
     }
     
     private func drawShadow() {
