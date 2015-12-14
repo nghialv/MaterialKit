@@ -77,6 +77,13 @@ public class MKTextField : UITextField {
             updateFloatingLabelText()
         }
     }
+    
+    override public var attributedPlaceholder: NSAttributedString? {
+        didSet {
+            updateFloatingLabelText()
+        }
+    }
+    
     override public var bounds: CGRect {
         didSet {
             mkLayer.superLayerDidResize()
@@ -125,7 +132,11 @@ public class MKTextField : UITextField {
 
     override public func layoutSubviews() {
         super.layoutSubviews()
-
+        
+        bottomBorderLayer?.backgroundColor = isFirstResponder() ? tintColor.CGColor : bottomBorderColor.CGColor
+        let borderWidth = isFirstResponder() ? bottomBorderHighlightWidth : bottomBorderWidth
+        bottomBorderLayer?.frame = CGRect(x: 0, y: layer.bounds.height - borderWidth, width: layer.bounds.width, height: borderWidth)
+        
         if !floatingPlaceholderEnabled {
             return
         }
@@ -138,10 +149,6 @@ public class MKTextField : UITextField {
         } else {
             hideFloatingLabel()
         }
-
-        bottomBorderLayer?.backgroundColor = isFirstResponder() ? tintColor.CGColor : bottomBorderColor.CGColor
-        let borderWidth = isFirstResponder() ? bottomBorderHighlightWidth : bottomBorderWidth
-        bottomBorderLayer?.frame = CGRect(x: 0, y: layer.bounds.height - borderWidth, width: layer.bounds.width, height: borderWidth)
     }
 
     override public func textRectForBounds(bounds: CGRect) -> CGRect {
@@ -198,7 +205,7 @@ private extension MKTextField {
     }
     
     private func updateFloatingLabelText() {
-        floatingLabel.text = placeholder
+        floatingLabel.attributedText = attributedPlaceholder
         floatingLabel.sizeToFit()
         setFloatingLabelOverlapTextField()
     }
