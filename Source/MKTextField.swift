@@ -77,6 +77,13 @@ public class MKTextField : UITextField {
             updateFloatingLabelText()
         }
     }
+    
+    override public var attributedPlaceholder: NSAttributedString? {
+        didSet {
+            updateFloatingLabelText()
+        }
+    }
+    
     override public var bounds: CGRect {
         didSet {
             mkLayer.superLayerDidResize()
