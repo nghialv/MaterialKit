@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C5958881C2F5D91009CACE2 /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5958871C2F5D91009CACE2 /* TextViewController.swift */; };
+		3C59588C1C2F5E28009CACE2 /* MKTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C59588B1C2F5E28009CACE2 /* MKTextView.swift */; };
 		8667C0111A299B7200025664 /* MKLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8667C0101A299B7200025664 /* MKLabel.swift */; };
 		8667C0131A29A53100025664 /* uibaritem_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8667C0121A29A53100025664 /* uibaritem_icon.png */; };
 		866D96861A17B12500897451 /* icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 866D96841A17B12500897451 /* icon1.png */; };
@@ -42,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C5958871C2F5D91009CACE2 /* TextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
+		3C59588B1C2F5E28009CACE2 /* MKTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTextView.swift; sourceTree = "<group>"; };
 		8667C0101A299B7200025664 /* MKLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLabel.swift; sourceTree = "<group>"; };
 		8667C0121A29A53100025664 /* uibaritem_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uibaritem_icon.png; sourceTree = "<group>"; };
 		866D96841A17B12500897451 /* icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1.png; sourceTree = "<group>"; };
@@ -88,6 +92,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C5958861C2F5D64009CACE2 /* TextView Example */ = {
+			isa = PBXGroup;
+			children = (
+				3C5958871C2F5D91009CACE2 /* TextViewController.swift */,
+			);
+			name = "TextView Example";
+			sourceTree = "<group>";
+		};
 		861DB20C1A20581D00CA47EB /* Button Example */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +174,7 @@
 				86EA09641A298A2D008EDEF8 /* BarButtonItem */,
 				861DB20D1A20582C00CA47EB /* TextField Example */,
 				861DB20C1A20581D00CA47EB /* Button Example */,
+				3C5958861C2F5D64009CACE2 /* TextView Example */,
 				8C4D639A1A160C95003629F6 /* Images.xcassets */,
 				8C4D639C1A160C95003629F6 /* LaunchScreen.xib */,
 				8C4D63911A160C95003629F6 /* Supporting Files */,
@@ -204,6 +217,7 @@
 				86EA09671A29990D008EDEF8 /* MKImageView.swift */,
 				86FE3A361A1788FF004A0CD5 /* MKLayer.swift */,
 				8C780DD61A16209200C9DEB9 /* MKColor.swift */,
+				3C59588B1C2F5E28009CACE2 /* MKTextView.swift */,
 			);
 			name = Source;
 			path = ../../Source;
@@ -319,8 +333,10 @@
 				8C780DD31A16203100C9DEB9 /* MKButton.swift in Sources */,
 				8C780DD51A16205100C9DEB9 /* MKTextField.swift in Sources */,
 				86EA09681A29990D008EDEF8 /* MKImageView.swift in Sources */,
+				3C59588C1C2F5E28009CACE2 /* MKTextView.swift in Sources */,
 				86FE3A2F1A1755CF004A0CD5 /* TextFieldViewController.swift in Sources */,
 				86EA09661A298A6A008EDEF8 /* BarButtonItemViewController.swift in Sources */,
+				3C5958881C2F5D91009CACE2 /* TextViewController.swift in Sources */,
 				866D96891A17C21D00897451 /* TableViewController.swift in Sources */,
 				86FE3A351A178863004A0CD5 /* MKTableViewCell.swift in Sources */,
 				866D968B1A17CE2700897451 /* MyCell.swift in Sources */,
