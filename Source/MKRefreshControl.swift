@@ -11,12 +11,12 @@ import UIKit
 
 public class MKRefreshControl: UIControl {
 
-    private var parentScrollView: UIScrollView = UIScrollView()
-    private var animationView: UIView = UIView()
-    private var circleView: UIView = UIView()
-    private var progressPath: UIBezierPath = UIBezierPath()
-    private var progressLayer: CAShapeLayer = CAShapeLayer()
-    private var refreshBlock: (() -> Void) = {() -> Void in}
+    private var parentScrollView: UIScrollView!
+    private var animationView: UIView!
+    private var circleView: UIView!
+    private var progressPath: UIBezierPath!
+    private var progressLayer: CAShapeLayer!
+    private var refreshBlock: (() -> Void)!
     private var radius: CGFloat = 0
     private var rotation: CGFloat = 0
     private var rotationIncrement: CGFloat = 0
@@ -108,7 +108,9 @@ public class MKRefreshControl: UIControl {
     private func refresh() {
         self.refreshing = true
         self.sendActionsForControlEvents(.ValueChanged)
-        self.refreshBlock()
+        if let refreshBlock = self.refreshBlock {
+            refreshBlock()
+        }
         self.startRefreshing()
     }
     
