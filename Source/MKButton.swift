@@ -16,9 +16,17 @@ public class MKButton : UIButton
             mkLayer.enableMask(maskEnabled)
         }
     }
-    @IBInspectable public var rippleLocation: MKRippleLocation = .TapLocation {
+    public var rippleLocation: MKRippleLocation = .TapLocation {
         didSet {
             mkLayer.rippleLocation = rippleLocation
+        }
+    }
+    @IBInspectable public var rippleLocationAdapter: Int {
+        get {
+            return rippleLocation.rawValue
+        }
+        set(index) {
+            rippleLocation = MKRippleLocation(rawValue: index) ?? .TapLocation
         }
     }
     @IBInspectable public var ripplePercent: Float = 0.9 {
@@ -44,9 +52,9 @@ public class MKButton : UIButton
     @IBInspectable public var backgroundAniDuration: Float = 1.0
     @IBInspectable public var shadowAniDuration: Float = 0.65
     
-    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var shadowAniTimingFunction: MKTimingFunction = .EaseOut
+    public var rippleAniTimingFunction: MKTimingFunction = .Linear
+    public var backgroundAniTimingFunction: MKTimingFunction = .Linear
+    public var shadowAniTimingFunction: MKTimingFunction = .EaseOut
 
     @IBInspectable public var cornerRadius: CGFloat = 2.5 {
         didSet {

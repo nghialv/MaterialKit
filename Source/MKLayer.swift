@@ -29,11 +29,11 @@ public enum MKTimingFunction {
     }
 }
 
-public enum MKRippleLocation {
-    case Center
-    case Left
-    case Right
-    case TapLocation
+public enum MKRippleLocation: Int {
+    case Center = 0
+    case Left = 1
+    case Right = 2
+    case TapLocation = 3
 }
 
 public class MKLayer {
