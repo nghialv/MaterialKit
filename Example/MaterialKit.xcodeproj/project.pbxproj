@@ -29,6 +29,7 @@
 		8C780DD31A16203100C9DEB9 /* MKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C780DD21A16203100C9DEB9 /* MKButton.swift */; };
 		8C780DD51A16205100C9DEB9 /* MKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C780DD41A16205100C9DEB9 /* MKTextField.swift */; };
 		8C780DD71A16209200C9DEB9 /* MKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C780DD61A16209200C9DEB9 /* MKColor.swift */; };
+		9006BDD71C47BAD10010B625 /* MKSnackbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9006BDD61C47BAD10010B625 /* MKSnackbar.swift */; };
 		9064CFD91BF2775E003E5D62 /* MKRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9064CFD81BF2775E003E5D62 /* MKRefreshControl.swift */; };
 		907589831BEA696E0025DC73 /* MKCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9075897F1BEA696E0025DC73 /* MKCardView.swift */; };
 		907589851BEA696E0025DC73 /* MKNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907589811BEA696E0025DC73 /* MKNavigationBar.swift */; };
@@ -72,6 +73,7 @@
 		8C780DD21A16203100C9DEB9 /* MKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKButton.swift; sourceTree = "<group>"; };
 		8C780DD41A16205100C9DEB9 /* MKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTextField.swift; sourceTree = "<group>"; };
 		8C780DD61A16209200C9DEB9 /* MKColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKColor.swift; sourceTree = "<group>"; };
+		9006BDD61C47BAD10010B625 /* MKSnackbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKSnackbar.swift; sourceTree = "<group>"; };
 		9064CFD81BF2775E003E5D62 /* MKRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKRefreshControl.swift; sourceTree = "<group>"; };
 		9075897F1BEA696E0025DC73 /* MKCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKCardView.swift; sourceTree = "<group>"; };
 		907589811BEA696E0025DC73 /* MKNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKNavigationBar.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				86FE3A361A1788FF004A0CD5 /* MKLayer.swift */,
 				8C780DD61A16209200C9DEB9 /* MKColor.swift */,
 				9064CFD81BF2775E003E5D62 /* MKRefreshControl.swift */,
+				9006BDD61C47BAD10010B625 /* MKSnackbar.swift */,
 			);
 			name = Source;
 			path = ../../Source;
@@ -336,6 +339,7 @@
 				86FE3A2F1A1755CF004A0CD5 /* TextFieldViewController.swift in Sources */,
 				86EA09661A298A6A008EDEF8 /* BarButtonItemViewController.swift in Sources */,
 				866D96891A17C21D00897451 /* TableViewController.swift in Sources */,
+				9006BDD71C47BAD10010B625 /* MKSnackbar.swift in Sources */,
 				86FE3A351A178863004A0CD5 /* MKTableViewCell.swift in Sources */,
 				866D968B1A17CE2700897451 /* MyCell.swift in Sources */,
 				8667C0111A299B7200025664 /* MKLabel.swift in Sources */,

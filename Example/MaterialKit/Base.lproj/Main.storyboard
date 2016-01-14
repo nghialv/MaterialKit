@@ -142,6 +142,9 @@
                                         <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="cardViewClicked:" destination="gW2-cv-UYc" eventType="touchUpInside" id="2r1-Mn-q3F"/>
+                                </connections>
                             </view>
                         </subviews>
                         <animations/>
