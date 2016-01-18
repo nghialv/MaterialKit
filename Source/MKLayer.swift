@@ -29,8 +29,8 @@ public enum MKTimingFunction {
     }
 }
 
-public enum MKRippleLocation {
-    case Center
+public enum MKRippleLocation: Int {
+    case Center = 0
     case Left
     case Right
     case TapLocation

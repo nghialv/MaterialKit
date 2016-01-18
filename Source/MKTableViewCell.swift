@@ -9,14 +9,22 @@
 import UIKit
 
 public class MKTableViewCell : UITableViewCell {
-    @IBInspectable public var rippleLocation: MKRippleLocation = .TapLocation {
+    public var rippleLocation: MKRippleLocation = .TapLocation {
         didSet {
             mkLayer.rippleLocation = rippleLocation
         }
     }
+    @IBInspectable public var rippleLocationAdapter: Int {
+        get {
+            return rippleLocation.rawValue
+        }
+        set(index) {
+            rippleLocation = MKRippleLocation(rawValue: index) ?? .TapLocation
+        }
+    }
     @IBInspectable public var rippleAniDuration: Float = 0.75
     @IBInspectable public var backgroundAniDuration: Float = 1.0
-    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
+    public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var shadowAniEnabled: Bool = true
 
     // color
