@@ -46,6 +46,18 @@ public class MKCardView: UIControl {
         }
     }
     
+    @IBInspectable public var shadowOffset: CGSize = CGSizeZero {
+        didSet {
+            drawShadow()
+        }
+    }
+    
+    @IBInspectable public var roundingCorners: UIRectCorner = UIRectCorner.AllCorners {
+        didSet {
+            drawShadow()
+        }
+    }
+    
     @IBInspectable public var maskEnabled: Bool = false {
         didSet {
             mkLayer.enableMask(maskEnabled)
@@ -103,12 +115,18 @@ public class MKCardView: UIControl {
     
     private func drawShadow() {
         if elevation > 0 {
-            let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+            let shadowPath = UIBezierPath(
+                roundedRect: bounds,
+                byRoundingCorners: roundingCorners,
+                cornerRadii: CGSize(
+                    width: cornerRadius,
+                    height: cornerRadius)
+            )
             layer.masksToBounds = false
             layer.cornerRadius = cornerRadius
             layer.shadowRadius = elevation
             layer.shadowColor = UIColor.blackColor().CGColor
-            layer.shadowOffset = CGSize(width: 1, height: 1);
+            layer.shadowOffset = shadowOffset
             layer.shadowOpacity = shadowOpacity
             layer.shadowPath = shadowPath.CGPath
         }
