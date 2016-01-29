@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Nz2-bn-2Jh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Nz2-bn-2Jh">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -67,24 +67,6 @@
                                     <segue destination="dgb-3A-4h0" kind="show" id="DgS-SL-NkY"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgH-fo-Ey9" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="97" y="124" width="180" height="45"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.20392156859999999" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                <state key="normal" title="MKButton">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="3"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="show" id="PRJ-go-jn1"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d7L-Oy-Zhc" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
                                 <rect key="frame" x="97" y="256" width="180" height="45"/>
                                 <animations/>
@@ -122,13 +104,13 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a0t-tT-v1W" customClass="MKCardView" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="67" y="417" width="240" height="128"/>
+                                <rect key="frame" x="67" y="472" width="240" height="128"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Card View" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3u2-L7-nLE" customClass="MKLabel" customModule="MaterialKit" customModuleProvider="target">
                                         <rect key="frame" x="79" y="53" width="83" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -146,6 +128,32 @@
                                     <action selector="cardViewClicked:" destination="gW2-cv-UYc" eventType="touchUpInside" id="2r1-Mn-q3F"/>
                                 </connections>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="77t-mr-STQ" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
+                                <rect key="frame" x="97" y="398" width="180" height="47"/>
+                                <animations/>
+                                <state key="normal" title="MKSwitch"/>
+                                <connections>
+                                    <segue destination="Mst-SP-zeQ" kind="show" id="Cdu-D3-SWZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgH-fo-Ey9" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
+                                <rect key="frame" x="97" y="94" width="180" height="45"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.20392156859999999" green="0.50196078430000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="MKButton">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="show" id="PRJ-go-jn1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -223,6 +231,51 @@
             </objects>
             <point key="canvasLocation" x="521.5" y="644.5"/>
         </scene>
+        <!--MKSwitch-->
+        <scene sceneID="uNA-h3-YpC">
+            <objects>
+                <viewController id="Mst-SP-zeQ" customClass="SwitchViewController" customModule="MaterialKit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PoC-b6-mJ3"/>
+                        <viewControllerLayoutGuide type="bottom" id="hI4-bO-dmE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uox-VO-KHd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hva-cd-ZcE" customClass="MKSwitch" customModule="MaterialKit" customModuleProvider="target">
+                                <rect key="frame" x="147" y="314" width="80" height="40"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="EyX-XM-IUu"/>
+                                    <constraint firstAttribute="height" constant="40" id="UGh-Vp-deC"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="enabled" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="on" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Hva-cd-ZcE" firstAttribute="centerY" secondItem="uox-VO-KHd" secondAttribute="centerY" id="Onj-hU-aTA"/>
+                            <constraint firstItem="Hva-cd-ZcE" firstAttribute="top" secondItem="PoC-b6-mJ3" secondAttribute="bottom" constant="39" id="ohS-xG-QOh"/>
+                            <constraint firstItem="Hva-cd-ZcE" firstAttribute="centerX" secondItem="uox-VO-KHd" secondAttribute="centerX" id="xVc-I1-jFy"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="ohS-xG-QOh"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="MKSwitch" id="KFp-vK-Ky9"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X3Y-zm-4Ag" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-411.5" y="1821.5"/>
+        </scene>
         <!--Bar Button Item View Controller-->
         <scene sceneID="WgR-pI-C72">
             <objects>
@@ -243,7 +296,7 @@
                                 <rect key="frame" x="153" y="0.0" width="68" height="20"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="npW-gx-EJH" customClass="MKActivityIndicator" customModule="MaterialKit" customModuleProvider="target">

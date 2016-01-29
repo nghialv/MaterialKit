@@ -21,11 +21,6 @@ public class MKButton : UIButton
             mkLayer.rippleLocation = rippleLocation
         }
     }
-    @IBInspectable public var ripplePercent: Float = 0.9 {
-        didSet {
-            mkLayer.ripplePercent = ripplePercent
-        }
-    }
     @IBInspectable public var cornerRadius: CGFloat = 0 {
         didSet {
             self.layer.cornerRadius = self.cornerRadius
@@ -49,15 +44,13 @@ public class MKButton : UIButton
     }
     
     // animations
-    @IBInspectable public var shadowAniEnabled: Bool = true
-    @IBInspectable public var rippleAniDuration: Float = 0.35
-    @IBInspectable public var backgroundAniDuration: Float = 1.0
-    @IBInspectable public var shadowAniDuration: Float = 0.35
+    @IBInspectable public var shadowAnimationEnabled: Bool = true
+    @IBInspectable public var rippleAnimationDuration: Float = 0.35
+    @IBInspectable public var shadowAnimationDuration: Float = 0.35
     
-    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var shadowAniTimingFunction: MKTimingFunction = .EaseOut
-
+    @IBInspectable public var rippleAnimationTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable public var shadowAnimationTimingFunction: MKTimingFunction = .EaseOut
+    
     // color
     @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0) {
         didSet {
@@ -70,15 +63,15 @@ public class MKButton : UIButton
             mkLayer.superLayerDidResize()
         }
     }
-
+    
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
-
+    
     // MARK - initilization
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setupLayer()
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupLayer()
@@ -98,12 +91,12 @@ public class MKButton : UIButton
             layer.cornerRadius = cornerRadius
             layer.shadowRadius = elevation
             layer.shadowColor = UIColor.blackColor().CGColor
-            layer.shadowOffset = CGSize(width: 1, height: 1);
+            layer.shadowOffset = CGSize(width: 1, height: 1) ;
             layer.shadowOpacity = shadowOpacity
             layer.shadowPath = shadowPath.CGPath
         }
     }
-
+    
     // MARK - location tracking methods
     override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
         if !super.beginTrackingWithTouch(touch, withEvent: event) {
@@ -114,18 +107,24 @@ public class MKButton : UIButton
         if rippleLocation == .TapLocation {
             mkLayer.didChangeTapLocation(touch.locationInView(self))
         }
-
+        
         // rippleLayer animation
-        mkLayer.animateRipple(rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
-
+        mkLayer.animateRipple(rippleAnimationTimingFunction, duration: CFTimeInterval(self.rippleAnimationDuration))
+        
         // shadow animation for self
-        if shadowAniEnabled {
+        if shadowAnimationEnabled {
             let shadowRadius = layer.shadowRadius
             let shadowOpacity = layer.shadowOpacity
-            let duration = CFTimeInterval(shadowAniDuration)
-            mkLayer.animateSuperLayerShadow(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, timingFunction: shadowAniTimingFunction, duration: duration)
+            let duration = CFTimeInterval(shadowAnimationDuration)
+            mkLayer.animateSuperLayerShadow(
+                10,
+                toRadius: shadowRadius,
+                fromOpacity: 0,
+                toOpacity: shadowOpacity,
+                timingFunction: shadowAnimationTimingFunction,
+                duration: duration)
         }
-
+        
         return true
     }
     

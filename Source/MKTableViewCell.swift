@@ -14,10 +14,8 @@ public class MKTableViewCell : UITableViewCell {
             mkLayer.rippleLocation = rippleLocation
         }
     }
-    @IBInspectable public var rippleAniDuration: Float = 0.35
-    @IBInspectable public var backgroundAniDuration: Float = 1.0
-    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var shadowAniEnabled: Bool = true
+    @IBInspectable public var rippleAnimationDuration: Float = 0.35
+    @IBInspectable public var rippleAnimationTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var rippleAnimationEnabled = true {
         didSet {
             mkLayer.setRippleAnimation(self.rippleAnimationEnabled)
@@ -30,10 +28,10 @@ public class MKTableViewCell : UITableViewCell {
             mkLayer.setCircleLayerColor(rippleLayerColor)
         }
     }
-
+    
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.contentView.layer)
     private var contentViewResized = false
-
+    
     override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
@@ -42,13 +40,12 @@ public class MKTableViewCell : UITableViewCell {
         super.init(coder: aDecoder)
         setupLayer()
     }
-
+    
     private func setupLayer() {
         selectionStyle = .None
         mkLayer.setCircleLayerColor(rippleLayerColor)
-        mkLayer.ripplePercent = 1.2
     }
-
+    
     public override func prepareForReuse() {
         super.prepareForReuse()
         self.mkLayer.removeAllAnimations()
@@ -62,9 +59,7 @@ public class MKTableViewCell : UITableViewCell {
                 contentViewResized = true
             }
             mkLayer.didChangeTapLocation(firstTouch.locationInView(contentView))
-
-            mkLayer.animateRipple(rippleAniTimingFunction, duration: CFTimeInterval(rippleAniDuration))
-            mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: CFTimeInterval(backgroundAniDuration))
+            mkLayer.animateRipple(rippleAnimationTimingFunction, duration: CFTimeInterval(rippleAnimationDuration))
         }
     }
     

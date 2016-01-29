@@ -21,10 +21,8 @@ public class MKImageView: UIImageView
             mkLayer.rippleLocation = rippleLocation
         }
     }
-    @IBInspectable public var rippleAniDuration: Float = 0.35
-    @IBInspectable public var backgroundAniDuration: Float = 1.0
-    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable public var rippleAnimationDuration: Float = 0.35
+    @IBInspectable public var rippleAnimationTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var cornerRadius: CGFloat = 0 {
         didSet {
             self.layer.cornerRadius = self.cornerRadius
@@ -43,50 +41,48 @@ public class MKImageView: UIImageView
             mkLayer.setCircleLayerColor(rippleLayerColor)
         }
     }
-
+    
     override public var bounds: CGRect {
         didSet {
             mkLayer.superLayerDidResize()
         }
     }
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-
+    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-
+    
     override public init(image: UIImage?) {
         super.init(image: image)
         setup()
     }
-
+    
     override public init(image: UIImage?, highlightedImage: UIImage?) {
         super.init(image: image, highlightedImage: highlightedImage)
         setup()
     }
-
+    
     private func setup() {
         self.clipsToBounds = true
         mkLayer.setCircleLayerColor(rippleLayerColor)
     }
-
+    
     public func animateRipple(location: CGPoint? = nil) {
         if let point = location {
             mkLayer.didChangeTapLocation(point)
         } else if rippleLocation == .TapLocation {
             rippleLocation = .Center
         }
-
-        mkLayer.animateRipple(rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
-        mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(self.backgroundAniDuration))
+        mkLayer.animateRipple(rippleAnimationTimingFunction, duration: CFTimeInterval(self.rippleAnimationDuration))
     }
-
+    
     override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
         if let firstTouch = touches.first {

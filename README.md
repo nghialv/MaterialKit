@@ -136,12 +136,15 @@ A custom UINavigationBar which supports elevation and adding a tint above itself
 - Customizable attributes: color, dark color, elevation, shadow opacity, tint color...
 - Set the class of the navigation bar in the storyboard designer to MKNavigationBar and set the custom properties
 
+### MKSwitch
+On/off switches toggle the state of a single settings option. The option that the switch controls, as well as the state it’s in, should be made clear from the corresponding inline label. Switches take on the same visual properties of the radio button.
+
 Installation
 -----
 * Installation with CocoaPods
 
 ```
-	pod 'MaterialKit'
+	pod 'MaterialKit', :git => 'https://github.com/rahuliyer95/MaterialKit.git'
 ```
 
 * Copying all the files into your project
@@ -149,7 +152,7 @@ Installation
 
 Requirements
 -----
-- iOS 7.0+
+- iOS 8.0+
 - Xcode 6.1
 
 License

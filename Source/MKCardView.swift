@@ -68,10 +68,8 @@ public class MKCardView: UIControl {
             mkLayer.rippleLocation = rippleLocation
         }
     }
-    @IBInspectable public var rippleAniDuration: Float = 0.35
-    @IBInspectable public var backgroundAniDuration: Float = 1.0
-    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
+    @IBInspectable public var rippleAnimationDuration: Float = 0.35
+    @IBInspectable public var rippleAnimationTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var rippleAnimationEnabled = true {
         didSet {
             mkLayer.setRippleAnimation(self.rippleAnimationEnabled)
@@ -139,8 +137,9 @@ public class MKCardView: UIControl {
             rippleLocation = .Center
         }
         
-        mkLayer.animateRipple(rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
-        mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(self.backgroundAniDuration))
+        mkLayer.animateRipple(
+            rippleAnimationTimingFunction,
+            duration: CFTimeInterval(self.rippleAnimationDuration))
     }
     
     // MARK - location tracking methods
@@ -155,7 +154,9 @@ public class MKCardView: UIControl {
         }
         
         // rippleLayer animation
-        mkLayer.animateRipple(rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
+        mkLayer.animateRipple(
+            rippleAnimationTimingFunction,
+            duration: CFTimeInterval(self.rippleAnimationDuration))
         
         return true
     }

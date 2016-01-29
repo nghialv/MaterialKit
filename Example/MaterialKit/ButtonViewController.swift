@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 
 class ButtonViewController: UIViewController {
-
+    
     @IBOutlet var raisedButton: MKButton!
     
     @IBOutlet var flatButton1: MKButton!
@@ -25,20 +25,17 @@ class ButtonViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-            
+        
         flatButton2.maskEnabled = true
-        flatButton2.ripplePercent = 0.5
         flatButton2.rippleLocation = .Center
         
         imageButton1.rippleLayerColor = UIColor.MKColor.DeepOrange
         imageButton1.maskEnabled = true
         
-        imageButton2.ripplePercent = 1.2
         imageButton2.rippleLocation = .Center
         
         floatButton1.cornerRadius = 40.0
         floatButton1.maskEnabled = true
-        floatButton1.ripplePercent = 1.75
         floatButton1.rippleLocation = .Center
         
         floatButton1.layer.shadowOpacity = 0.75
@@ -52,7 +49,7 @@ class ButtonViewController: UIViewController {
         floatButton2.layer.shadowColor = UIColor.blackColor().CGColor
         floatButton2.layer.shadowOffset = CGSize(width: 1.0, height: 5.5)
     }
-
+    
     func buttonPressed() {
         print("Button pressed")
     }
@@ -61,7 +58,7 @@ class ButtonViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
 }
 

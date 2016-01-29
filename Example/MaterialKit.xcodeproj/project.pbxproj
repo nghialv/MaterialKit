@@ -34,6 +34,8 @@
 		907589831BEA696E0025DC73 /* MKCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9075897F1BEA696E0025DC73 /* MKCardView.swift */; };
 		907589851BEA696E0025DC73 /* MKNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907589811BEA696E0025DC73 /* MKNavigationBar.swift */; };
 		907589861BEA696E0025DC73 /* MKActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907589821BEA696E0025DC73 /* MKActivityIndicator.swift */; };
+		90F956281C5B43220056B976 /* MKSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F956271C5B43220056B976 /* MKSwitch.swift */; };
+		90F9562B1C5B54D20056B976 /* SwitchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F9562A1C5B54D20056B976 /* SwitchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 		9075897F1BEA696E0025DC73 /* MKCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKCardView.swift; sourceTree = "<group>"; };
 		907589811BEA696E0025DC73 /* MKNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKNavigationBar.swift; sourceTree = "<group>"; };
 		907589821BEA696E0025DC73 /* MKActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKActivityIndicator.swift; sourceTree = "<group>"; };
+		90F956271C5B43220056B976 /* MKSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKSwitch.swift; sourceTree = "<group>"; };
+		90F9562A1C5B54D20056B976 /* SwitchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +176,7 @@
 				86EA09641A298A2D008EDEF8 /* BarButtonItem */,
 				861DB20D1A20582C00CA47EB /* TextField Example */,
 				861DB20C1A20581D00CA47EB /* Button Example */,
+				90F956291C5B54BA0056B976 /* Switch Example */,
 				8C4D639A1A160C95003629F6 /* Images.xcassets */,
 				8C4D639C1A160C95003629F6 /* LaunchScreen.xib */,
 				8C4D63911A160C95003629F6 /* Supporting Files */,
@@ -219,9 +224,18 @@
 				8C780DD61A16209200C9DEB9 /* MKColor.swift */,
 				9064CFD81BF2775E003E5D62 /* MKRefreshControl.swift */,
 				9006BDD61C47BAD10010B625 /* MKSnackbar.swift */,
+				90F956271C5B43220056B976 /* MKSwitch.swift */,
 			);
 			name = Source;
 			path = ../../Source;
+			sourceTree = "<group>";
+		};
+		90F956291C5B54BA0056B976 /* Switch Example */ = {
+			isa = PBXGroup;
+			children = (
+				90F9562A1C5B54D20056B976 /* SwitchViewController.swift */,
+			);
+			name = "Switch Example";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,8 +348,10 @@
 				8C780DD31A16203100C9DEB9 /* MKButton.swift in Sources */,
 				8C780DD51A16205100C9DEB9 /* MKTextField.swift in Sources */,
 				907589831BEA696E0025DC73 /* MKCardView.swift in Sources */,
+				90F956281C5B43220056B976 /* MKSwitch.swift in Sources */,
 				907589861BEA696E0025DC73 /* MKActivityIndicator.swift in Sources */,
 				86EA09681A29990D008EDEF8 /* MKImageView.swift in Sources */,
+				90F9562B1C5B54D20056B976 /* SwitchViewController.swift in Sources */,
 				86FE3A2F1A1755CF004A0CD5 /* TextFieldViewController.swift in Sources */,
 				86EA09661A298A6A008EDEF8 /* BarButtonItemViewController.swift in Sources */,
 				866D96891A17C21D00897451 /* TableViewController.swift in Sources */,
