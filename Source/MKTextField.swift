@@ -13,34 +13,70 @@ import QuartzCore
 public class MKTextField : UITextField {
     @IBInspectable public var padding: CGSize = CGSize(width: 5, height: 5)
     @IBInspectable public var floatingLabelBottomMargin: CGFloat = 2.0
-    @IBInspectable public var floatingPlaceholderEnabled: Bool = false
-    
-    @IBInspectable public var rippleLocation: MKRippleLocation = .TapLocation {
+    @IBInspectable public var floatingPlaceholderEnabled: Bool = false {
         didSet {
-            mkLayer.rippleLocation = rippleLocation
+            self.updateFloatingLabelText()
         }
     }
-    
-    @IBInspectable public var rippleAnimationDuration: Float = 0.35
-    @IBInspectable public var rippleAnimationTimingFunction: MKTimingFunction = .Linear
+
+    @IBInspectable public var maskEnabled: Bool = true {
+        didSet {
+            mkLayer.maskEnabled = maskEnabled
+        }
+    }
+    @IBInspectable public var cornerRadius: CGFloat = 0 {
+        didSet {
+            self.layer.cornerRadius = self.cornerRadius
+            mkLayer.superLayerDidResize()
+        }
+    }
     @IBInspectable public var elevation: CGFloat = 0 {
         didSet {
-            drawShadow()
+            mkLayer.elevation = elevation
         }
     }
-    @IBInspectable public var shadowOpacity: Float = 0.5 {
+    @IBInspectable public var shadowOffset: CGSize = CGSizeZero {
         didSet {
-            drawShadow()
+            mkLayer.shadowOffset = shadowOffset
         }
     }
-    
-    // color
+    @IBInspectable public var roundingCorners: UIRectCorner = UIRectCorner.AllCorners {
+        didSet {
+            mkLayer.roundingCorners = roundingCorners
+        }
+    }
+    @IBInspectable public var rippleEnabled = true {
+        didSet {
+            mkLayer.rippleEnabled = rippleEnabled
+        }
+    }
+    @IBInspectable public var rippleDuration: CFTimeInterval = 0.5 {
+        didSet {
+            mkLayer.rippleDuration = rippleDuration
+        }
+    }
+    @IBInspectable public var rippleScaleRatio: CGFloat = 1.0 {
+        didSet {
+            mkLayer.rippleScaleRatio = rippleScaleRatio
+        }
+    }
     @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0) {
         didSet {
-            mkLayer.setCircleLayerColor(rippleLayerColor)
+            mkLayer.setRippleColor(rippleLayerColor)
         }
     }
-    
+    @IBInspectable public var backgroundAnimationEnabled: Bool = true {
+        didSet {
+            mkLayer.backgroundAnimationEnabled = backgroundAnimationEnabled
+        }
+    }
+
+    override public var bounds: CGRect {
+        didSet {
+            mkLayer.superLayerDidResize()
+        }
+    }
+
     // floating label
     @IBInspectable public var floatingLabelFont: UIFont = UIFont.boldSystemFontOfSize(10.0) {
         didSet {
@@ -52,7 +88,7 @@ public class MKTextField : UITextField {
             floatingLabel.textColor = floatingLabelTextColor
         }
     }
-    
+
     @IBInspectable public var bottomBorderEnabled: Bool = true {
         didSet {
             bottomBorderLayer?.removeFromSuperlayer()
@@ -60,7 +96,7 @@ public class MKTextField : UITextField {
             if bottomBorderEnabled {
                 bottomBorderLayer = CALayer()
                 bottomBorderLayer?.frame = CGRect(x: 0, y: layer.bounds.height - 1, width: bounds.width, height: 1)
-                bottomBorderLayer?.backgroundColor = UIColor.MKColor.Grey.CGColor
+                bottomBorderLayer?.backgroundColor = UIColor.MKColor.Grey.P500.CGColor
                 layer.addSublayer(bottomBorderLayer!)
             }
         }
@@ -74,88 +110,61 @@ public class MKTextField : UITextField {
         }
     }
     @IBInspectable public var bottomBorderHighlightWidth: CGFloat = 1.75
-    @IBInspectable public var cornerRadius: CGFloat = 0 {
-        didSet {
-            self.layer.cornerRadius = self.cornerRadius
-            mkLayer.setCornerRadius(self.cornerRadius)
-        }
-    }
-    @IBInspectable public var rippleAnimationEnabled = true {
-        didSet {
-            mkLayer.setRippleAnimation(self.rippleAnimationEnabled)
-        }
-    }
-    
-    override public var bounds: CGRect {
-        didSet {
-            mkLayer.superLayerDidResize()
-        }
-    }
     override public var attributedPlaceholder: NSAttributedString? {
         didSet {
             updateFloatingLabelText()
         }
     }
-    
-    private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
+
+    private lazy var mkLayer: MKLayer = MKLayer(withView: self)
     private var floatingLabel: UILabel!
     private var bottomBorderLayer: CALayer?
-    
+
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setupLayer()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupLayer()
     }
-    
+
     private func setupLayer() {
+        mkLayer.elevation = self.elevation
+        self.layer.cornerRadius = self.cornerRadius
+        mkLayer.elevationOffset = self.shadowOffset
+        mkLayer.roundingCorners = self.roundingCorners
+        mkLayer.maskEnabled = self.maskEnabled
+        mkLayer.rippleScaleRatio = self.rippleScaleRatio
+        mkLayer.rippleDuration = self.rippleDuration
+        mkLayer.rippleEnabled = self.rippleEnabled
+        mkLayer.backgroundAnimationEnabled = self.backgroundAnimationEnabled
+        mkLayer.setRippleColor(self.rippleLayerColor)
+
         layer.borderWidth = 1.0
         borderStyle = .None
-        mkLayer.setCircleLayerColor(rippleLayerColor)
-        
+
         // floating label
         floatingLabel = UILabel()
         floatingLabel.font = floatingLabelFont
         floatingLabel.alpha = 0.0
         updateFloatingLabelText()
-        
+
         addSubview(floatingLabel)
-        drawShadow()
     }
-    
-    private func drawShadow() {
-        if elevation > 0 {
-            let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
-            layer.masksToBounds = false
-            layer.cornerRadius = cornerRadius
-            layer.shadowRadius = elevation
-            layer.shadowColor = UIColor.blackColor().CGColor
-            layer.shadowOffset = CGSize(width: 1, height: 1)
-            layer.shadowOpacity = shadowOpacity
-            layer.shadowPath = shadowPath.CGPath
-        }
-    }
-    
-    override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
-        mkLayer.didChangeTapLocation(touch.locationInView(self))
-        mkLayer.animateRipple(MKTimingFunction.Linear, duration: CFTimeInterval(self.rippleAnimationDuration))
-        return super.beginTrackingWithTouch(touch, withEvent: event)
-    }
-    
+
     override public func layoutSubviews() {
         super.layoutSubviews()
-        
+
         bottomBorderLayer?.backgroundColor = isFirstResponder() ? tintColor.CGColor : bottomBorderColor.CGColor
         let borderWidth = isFirstResponder() ? bottomBorderHighlightWidth : bottomBorderWidth
         bottomBorderLayer?.frame = CGRect(x: 0, y: layer.bounds.height - borderWidth, width: layer.bounds.width, height: borderWidth)
-        
+
         if !floatingPlaceholderEnabled {
             return
         }
-        
+
         if let text = text where text.isEmpty == false {
             floatingLabel.textColor = isFirstResponder() ? tintColor : floatingLabelTextColor
             if floatingLabel.alpha == 0 {
@@ -165,36 +174,47 @@ public class MKTextField : UITextField {
             hideFloatingLabel()
         }
     }
-    
+
     override public func textRectForBounds(bounds: CGRect) -> CGRect {
         let rect = super.textRectForBounds(bounds)
         var newRect = CGRect(x: rect.origin.x + padding.width, y: rect.origin.y,
             width: rect.size.width - 2 * padding.width, height: rect.size.height)
-        
+
         if !floatingPlaceholderEnabled {
             return newRect
         }
-        
+
         if let text = text where text.isEmpty == false {
             let dTop = floatingLabel.font.lineHeight + floatingLabelBottomMargin
             newRect = UIEdgeInsetsInsetRect(newRect, UIEdgeInsets(top: dTop, left: 0.0, bottom: 0.0, right: 0.0))
         }
-        
+
         return newRect
     }
-    
+
     override public func editingRectForBounds(bounds: CGRect) -> CGRect {
         return textRectForBounds(bounds)
     }
-    
+
+    // MARK: Touch
+    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesBegan(touches, withEvent: event)
+        mkLayer.touchesBegan(touches, withEvent: event)
+    }
+
     public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesEnded(touches, withEvent: event)
-        mkLayer.removeAllAnimations()
+        mkLayer.touchesEnded(touches, withEvent: event)
     }
-    
+
     public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         super.touchesCancelled(touches, withEvent: event)
-        mkLayer.removeAllAnimations()
+        mkLayer.touchesCancelled(touches, withEvent: event)
+    }
+
+    public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesMoved(touches, withEvent: event)
+        mkLayer.touchesMoved(touches, withEvent: event)
     }
 }
 
@@ -214,7 +234,7 @@ private extension MKTextField {
         floatingLabel.frame = CGRect(x: originX, y: padding.height,
             width: floatingLabel.frame.size.width, height: floatingLabel.frame.size.height)
     }
-    
+
     private func showFloatingLabel() {
         let curFrame = floatingLabel.frame
         floatingLabel.frame = CGRect(x: curFrame.origin.x, y: bounds.height / 2, width: curFrame.width, height: curFrame.height)
@@ -224,11 +244,11 @@ private extension MKTextField {
                 self.floatingLabel.frame = curFrame
             }, completion: nil)
     }
-    
+
     private func hideFloatingLabel() {
         floatingLabel.alpha = 0.0
     }
-    
+
     private func updateFloatingLabelText() {
         floatingLabel.attributedText = attributedPlaceholder
         floatingLabel.sizeToFit()

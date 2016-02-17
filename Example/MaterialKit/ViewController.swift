@@ -9,14 +9,29 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+
+    override func viewWillAppear(animated: Bool) {
+        let hamburgerButton = MKButton(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
+        hamburgerButton.setImage(UIImage(named: "uibaritem_icon.png"), forState: .Normal)
+        hamburgerButton.maskEnabled = false
+        hamburgerButton.backgroundAnimationEnabled = false
+        hamburgerButton.addTarget(self, action: Selector("toggleDrawer"), forControlEvents: UIControlEvents.TouchUpInside)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: hamburgerButton)
+    }
+
+    func toggleDrawer() {
+        if let sideDrawerViewController = self.sideDrawerViewController {
+            sideDrawerViewController.toggleDrawer()
+        }
+    }
+
     @IBAction func cardViewClicked(sender: AnyObject) {
         let snackbar = MKSnackbar(
             withTitle: "You clicked on CardView\nThis is a SnackBar :)",
             withDuration: nil,
             withTitleColor: nil,
             withActionButtonTitle: "Done",
-            withActionButtonColor: UIColor.MKColor.Blue)
+            withActionButtonColor: UIColor.MKColor.Red.P100)
         snackbar.show()
     }
 }

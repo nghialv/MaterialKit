@@ -11,130 +11,110 @@ import UIKit
 @IBDesignable
 public class MKButton : UIButton
 {
-    @IBInspectable public var maskEnabled: Bool = false {
+    @IBInspectable public var maskEnabled: Bool = true {
         didSet {
-            mkLayer.enableMask(maskEnabled)
-        }
-    }
-    @IBInspectable public var rippleLocation: MKRippleLocation = .TapLocation {
-        didSet {
-            mkLayer.rippleLocation = rippleLocation
+            mkLayer.maskEnabled = maskEnabled
         }
     }
     @IBInspectable public var cornerRadius: CGFloat = 0 {
         didSet {
             self.layer.cornerRadius = self.cornerRadius
-            mkLayer.setCornerRadius(self.cornerRadius)
+            mkLayer.superLayerDidResize()
         }
     }
     @IBInspectable public var elevation: CGFloat = 0 {
         didSet {
-            drawShadow()
+            mkLayer.elevation = elevation
         }
     }
-    @IBInspectable public var shadowOpacity: Float = 0.5 {
+    @IBInspectable public var shadowOffset: CGSize = CGSizeZero {
         didSet {
-            drawShadow()
+            mkLayer.shadowOffset = shadowOffset
         }
     }
-    @IBInspectable public var rippleAnimationEnabled = true {
+    @IBInspectable public var roundingCorners: UIRectCorner = UIRectCorner.AllCorners {
         didSet {
-            mkLayer.setRippleAnimation(self.rippleAnimationEnabled)
+            mkLayer.roundingCorners = roundingCorners
         }
     }
-    
-    // animations
-    @IBInspectable public var shadowAnimationEnabled: Bool = true
-    @IBInspectable public var rippleAnimationDuration: Float = 0.35
-    @IBInspectable public var shadowAnimationDuration: Float = 0.35
-    
-    @IBInspectable public var rippleAnimationTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var shadowAnimationTimingFunction: MKTimingFunction = .EaseOut
-    
-    // color
+    @IBInspectable public var rippleEnabled = true {
+        didSet {
+            mkLayer.rippleEnabled = rippleEnabled
+        }
+    }
+    @IBInspectable public var rippleDuration: CFTimeInterval = 0.5 {
+        didSet {
+            mkLayer.rippleDuration = rippleDuration
+        }
+    }
+    @IBInspectable public var rippleScaleRatio: CGFloat = 1.0 {
+        didSet {
+            mkLayer.rippleScaleRatio = rippleScaleRatio
+        }
+    }
     @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0) {
         didSet {
-            mkLayer.setCircleLayerColor(rippleLayerColor)
+            mkLayer.setRippleColor(rippleLayerColor)
         }
     }
-    
+    @IBInspectable public var backgroundAnimationEnabled: Bool = true {
+        didSet {
+            mkLayer.backgroundAnimationEnabled = backgroundAnimationEnabled
+        }
+    }
+
     override public var bounds: CGRect {
         didSet {
             mkLayer.superLayerDidResize()
         }
     }
-    
-    private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
-    
-    // MARK - initilization
+
+    private lazy var mkLayer: MKLayer = MKLayer(withView: self)
+
+    // MARK: Init
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setupLayer()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupLayer()
     }
-    
-    // MARK - setup methods
+
+    // MARK: Setup
     private func setupLayer() {
-        adjustsImageWhenHighlighted = false
-        mkLayer.setCircleLayerColor(rippleLayerColor)
-        drawShadow()
+        mkLayer = MKLayer(withView: self)
+        mkLayer.elevation = self.elevation
+        self.layer.cornerRadius = self.cornerRadius
+        mkLayer.elevationOffset = self.shadowOffset
+        mkLayer.roundingCorners = self.roundingCorners
+        mkLayer.maskEnabled = self.maskEnabled
+        mkLayer.rippleScaleRatio = self.rippleScaleRatio
+        mkLayer.rippleDuration = self.rippleDuration
+        mkLayer.rippleEnabled = self.rippleEnabled
+        mkLayer.backgroundAnimationEnabled = self.backgroundAnimationEnabled
+        mkLayer.setRippleColor(self.rippleLayerColor)
     }
-    
-    private func drawShadow() {
-        if elevation > 0 {
-            let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
-            layer.masksToBounds = false
-            layer.cornerRadius = cornerRadius
-            layer.shadowRadius = elevation
-            layer.shadowColor = UIColor.blackColor().CGColor
-            layer.shadowOffset = CGSize(width: 1, height: 1) ;
-            layer.shadowOpacity = shadowOpacity
-            layer.shadowPath = shadowPath.CGPath
-        }
+
+    // MARK: Touch
+    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesBegan(touches, withEvent: event)
+        mkLayer.touchesBegan(touches, withEvent: event)
     }
-    
-    // MARK - location tracking methods
-    override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
-        if !super.beginTrackingWithTouch(touch, withEvent: event) {
-            mkLayer.removeAllAnimations()
-            return false
-        }
-        
-        if rippleLocation == .TapLocation {
-            mkLayer.didChangeTapLocation(touch.locationInView(self))
-        }
-        
-        // rippleLayer animation
-        mkLayer.animateRipple(rippleAnimationTimingFunction, duration: CFTimeInterval(self.rippleAnimationDuration))
-        
-        // shadow animation for self
-        if shadowAnimationEnabled {
-            let shadowRadius = layer.shadowRadius
-            let shadowOpacity = layer.shadowOpacity
-            let duration = CFTimeInterval(shadowAnimationDuration)
-            mkLayer.animateSuperLayerShadow(
-                10,
-                toRadius: shadowRadius,
-                fromOpacity: 0,
-                toOpacity: shadowOpacity,
-                timingFunction: shadowAnimationTimingFunction,
-                duration: duration)
-        }
-        
-        return true
+
+    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesEnded(touches, withEvent: event)
+        mkLayer.touchesEnded(touches, withEvent: event)
     }
-    
-    public override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
-        super.endTrackingWithTouch(touch, withEvent: event)
-        mkLayer.removeAllAnimations()
-    }
-    
+
     public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         super.touchesCancelled(touches, withEvent: event)
-        mkLayer.removeAllAnimations()
+        mkLayer.touchesCancelled(touches, withEvent: event)
+    }
+
+    public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesMoved(touches, withEvent: event)
+        mkLayer.touchesMoved(touches, withEvent: event)
     }
 }

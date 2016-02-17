@@ -1,14 +1,15 @@
 //
-//  MKTableViewCell.swift
+//  MKCollectionViewCell.swift
 //  MaterialKit
 //
-//  Created by Le Van Nghia on 11/15/14.
-//  Copyright (c) 2014 Le Van Nghia. All rights reserved.
+//  Created by Rahul Iyer on 17/02/16.
+//  Copyright © 2016 Le Van Nghia. All rights reserved.
 //
 
 import UIKit
 
-public class MKTableViewCell : UITableViewCell {
+public class MKCollectionViewCell: UICollectionViewCell {
+
     @IBInspectable public var maskEnabled: Bool = true {
         didSet {
             mkLayer.maskEnabled = maskEnabled
@@ -61,10 +62,10 @@ public class MKTableViewCell : UITableViewCell {
         }
     }
 
-    private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.contentView.layer)
+    private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
 
-    override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
         setupLayer()
     }
 
@@ -87,30 +88,23 @@ public class MKTableViewCell : UITableViewCell {
         mkLayer.setRippleColor(self.rippleLayerColor)
     }
 
-    public override func prepareForReuse() {
-        super.prepareForReuse()
-        self.mkLayer.removeAllAnimations()
-    }
-
-    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
-        if let firstTouch = touches.first {
-            mkLayer.startEffects(atLocation: firstTouch.locationInView(self))
-        }
+        mkLayer.touchesBegan(touches, withEvent: event)
     }
 
     public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesEnded(touches, withEvent: event)
-        mkLayer.stopEffects()
+        mkLayer.touchesEnded(touches, withEvent: event)
     }
 
     public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         super.touchesCancelled(touches, withEvent: event)
-        mkLayer.stopEffectsImmediately()
+        mkLayer.touchesCancelled(touches, withEvent: event)
     }
 
     public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesMoved(touches, withEvent: event)
-        mkLayer.stopEffects()
+        mkLayer.touchesMoved(touches, withEvent: event)
     }
 }
