@@ -61,12 +61,7 @@ public class MKTableViewCell : UITableViewCell {
         }
     }
 
-    private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.contentView.layer)
-
-    override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupLayer()
-    }
+    private lazy var mkLayer: MKLayer = MKLayer(withView: self.contentView)
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -75,6 +70,7 @@ public class MKTableViewCell : UITableViewCell {
 
     // MARK: Setup
     private func setupLayer() {
+        selectionStyle = .None
         mkLayer.elevation = self.elevation
         self.layer.cornerRadius = self.cornerRadius
         mkLayer.elevationOffset = self.shadowOffset
@@ -87,30 +83,23 @@ public class MKTableViewCell : UITableViewCell {
         mkLayer.setRippleColor(self.rippleLayerColor)
     }
 
-    public override func prepareForReuse() {
-        super.prepareForReuse()
-        self.mkLayer.removeAllAnimations()
-    }
-
     override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
-        if let firstTouch = touches.first {
-            mkLayer.startEffects(atLocation: firstTouch.locationInView(self))
-        }
+        mkLayer.touchesBegan(touches, withEvent: event)
     }
 
     public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesEnded(touches, withEvent: event)
-        mkLayer.stopEffects()
+        mkLayer.touchesEnded(touches, withEvent: event)
     }
 
     public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         super.touchesCancelled(touches, withEvent: event)
-        mkLayer.stopEffectsImmediately()
+        mkLayer.touchesCancelled(touches, withEvent: event)
     }
 
     public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesMoved(touches, withEvent: event)
-        mkLayer.stopEffects()
+        mkLayer.touchesMoved(touches, withEvent: event)
     }
 }

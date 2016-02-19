@@ -144,7 +144,7 @@ public class MKLayer: CALayer {
     }
 
     public func setRippleColor(color: UIColor,
-        withRippleAlpha rippleAlpha: CGFloat = 0.5,
+        withRippleAlpha rippleAlpha: CGFloat = 0.3,
         withBackgroundAlpha backgroundAlpha: CGFloat = 0.3) {
             if let rippleLayer = self.rippleLayer,
                 backgroundLayer = self.backgroundLayer {

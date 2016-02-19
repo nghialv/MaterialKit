@@ -88,7 +88,8 @@ public class MKSwitch: UIControl {
     @IBInspectable public var on: Bool = false {
         didSet {
             if let switchLayer = self.switchLayer {
-                switchLayer.on = self.on
+                switchLayer.switchState(self.on)
+                sendActionsForControlEvents(.ValueChanged)
             }
         }
     }
@@ -170,20 +171,12 @@ public class MKSwitch: UIControl {
 
 public class MKSwitchLayer: CALayer {
 
-    public var on: Bool = false {
-        didSet {
-            if let parent = self.parent {
-                switchState(self.on)
-                parent.sendActionsForControlEvents(UIControlEvents.ValueChanged)
-            }
-        }
-    }
     public var enabled: Bool = true {
         didSet {
             updateColors()
         }
     }
-    public var parent: UIControl?
+    public var parent: MKSwitch?
     public var rippleAnimationDuration: CFTimeInterval = 0.35
 
     private var trackLayer: CAShapeLayer?
@@ -211,7 +204,7 @@ public class MKSwitchLayer: CALayer {
         }
     }
 
-    public init(withParent parent: UIControl) {
+    public init(withParent parent: MKSwitch) {
         super.init()
         self.parent = parent
         setup()
@@ -258,57 +251,60 @@ public class MKSwitchLayer: CALayer {
                 roundedRect: trackLayer.bounds,
                 byRoundingCorners: UIRectCorner.AllCorners,
                 cornerRadii: CGSize(
-                width: kMKTrackCornerRadius,
-                height: kMKTrackCornerRadius)).CGPath
+                    width: kMKTrackCornerRadius,
+                    height: kMKTrackCornerRadius)).CGPath
         }
     }
 
     private func updateThumbLayer() {
         var subX: CGFloat = 0
-        if on {
-            subX = kMKControlWidth - kMKThumbRadius * 2
+        if let parent = parent {
+            if parent.on {
+                subX = kMKControlWidth - kMKThumbRadius * 2
+            }
         }
 
         thumbFrame = CGRect(x: subX, y: 0, width: kMKThumbRadius * 2, height: kMKThumbRadius * 2)
         if let
         thumbHolder = thumbHolder,
-            thumbBackground = thumbBackground,
-            thumbLayer = thumbLayer {
-                thumbHolder.frame = thumbFrame!
-                thumbBackground.frame = thumbHolder.bounds
-                thumbLayer.frame = thumbHolder.bounds
-                thumbLayer.path = UIBezierPath(ovalInRect: thumbLayer.bounds).CGPath
-            }
+        thumbBackground = thumbBackground,
+        thumbLayer = thumbLayer {
+            thumbHolder.frame = thumbFrame!
+            thumbBackground.frame = thumbHolder.bounds
+            thumbLayer.frame = thumbHolder.bounds
+            thumbLayer.path = UIBezierPath(ovalInRect: thumbLayer.bounds).CGPath
+        }
     }
 
     private func updateColors() {
         if let trackLayer = trackLayer,
-            thumbLayer = thumbLayer,
-            rippleLayer = rippleLayer {
-                if !enabled {
-                    if let disabledColorPallete = disabledColorPallete {
-                        trackLayer.fillColor = disabledColorPallete.trackColor.CGColor
-                        thumbLayer.fillColor = disabledColorPallete.thumbColor.CGColor
-                    }
-                } else if on {
-                    if let
-                    onColorPallete = onColorPallete {
-                        trackLayer.fillColor = onColorPallete.trackColor.CGColor
-                        thumbLayer.fillColor = onColorPallete.thumbColor.CGColor
-                        rippleLayer.setRippleColor(onColorPallete.thumbColor, withRippleAlpha: 0.1,
-                            withBackgroundAlpha: 0.1)
-                    }
-                } else {
-                    if let
-                    offColorPallete = offColorPallete {
-                        trackLayer.fillColor = offColorPallete.trackColor.CGColor
-                        thumbLayer.fillColor = offColorPallete.thumbColor.CGColor
-                        rippleLayer.setRippleColor(offColorPallete.thumbColor,
-                            withRippleAlpha: 0.1,
-                            withBackgroundAlpha: 0.1)
-                    }
+        thumbLayer = thumbLayer,
+        rippleLayer = rippleLayer,
+        parent = parent {
+            if !enabled {
+                if let disabledColorPallete = disabledColorPallete {
+                    trackLayer.fillColor = disabledColorPallete.trackColor.CGColor
+                    thumbLayer.fillColor = disabledColorPallete.thumbColor.CGColor
+                }
+            } else if parent.on {
+                if let
+                onColorPallete = onColorPallete {
+                    trackLayer.fillColor = onColorPallete.trackColor.CGColor
+                    thumbLayer.fillColor = onColorPallete.thumbColor.CGColor
+                    rippleLayer.setRippleColor(onColorPallete.thumbColor, withRippleAlpha: 0.1,
+                        withBackgroundAlpha: 0.1)
+                }
+            } else {
+                if let
+                offColorPallete = offColorPallete {
+                    trackLayer.fillColor = offColorPallete.trackColor.CGColor
+                    thumbLayer.fillColor = offColorPallete.thumbColor.CGColor
+                    rippleLayer.setRippleColor(offColorPallete.thumbColor,
+                        withRippleAlpha: 0.1,
+                        withBackgroundAlpha: 0.1)
                 }
             }
+        }
     }
 
     private func switchState(on: Bool) {
@@ -332,13 +328,13 @@ public class MKSwitchLayer: CALayer {
         if enabled {
             if let
             rippleLayer = rippleLayer, shadowLayer = shadowLayer,
-                thumbBackground = thumbBackground, thumbLayer = thumbLayer {
-                    rippleLayer.startEffects(atLocation: self.convertPoint(touchLocation, toLayer: thumbBackground))
-                    shadowLayer.startEffects(atLocation: self.convertPoint(touchLocation, toLayer: thumbLayer))
+            thumbBackground = thumbBackground, thumbLayer = thumbLayer {
+                rippleLayer.startEffects(atLocation: self.convertPoint(touchLocation, toLayer: thumbBackground))
+                shadowLayer.startEffects(atLocation: self.convertPoint(touchLocation, toLayer: thumbLayer))
 
-                    self.touchInside = self.containsPoint(touchLocation)
-                    self.touchDownLocation = touchLocation
-                }
+                self.touchInside = self.containsPoint(touchLocation)
+                self.touchDownLocation = touchLocation
+            }
         }
     }
 
@@ -369,14 +365,14 @@ public class MKSwitchLayer: CALayer {
                 shadowLayer.stopEffects()
             }
 
-            if let touchDownLocation = touchDownLocation {
+            if let touchDownLocation = touchDownLocation, parent = parent {
                 if !touchInside || self.checkPoint(touchLocation, equalTo: touchDownLocation) {
-                    self.on = !self.on
+                    parent.on = !parent.on
                 } else {
-                    if on && touchLocation.x < touchDownLocation.x {
-                        self.on = false
-                    } else if !on && touchLocation.x > touchDownLocation.x {
-                        self.on = true
+                    if parent.on && touchLocation.x < touchDownLocation.x {
+                        parent.on = false
+                    } else if !parent.on && touchLocation.x > touchDownLocation.x {
+                        parent.on = true
                     }
                 }
             }

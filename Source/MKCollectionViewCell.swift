@@ -62,7 +62,7 @@ public class MKCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
+    private lazy var mkLayer: MKLayer = MKLayer(withView: self)
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
