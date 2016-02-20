@@ -11,6 +11,7 @@ import QuartzCore
 
 @IBDesignable
 public class MKTextField : UITextField {
+
     @IBInspectable public var padding: CGSize = CGSize(width: 5, height: 5)
     @IBInspectable public var floatingLabelBottomMargin: CGFloat = 2.0
     @IBInspectable public var floatingPlaceholderEnabled: Bool = false {
@@ -45,12 +46,12 @@ public class MKTextField : UITextField {
             mkLayer.roundingCorners = roundingCorners
         }
     }
-    @IBInspectable public var rippleEnabled = true {
+    @IBInspectable public var rippleEnabled: Bool = true {
         didSet {
             mkLayer.rippleEnabled = rippleEnabled
         }
     }
-    @IBInspectable public var rippleDuration: CFTimeInterval = 0.5 {
+    @IBInspectable public var rippleDuration: CFTimeInterval = 0.35 {
         didSet {
             mkLayer.rippleDuration = rippleDuration
         }
@@ -60,7 +61,7 @@ public class MKTextField : UITextField {
             mkLayer.rippleScaleRatio = rippleScaleRatio
         }
     }
-    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xEEEEEE) {
         didSet {
             mkLayer.setRippleColor(rippleLayerColor)
         }

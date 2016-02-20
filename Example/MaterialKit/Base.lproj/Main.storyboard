@@ -9,7 +9,7 @@
         <!--Side Drawer View Controller-->
         <scene sceneID="Cnf-vZ-xLY">
             <objects>
-                <viewController id="Cjt-0i-Hcw" customClass="MKSideDrawerViewController" customModule="MaterialKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Cjt-0i-Hcw" customClass="MKSideDrawerViewController" customModule="MaterialKit" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="29D-8X-csK"/>
                         <viewControllerLayoutGuide type="bottom" id="M0c-jU-A5o"/>
@@ -24,8 +24,8 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="drawerSegueIdentifier" value="drawer"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <segue destination="Nz2-bn-2Jh" kind="custom" identifier="main" customClass="MKEmbedMainControllerSegue" customModule="MaterialKit" customModuleProvider="target" id="ofp-oq-E1k"/>
-                        <segue destination="08h-Dz-2cg" kind="custom" identifier="drawer" customClass="MKEmbedDrawerControllerSegue" customModule="MaterialKit" customModuleProvider="target" id="MsP-b8-jQU"/>
+                        <segue destination="Nz2-bn-2Jh" kind="custom" identifier="main" customClass="MKEmbedMainControllerSegue" customModule="MaterialKit" customModuleProvider="target" id="psI-3t-wJ8"/>
+                        <segue destination="08h-Dz-2cg" kind="custom" identifier="drawer" customClass="MKEmbedDrawerControllerSegue" customModule="MaterialKit" customModuleProvider="target" id="CDR-BH-aKL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kh5-cZ-X2i" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -134,7 +134,7 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="MKActivityIndicator">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.45882353186607361" green="0.45882353186607361" blue="0.45882353186607361" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

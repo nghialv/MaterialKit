@@ -58,17 +58,17 @@ public class MKCardView: UIControl {
             mkLayer.rippleScaleRatio = rippleScaleRatio
         }
     }
-    @IBInspectable public var rippleDuration: CFTimeInterval = 0.5 {
+    @IBInspectable public var rippleDuration: CFTimeInterval = 0.35 {
         didSet {
             mkLayer.rippleDuration = rippleDuration
         }
     }
-    @IBInspectable public var rippleEnabled = true {
+    @IBInspectable public var rippleEnabled: Bool = true {
         didSet {
             mkLayer.rippleEnabled = rippleEnabled
         }
     }
-    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xe0e0e0) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xEEEEEE) {
         didSet {
             mkLayer.setRippleColor(rippleLayerColor)
         }

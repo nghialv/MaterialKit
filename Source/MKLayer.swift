@@ -23,7 +23,7 @@ public class MKLayer: CALayer {
             self.calculateRippleSize()
         }
     }
-    public var rippleDuration: CFTimeInterval = 0.5
+    public var rippleDuration: CFTimeInterval = 0.35
     public var elevation: CGFloat = 0 {
         didSet {
             self.enableElevation()
@@ -111,7 +111,7 @@ public class MKLayer: CALayer {
         userIsHolding = true
         if let rippleLayer = self.rippleLayer {
             rippleLayer.timeOffset = 0
-            rippleLayer.speed = 1
+            rippleLayer.speed = backgroundAnimationEnabled ? 1 : 1.1
             if rippleEnabled {
                 startRippleEffect(nearestInnerPoint(touchLocation))
             }
@@ -125,7 +125,7 @@ public class MKLayer: CALayer {
         } else if let rippleLayer = rippleLayer {
             rippleLayer.timeOffset = rippleLayer.convertTime(CACurrentMediaTime(), fromLayer: nil)
             rippleLayer.beginTime = CACurrentMediaTime()
-            rippleLayer.speed = 2
+            rippleLayer.speed = 1.2
         }
     }
 
@@ -134,12 +134,12 @@ public class MKLayer: CALayer {
         effectIsRunning = false
         if rippleEnabled {
             if let rippleLayer = self.rippleLayer,
-                backgroundLayer = self.backgroundLayer {
-                    rippleLayer.removeAllAnimations()
-                    backgroundLayer.removeAllAnimations()
-                    rippleLayer.opacity = 0
-                    backgroundLayer.opacity = 0
-                }
+            backgroundLayer = self.backgroundLayer {
+                rippleLayer.removeAllAnimations()
+                backgroundLayer.removeAllAnimations()
+                rippleLayer.opacity = 0
+                backgroundLayer.opacity = 0
+            }
         }
     }
 
@@ -147,11 +147,11 @@ public class MKLayer: CALayer {
         withRippleAlpha rippleAlpha: CGFloat = 0.3,
         withBackgroundAlpha backgroundAlpha: CGFloat = 0.3) {
             if let rippleLayer = self.rippleLayer,
-                backgroundLayer = self.backgroundLayer {
-                    rippleLayer.fillColor = color.colorWithAlphaComponent(rippleAlpha).CGColor
-                    backgroundLayer.fillColor = color.colorWithAlphaComponent(backgroundAlpha).CGColor
-                }
-        }
+            backgroundLayer = self.backgroundLayer {
+                rippleLayer.fillColor = color.colorWithAlphaComponent(rippleAlpha).CGColor
+                backgroundLayer.fillColor = color.colorWithAlphaComponent(backgroundAlpha).CGColor
+            }
+    }
 
     // MARK: Touches
 
@@ -232,64 +232,64 @@ public class MKLayer: CALayer {
 
     private func clearEffects() {
         if let rippleLayer = self.rippleLayer,
-            backgroundLayer = self.backgroundLayer {
-                rippleLayer.timeOffset = 0
-                rippleLayer.speed = 1
+        backgroundLayer = self.backgroundLayer {
+            rippleLayer.timeOffset = 0
+            rippleLayer.speed = 1
 
-                if rippleEnabled {
-                    rippleLayer.removeAllAnimations()
-                    backgroundLayer.removeAllAnimations()
-                    self.removeAllAnimations()
+            if rippleEnabled {
+                rippleLayer.removeAllAnimations()
+                backgroundLayer.removeAllAnimations()
+                self.removeAllAnimations()
 
-                    let opacityAnim = CABasicAnimation(keyPath: "opacity")
-                    opacityAnim.fromValue = 1
-                    opacityAnim.toValue = 0
-                    opacityAnim.duration = kMKClearEffectsDuration
-                    opacityAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                    opacityAnim.removedOnCompletion = false
-                    opacityAnim.fillMode = kCAFillModeForwards
-                    opacityAnim.delegate = self
+                let opacityAnim = CABasicAnimation(keyPath: "opacity")
+                opacityAnim.fromValue = 1
+                opacityAnim.toValue = 0
+                opacityAnim.duration = kMKClearEffectsDuration
+                opacityAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                opacityAnim.removedOnCompletion = false
+                opacityAnim.fillMode = kCAFillModeForwards
+                opacityAnim.delegate = self
 
-                    self.addAnimation(opacityAnim, forKey: "opacityAnim")
-                }
+                self.addAnimation(opacityAnim, forKey: "opacityAnim")
             }
+        }
     }
 
     private func startRippleEffect(touchLocation: CGPoint) {
         self.removeAllAnimations()
         self.opacity = 1
         if let rippleLayer = self.rippleLayer,
-            backgroundLayer = self.backgroundLayer,
-            superLayer = self.superLayer {
-                rippleLayer.removeAllAnimations()
-                backgroundLayer.removeAllAnimations()
+        backgroundLayer = self.backgroundLayer,
+        superLayer = self.superLayer {
+            rippleLayer.removeAllAnimations()
+            backgroundLayer.removeAllAnimations()
 
-                let scaleAnim = CABasicAnimation(keyPath: "transform.scale")
-                scaleAnim.fromValue = 0
-                scaleAnim.toValue = 1
-                scaleAnim.duration = rippleDuration
-                scaleAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
-                scaleAnim.delegate = self
+            let scaleAnim = CABasicAnimation(keyPath: "transform.scale")
+            scaleAnim.fromValue = 0
+            scaleAnim.toValue = 1
+            scaleAnim.duration = rippleDuration
+            scaleAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+            scaleAnim.delegate = self
 
-                let moveAnim = CABasicAnimation(keyPath: "position")
-                moveAnim.fromValue = NSValue(CGPoint: touchLocation)
-                moveAnim.toValue = NSValue(CGPoint: CGPoint(
-                    x: CGRectGetMidX(superLayer.bounds),
-                    y: CGRectGetMidY(superLayer.bounds)))
-                moveAnim.duration = rippleDuration
-                moveAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+            let moveAnim = CABasicAnimation(keyPath: "position")
+            moveAnim.fromValue = NSValue(CGPoint: touchLocation)
+            moveAnim.toValue = NSValue(CGPoint: CGPoint(
+                x: CGRectGetMidX(superLayer.bounds),
+                y: CGRectGetMidY(superLayer.bounds)))
+            moveAnim.duration = rippleDuration
+            moveAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
 
-                effectIsRunning = true
-                rippleLayer.opacity = 1
-                if backgroundAnimationEnabled {
-                    backgroundLayer.opacity = 1
-                } else {
-                    backgroundLayer.opacity = 0
-                }
-
-                rippleLayer.addAnimation(moveAnim, forKey: "position")
-                rippleLayer.addAnimation(scaleAnim, forKey: "scale")
+            effectIsRunning = true
+            rippleLayer.opacity = 1
+            if backgroundAnimationEnabled {
+                backgroundLayer.opacity = 1
+            } else {
+                backgroundLayer.opacity = 0
             }
+
+            rippleLayer.addAnimation(moveAnim, forKey: "position")
+            rippleLayer.addAnimation(scaleAnim, forKey: "scale")
+        }
     }
 
     private func calculateRippleSize() {
@@ -301,9 +301,9 @@ public class MKLayer: CALayer {
                 y: CGRectGetMidY(superLayer.bounds))
             let circleDiameter =
                 sqrt(
-                powf(Float(superLayerWidth), 2)
-                +
-                powf(Float(superLayerHeight), 2)) * Float(rippleScaleRatio)
+                    powf(Float(superLayerWidth), 2)
+                        +
+                        powf(Float(superLayerHeight), 2)) * Float(rippleScaleRatio)
             let subX = center.x - CGFloat(circleDiameter) / 2
             let subY = center.y - CGFloat(circleDiameter) / 2
 

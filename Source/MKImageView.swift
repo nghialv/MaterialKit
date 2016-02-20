@@ -37,12 +37,12 @@ public class MKImageView: UIImageView
             mkLayer.roundingCorners = roundingCorners
         }
     }
-    @IBInspectable public var rippleEnabled = true {
+    @IBInspectable public var rippleEnabled: Bool = true {
         didSet {
             mkLayer.rippleEnabled = rippleEnabled
         }
     }
-    @IBInspectable public var rippleDuration: CFTimeInterval = 0.5 {
+    @IBInspectable public var rippleDuration: CFTimeInterval = 0.35 {
         didSet {
             mkLayer.rippleDuration = rippleDuration
         }
@@ -52,7 +52,7 @@ public class MKImageView: UIImageView
             mkLayer.rippleScaleRatio = rippleScaleRatio
         }
     }
-    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xE0E0E0) {
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xEEEEEE) {
         didSet {
             mkLayer.setRippleColor(rippleLayerColor)
         }
@@ -123,4 +123,4 @@ public class MKImageView: UIImageView
     public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesMoved(touches, withEvent: event)
         mkLayer.touchesMoved(touches, withEvent: event)
-    } }
+} }

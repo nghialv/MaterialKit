@@ -15,6 +15,7 @@ class ViewController: UIViewController {
         hamburgerButton.setImage(UIImage(named: "uibaritem_icon.png"), forState: .Normal)
         hamburgerButton.maskEnabled = false
         hamburgerButton.backgroundAnimationEnabled = false
+        hamburgerButton.rippleDuration = 0.15
         hamburgerButton.addTarget(self, action: Selector("toggleDrawer"), forControlEvents: UIControlEvents.TouchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: hamburgerButton)
     }

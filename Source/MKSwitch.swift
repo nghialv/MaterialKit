@@ -25,7 +25,7 @@ public class MKSwitch: UIControl {
             }
         }
     }
-    @IBInspectable public var thumbOnColor: UIColor = UIColor.MKColor.Blue.P50 {
+    @IBInspectable public var thumbOnColor: UIColor = UIColor.MKColor.Blue.P500 {
         didSet {
             if let switchLayer = self.switchLayer {
                 if let onColorPallete = switchLayer.onColorPallete {
@@ -55,7 +55,7 @@ public class MKSwitch: UIControl {
             }
         }
     }
-    @IBInspectable public var trackOnColor: UIColor = UIColor.MKColor.Blue.P500 {
+    @IBInspectable public var trackOnColor: UIColor = UIColor.MKColor.Blue.P300 {
         didSet {
             if let switchLayer = self.switchLayer {
                 if let onColorPallete = switchLayer.onColorPallete {
