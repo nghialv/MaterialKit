@@ -9,63 +9,97 @@
 import UIKit
 
 public class MKTableViewCell : UITableViewCell {
-    @IBInspectable public var rippleLocation: MKRippleLocation = .TapLocation {
+    @IBInspectable public var maskEnabled: Bool = true {
         didSet {
-            mkLayer.rippleLocation = rippleLocation
+            mkLayer.maskEnabled = maskEnabled
         }
     }
-    @IBInspectable public var rippleAniDuration: Float = 0.75
-    @IBInspectable public var backgroundAniDuration: Float = 1.0
-    @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
-    @IBInspectable public var shadowAniEnabled: Bool = true
-
-    // color
-    @IBInspectable public var rippleLayerColor: UIColor = UIColor(white: 0.45, alpha: 0.5) {
+    @IBInspectable public var cornerRadius: CGFloat = 0 {
         didSet {
-            mkLayer.setCircleLayerColor(rippleLayerColor)
+            self.layer.cornerRadius = self.cornerRadius
+            mkLayer.superLayerDidResize()
         }
     }
-    @IBInspectable public var backgroundLayerColor: UIColor = UIColor(white: 0.75, alpha: 0.25) {
+    @IBInspectable public var elevation: CGFloat = 0 {
         didSet {
-            mkLayer.setBackgroundLayerColor(backgroundLayerColor)
+            mkLayer.elevation = elevation
+        }
+    }
+    @IBInspectable public var shadowOffset: CGSize = CGSizeZero {
+        didSet {
+            mkLayer.shadowOffset = shadowOffset
+        }
+    }
+    @IBInspectable public var roundingCorners: UIRectCorner = UIRectCorner.AllCorners {
+        didSet {
+            mkLayer.roundingCorners = roundingCorners
+        }
+    }
+    @IBInspectable public var rippleEnabled: Bool = true {
+        didSet {
+            mkLayer.rippleEnabled = rippleEnabled
+        }
+    }
+    @IBInspectable public var rippleDuration: CFTimeInterval = 0.35 {
+        didSet {
+            mkLayer.rippleDuration = rippleDuration
+        }
+    }
+    @IBInspectable public var rippleScaleRatio: CGFloat = 1.0 {
+        didSet {
+            mkLayer.rippleScaleRatio = rippleScaleRatio
+        }
+    }
+    @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xEEEEEE) {
+        didSet {
+            mkLayer.setRippleColor(rippleLayerColor)
+        }
+    }
+    @IBInspectable public var backgroundAnimationEnabled: Bool = true {
+        didSet {
+            mkLayer.backgroundAnimationEnabled = backgroundAnimationEnabled
         }
     }
 
-    private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.contentView.layer)
-    private var contentViewResized = false
+    private lazy var mkLayer: MKLayer = MKLayer(withView: self.contentView)
 
-    override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupLayer()
     }
 
+    // MARK: Setup
     private func setupLayer() {
         selectionStyle = .None
-        mkLayer.setBackgroundLayerColor(backgroundLayerColor)
-        mkLayer.setCircleLayerColor(rippleLayerColor)
-        mkLayer.ripplePercent = 1.2
+        mkLayer.elevation = self.elevation
+        self.layer.cornerRadius = self.cornerRadius
+        mkLayer.elevationOffset = self.shadowOffset
+        mkLayer.roundingCorners = self.roundingCorners
+        mkLayer.maskEnabled = self.maskEnabled
+        mkLayer.rippleScaleRatio = self.rippleScaleRatio
+        mkLayer.rippleDuration = self.rippleDuration
+        mkLayer.rippleEnabled = self.rippleEnabled
+        mkLayer.backgroundAnimationEnabled = self.backgroundAnimationEnabled
+        mkLayer.setRippleColor(self.rippleLayerColor)
     }
 
-    public override func prepareForReuse() {
-        super.prepareForReuse()
-        self.mkLayer.removeAllAnimations()
-    }
-    
     override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
-        if let firstTouch = touches.first {
-            if !contentViewResized {
-                mkLayer.superLayerDidResize()
-                contentViewResized = true
-            }
-            mkLayer.didChangeTapLocation(firstTouch.locationInView(contentView))
+        mkLayer.touchesBegan(touches, withEvent: event)
+    }
 
-            mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(rippleAniDuration))
-            mkLayer.animateAlphaForBackgroundLayer(MKTimingFunction.Linear, duration: CFTimeInterval(backgroundAniDuration))
-        }
+    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesEnded(touches, withEvent: event)
+        mkLayer.touchesEnded(touches, withEvent: event)
+    }
+
+    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        super.touchesCancelled(touches, withEvent: event)
+        mkLayer.touchesCancelled(touches, withEvent: event)
+    }
+
+    public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesMoved(touches, withEvent: event)
+        mkLayer.touchesMoved(touches, withEvent: event)
     }
 }

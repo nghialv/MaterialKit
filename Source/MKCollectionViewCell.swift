@@ -1,14 +1,15 @@
 //
-//  MKLabel.swift
+//  MKCollectionViewCell.swift
 //  MaterialKit
 //
-//  Created by Le Van Nghia on 11/29/14.
-//  Copyright (c) 2014 Le Van Nghia. All rights reserved.
+//  Created by Rahul Iyer on 17/02/16.
+//  Copyright © 2016 Le Van Nghia. All rights reserved.
 //
 
 import UIKit
 
-public class MKLabel: UILabel {
+public class MKCollectionViewCell: UICollectionViewCell {
+
     @IBInspectable public var maskEnabled: Bool = true {
         didSet {
             mkLayer.maskEnabled = maskEnabled
@@ -25,7 +26,7 @@ public class MKLabel: UILabel {
             mkLayer.elevation = elevation
         }
     }
-    @IBInspectable override public var shadowOffset: CGSize {
+    @IBInspectable public var shadowOffset: CGSize = CGSizeZero {
         didSet {
             mkLayer.shadowOffset = shadowOffset
         }
@@ -61,20 +62,15 @@ public class MKLabel: UILabel {
         }
     }
 
-    override public var bounds: CGRect {
-        didSet {
-            mkLayer.superLayerDidResize()
-        }
-    }
     private lazy var mkLayer: MKLayer = MKLayer(withView: self)
-
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupLayer()
-    }
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
+        setupLayer()
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         setupLayer()
     }
 
@@ -92,7 +88,6 @@ public class MKLabel: UILabel {
         mkLayer.setRippleColor(self.rippleLayerColor)
     }
 
-    // MARK: Touch
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
         mkLayer.touchesBegan(touches, withEvent: event)
