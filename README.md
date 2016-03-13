@@ -144,7 +144,7 @@ Installation
 * Installation with CocoaPods
 
 ```
-	pod 'MaterialKit', '~> 0.3'
+	pod 'MaterialKit', '~> 0.4'
 ```
 
 * Copying all the files into your project
