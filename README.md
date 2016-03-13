@@ -144,7 +144,7 @@ Installation
 * Installation with CocoaPods
 
 ```
-	pod 'MaterialKit', :git => 'https://github.com/rahuliyer95/MaterialKit.git'
+	pod 'MaterialKit', '~> 0.3'
 ```
 
 * Copying all the files into your project
