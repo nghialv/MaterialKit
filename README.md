@@ -10,6 +10,9 @@ MaterialKit
 [![Issues](https://img.shields.io/github/issues/nghialv/MaterialKit.svg?style=flat
 )](https://github.com/nghialv/MaterialKit/issues?state=open)
 
+
+#### NOTE: This project is unmaintained.
+
 Material design components (inspired by [Google Material Design](http://www.google.com/design/spec/material-design/introduction.html)) for iOS written in Swift
 
 Please feel free to make pull requests.
