@@ -10,7 +10,7 @@ import UIKit
 
 let kMKClearEffectsDuration = 0.3
 
-public class MKLayer: CALayer {
+public class MKLayer: CALayer,CAAnimationDelegate {
 
     public var maskEnabled: Bool = true {
         didSet {
@@ -95,7 +95,7 @@ public class MKLayer: CALayer {
         }
     }
 
-    public override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+    public func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         if anim == self.animationForKey("opacityAnim") {
             self.opacity = 0
         } else if flag {

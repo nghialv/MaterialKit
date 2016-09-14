@@ -51,7 +51,7 @@ public class MKRefreshControl: UIControl {
         if let parentScrollView = self.parentScrollView {
             parentScrollView.addSubview(self)
             parentScrollView.sendSubviewToBack(self)
-            parentScrollView.panGestureRecognizer.addTarget(self, action: "handlePanGestureRecognizer")
+            parentScrollView.panGestureRecognizer.addTarget(self, action: #selector(MKRefreshControl.handlePanGestureRecognizer))
             parentScrollView.addObserver(self, forKeyPath: "contentOffset", options: .New, context: nil)
         }
     }

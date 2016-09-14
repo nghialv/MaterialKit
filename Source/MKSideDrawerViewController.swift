@@ -65,7 +65,7 @@ public class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDe
         let view = UIView(frame: self.view.frame)
         let tapGesture = UITapGestureRecognizer(
             target: self,
-            action: "didtapContainerView:"
+            action: #selector(MKSideDrawerViewController.didtapContainerView(_:))
         )
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(white: 0.0, alpha: 0)
@@ -79,7 +79,7 @@ public class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDe
     lazy private(set) var screenEdgePanGesture: UIScreenEdgePanGestureRecognizer = {
         let gesture = UIScreenEdgePanGestureRecognizer(
             target: self,
-            action: "handlePanGesture:"
+            action: #selector(MKSideDrawerViewController.handlePanGesture(_:))
         )
         switch self.drawerDirection {
         case .Left: gesture.edges = .Left
@@ -92,7 +92,7 @@ public class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDe
     lazy private(set) var panGesture: UIPanGestureRecognizer = {
         let gesture = UIPanGestureRecognizer(
             target: self,
-            action: "handlePanGesture:"
+            action: #selector(MKSideDrawerViewController.handlePanGesture(_:))
         )
         gesture.delegate = self
         return gesture

@@ -133,16 +133,14 @@ public class MKSwitch: UIControl {
         }
     }
 
-    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    public override func touchesCancelled(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesCancelled(touches, withEvent: event)
-        if let touches = touches {
             if let touch = touches.first {
                 let point = touch.locationInView(self)
                 if let switchLayer = switchLayer {
                     switchLayer.onTouchUp(self.layer.convertPoint(point, toLayer: switchLayer))
                 }
             }
-        }
     }
 
     public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {

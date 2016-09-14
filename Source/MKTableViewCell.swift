@@ -93,7 +93,7 @@ public class MKTableViewCell : UITableViewCell {
         mkLayer.touchesEnded(touches, withEvent: event)
     }
 
-    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    public override func touchesCancelled(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesCancelled(touches, withEvent: event)
         mkLayer.touchesCancelled(touches, withEvent: event)
     }

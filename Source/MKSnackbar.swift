@@ -117,7 +117,7 @@ public class MKSnackbar: UIControl {
                 forAxis: UILayoutConstraintAxis.Horizontal)
             actionButton.addTarget(
                 self,
-                action: Selector("actionButtonClicked:"),
+                action: #selector(MKSnackbar.actionButtonClicked(_:)),
                 forControlEvents: UIControlEvents.TouchUpInside)
         }
     }
@@ -135,7 +135,7 @@ public class MKSnackbar: UIControl {
         
         isAnimating = true
         
-        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: Selector("dismiss"), object: nil)
+        NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: #selector(MKSnackbar.dismiss), object: nil)
         if let rootView = rootView {
             rootView.layoutIfNeeded()
             
@@ -187,7 +187,7 @@ public class MKSnackbar: UIControl {
     // Mark: Action
     
     internal func actionButtonClicked(sender: AnyObject) {
-        performDelegateAction(Selector("actionClicked:"))
+        performDelegateAction(#selector(MKSnackbarDelegate.actionClicked(_:)))
         if let actionButton = actionButton {
             actionButton.enabled = false
         }
@@ -333,9 +333,9 @@ public class MKSnackbar: UIControl {
                 }, completion: {(finished: Bool) -> Void in
                     if finished {
                         self.isAnimating = false
-                        self.performDelegateAction(Selector("snackbarShown:"))
+                        self.performDelegateAction(#selector(MKSnackbarDelegate.snackbarShown(_:)))
                         self.performSelector(
-                            Selector("dismiss"),
+                            #selector(MKSnackbar.dismiss),
                             withObject: nil,
                             afterDelay: self.duration)
                         if let actionButton = self.actionButton {
