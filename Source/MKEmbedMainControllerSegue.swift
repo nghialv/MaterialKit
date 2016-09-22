@@ -9,11 +9,11 @@
 
 import UIKit
 
-public class MKEmbedMainControllerSegue: UIStoryboardSegue {
+open class MKEmbedMainControllerSegue: UIStoryboardSegue {
 
     final override public func perform() {
-        if let sourceViewController = sourceViewController as? MKSideDrawerViewController {
-            sourceViewController.mainViewController = destinationViewController
+        if let sourceViewController = source as? MKSideDrawerViewController {
+            sourceViewController.mainViewController = destination
         } else {
             assertionFailure("SourceViewController must be MKDrawerViewController!")
         }
