@@ -9,18 +9,18 @@
 import UIKit
 
 @IBDesignable
-public class MKActivityIndicator: UIView {
+open class MKActivityIndicator: UIView {
 
-    private let drawableLayer = CAShapeLayer()
-    private var animating = false
+    fileprivate let drawableLayer = CAShapeLayer()
+    fileprivate var animating = false
 
-    @IBInspectable public var color: UIColor = UIColor.MKColor.Blue.P500 {
+    @IBInspectable open var color: UIColor = UIColor.MKColor.Blue.P500 {
         didSet {
-            drawableLayer.strokeColor = self.color.CGColor
+            drawableLayer.strokeColor = self.color.cgColor
         }
     }
 
-    @IBInspectable public var lineWidth: CGFloat = 6 {
+    @IBInspectable open var lineWidth: CGFloat = 6 {
         didSet {
             drawableLayer.lineWidth = self.lineWidth
             self.updatePath()
@@ -37,41 +37,41 @@ public class MKActivityIndicator: UIView {
         setup()
     }
 
-    public override var bounds: CGRect {
+    open override var bounds: CGRect {
         didSet {
             updateFrame()
             updatePath()
         }
     }
 
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         updateFrame()
         updatePath()
     }
 
-    public func startAnimating() {
+    open func startAnimating() {
         if self.animating {
             return
         }
 
         self.animating = true
-        self.hidden = false
+        self.isHidden = false
         self.resetAnimations()
     }
 
-    public func stopAnimating() {
+    open func stopAnimating() {
         self.drawableLayer.removeAllAnimations()
         self.animating = false
-        self.hidden = true
+        self.isHidden = true
     }
 
-    private func setup() {
-        self.hidden = true
+    fileprivate func setup() {
+        self.isHidden = true
         self.layer.addSublayer(self.drawableLayer)
-        self.drawableLayer.strokeColor = self.color.CGColor
+        self.drawableLayer.strokeColor = self.color.cgColor
         self.drawableLayer.lineWidth = self.lineWidth
-        self.drawableLayer.fillColor = UIColor.clearColor().CGColor
+        self.drawableLayer.fillColor = UIColor.clear.cgColor
         self.drawableLayer.lineCap = kCALineJoinRound
         self.drawableLayer.strokeStart = 0.99
         self.drawableLayer.strokeEnd = 1
@@ -79,23 +79,23 @@ public class MKActivityIndicator: UIView {
         updatePath()
     }
 
-    private func updateFrame() {
-        self.drawableLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))
+    fileprivate func updateFrame() {
+        self.drawableLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
     }
 
-    private func updatePath() {
-        let center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))
-        let radius = min(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) / 2 - self.lineWidth
+    fileprivate func updatePath() {
+        let center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
+        let radius = min(self.bounds.width, self.bounds.height) / 2 - self.lineWidth
         self.drawableLayer.path = UIBezierPath(
             arcCenter: center,
             radius: radius,
             startAngle: 0,
             endAngle: CGFloat(2 * M_PI),
             clockwise: true)
-            .CGPath
+            .cgPath
     }
 
-    private func resetAnimations() {
+    fileprivate func resetAnimations() {
         drawableLayer.removeAllAnimations()
 
         let rotationAnim = CABasicAnimation(keyPath: "transform.rotation")
@@ -103,7 +103,7 @@ public class MKActivityIndicator: UIView {
         rotationAnim.duration = 4
         rotationAnim.toValue = 2 * M_PI
         rotationAnim.repeatCount = Float.infinity
-        rotationAnim.removedOnCompletion = false
+        rotationAnim.isRemovedOnCompletion = false
 
         let startHeadAnim = CABasicAnimation(keyPath: "strokeStart")
         startHeadAnim.beginTime = 0.1
@@ -137,9 +137,9 @@ public class MKActivityIndicator: UIView {
         strokeAnimGroup.duration = 1.5
         strokeAnimGroup.animations = [startHeadAnim, startTailAnim, endHeadAnim, endTailAnim]
         strokeAnimGroup.repeatCount = Float.infinity
-        strokeAnimGroup.removedOnCompletion = false
+        strokeAnimGroup.isRemovedOnCompletion = false
 
-        self.drawableLayer.addAnimation(rotationAnim, forKey: "rotation")
-        self.drawableLayer.addAnimation(strokeAnimGroup, forKey: "stroke")
+        self.drawableLayer.add(rotationAnim, forKey: "rotation")
+        self.drawableLayer.add(strokeAnimGroup, forKey: "stroke")
     }
 }

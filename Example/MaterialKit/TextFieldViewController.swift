@@ -13,10 +13,10 @@ class TextFieldViewController: UIViewController {
     @IBOutlet weak var textField1: MKTextField!
     
     override func viewDidLoad() {
-        textField1.layer.borderColor = UIColor.clearColor().CGColor
+        textField1.layer.borderColor = UIColor.clear.cgColor
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
 }
