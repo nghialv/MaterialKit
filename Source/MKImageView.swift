@@ -89,6 +89,10 @@ public class MKImageView: UIImageView
         super.init(image: image, highlightedImage: highlightedImage)
         setupLayer()
     }
+    
+    deinit {
+        mkLayer.cleanupObservers()
+    }
 
     // MARK: Setup
     private func setupLayer() {

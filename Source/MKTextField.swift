@@ -130,6 +130,10 @@ public class MKTextField : UITextField {
         super.init(coder: aDecoder)
         setupLayer()
     }
+    
+    deinit {
+        mkLayer.cleanupObservers()
+    }
 
     private func setupLayer() {
         mkLayer.elevation = self.elevation

@@ -207,6 +207,11 @@ public class MKSwitchLayer: CALayer {
         self.parent = parent
         setup()
     }
+    
+    deinit {
+        shadowLayer?.cleanupObservers()
+        rippleLayer?.cleanupObservers()
+    }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

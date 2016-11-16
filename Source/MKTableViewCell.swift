@@ -67,6 +67,10 @@ public class MKTableViewCell : UITableViewCell {
         super.init(coder: aDecoder)
         setupLayer()
     }
+    
+    deinit {
+        mkLayer.cleanupObservers()
+    }
 
     // MARK: Setup
     private func setupLayer() {

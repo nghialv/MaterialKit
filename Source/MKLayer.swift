@@ -42,12 +42,20 @@ public class MKLayer: CALayer,CAAnimationDelegate {
     public var backgroundAnimationEnabled: Bool = true
     
     private weak var superView: UIView?
-    private weak var superLayer: CALayer?
+    weak var superLayer: CALayer?
     private var rippleLayer: CAShapeLayer?
     private var backgroundLayer: CAShapeLayer?
     private var maskLayer: CAShapeLayer?
     private var userIsHolding: Bool = false
     private var effectIsRunning: Bool = false
+    
+    public func cleanupObservers() {
+        if let layer = self.superLayer {
+            layer.removeObserver(self, forKeyPath: "cornerRadius")
+            layer.removeObserver(self, forKeyPath: "bounds")
+            self.superLayer = nil
+        }
+    }
     
     private override init(layer: AnyObject) {
         super.init()

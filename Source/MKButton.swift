@@ -82,6 +82,10 @@ public class MKButton : UIButton
         setupLayer()
     }
 
+    deinit {
+        mkLayer.cleanupObservers()
+    }
+    
     // MARK: Setup
     private func setupLayer() {
         mkLayer = MKLayer(withView: self)

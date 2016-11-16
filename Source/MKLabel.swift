@@ -78,6 +78,10 @@ public class MKLabel: UILabel {
         setupLayer()
     }
 
+    deinit {
+        mkLayer.cleanupObservers()
+    }
+    
     // MARK: Setup
     private func setupLayer() {
         mkLayer.elevation = self.elevation
