@@ -11,7 +11,7 @@ import UIKit
 
 open class MKRefreshControl: UIControl {
 
-    fileprivate var parentScrollView: UIScrollView?
+    fileprivate weak var parentScrollView: UIScrollView?
     fileprivate var animationView: UIView?
     fileprivate var circleView: UIView?
     fileprivate var progressPath: UIBezierPath?
@@ -41,6 +41,10 @@ open class MKRefreshControl: UIControl {
         super.init(coder: aDecoder)
         setupRefreshControl()
         setup()
+    }
+
+    public func recycle() {
+        parentScrollView?.removeObserver(self, forKeyPath: "contentOffset")
     }
 
     // MARK: Public functions

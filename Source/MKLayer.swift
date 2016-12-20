@@ -41,8 +41,8 @@ open class MKLayer: CALayer, CAAnimationDelegate {
     }
     open var backgroundAnimationEnabled: Bool = true
 
-    fileprivate var superView: UIView?
-    fileprivate var superLayer: CALayer?
+    fileprivate weak var superView: UIView?
+    fileprivate weak var superLayer: CALayer?
     fileprivate var rippleLayer: CAShapeLayer?
     fileprivate var backgroundLayer: CAShapeLayer?
     fileprivate var maskLayer: CAShapeLayer?
@@ -70,6 +70,11 @@ open class MKLayer: CALayer, CAAnimationDelegate {
         super.init(coder: aDecoder)
         self.superLayer = self.superlayer
         self.setup()
+    }
+
+    public func recycle() {
+        superLayer?.removeObserver(self, forKeyPath: "bounds")
+        superLayer?.removeObserver(self, forKeyPath: "cornerRadius")
     }
 
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

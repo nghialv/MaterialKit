@@ -82,6 +82,10 @@ open class MKButton : UIButton
         setupLayer()
     }
 
+    deinit {
+        mkLayer.recycle()
+    }
+
     // MARK: Setup
     fileprivate func setupLayer() {
         mkLayer = MKLayer(withView: self)

@@ -68,6 +68,10 @@ open class MKTableViewCell : UITableViewCell {
         setupLayer()
     }
 
+    deinit {
+        mkLayer.recycle()
+    }
+
     // MARK: Setup
     fileprivate func setupLayer() {
         selectionStyle = .none

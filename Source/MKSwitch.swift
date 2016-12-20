@@ -174,7 +174,7 @@ open class MKSwitchLayer: CALayer {
             updateColors()
         }
     }
-    open var parent: MKSwitch?
+    open weak var parent: MKSwitch?
     open var rippleAnimationDuration: CFTimeInterval = 0.35
 
     fileprivate var trackLayer: CAShapeLayer?
@@ -210,6 +210,11 @@ open class MKSwitchLayer: CALayer {
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+
+    deinit {
+        shadowLayer?.recycle()
+        rippleLayer?.recycle()
     }
 
     fileprivate func setup() {

@@ -131,6 +131,10 @@ open class MKTextField : UITextField {
         setupLayer()
     }
 
+    deinit {
+        mkLayer.recycle()
+    }
+
     fileprivate func setupLayer() {
         mkLayer.elevation = self.elevation
         self.layer.cornerRadius = self.cornerRadius

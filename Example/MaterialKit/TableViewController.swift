@@ -15,10 +15,14 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     var refreshView: MKRefreshControl?
 
+    deinit {
+        refreshView?.recycle()
+    }
+
     override func viewDidLoad() {
         refreshView = MKRefreshControl()
-        refreshView!.addToScrollView(self.tableView, withRefreshBlock: { () -> Void in
-            self.tableViewRefresh()
+        refreshView!.addToScrollView(self.tableView, withRefreshBlock: { [weak self] in
+            self?.tableViewRefresh()
         })
     }
 
@@ -42,9 +46,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func tableViewRefresh() {
         NSLog("Refresh Block")
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(5 * NSEC_PER_SEC)) / Double(NSEC_PER_SEC), execute: { () -> Void in
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(5 * NSEC_PER_SEC)) / Double(NSEC_PER_SEC), execute: { [weak self] in
             NSLog("End refreshing")
-            self.refreshView!.endRefreshing()
+            self?.refreshView!.endRefreshing()
         })
     }
 }

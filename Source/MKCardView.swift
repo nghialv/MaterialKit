@@ -97,6 +97,10 @@ open class MKCardView: UIControl {
         setupLayer()
     }
 
+    deinit {
+        mkLayer.recycle()
+    }
+
     fileprivate func setupLayer() {
         mkLayer.elevation = self.elevation
         self.layer.cornerRadius = self.cornerRadius

@@ -74,6 +74,10 @@ open class MKCollectionViewCell: UICollectionViewCell {
         setupLayer()
     }
 
+    deinit {
+        mkLayer.recycle()
+    }
+
     // MARK: Setup
     fileprivate func setupLayer() {
         mkLayer.elevation = self.elevation

@@ -90,6 +90,10 @@ open class MKImageView: UIImageView
         setupLayer()
     }
 
+    deinit {
+        mkLayer.recycle()
+    }
+
     // MARK: Setup
     fileprivate func setupLayer() {
         mkLayer.elevation = self.elevation
