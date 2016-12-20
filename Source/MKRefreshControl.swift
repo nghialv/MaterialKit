@@ -133,7 +133,7 @@ open class MKRefreshControl: UIControl {
     fileprivate func startRefreshing() {
         UIView.animate(withDuration: 0.25, animations: { () -> Void in
             self.setScrollViewTopInsets(withOffset: self.height)
-        }) 
+        })
         self.animateRefreshView()
     }
 

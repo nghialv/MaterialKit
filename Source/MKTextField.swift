@@ -183,7 +183,7 @@ open class MKTextField : UITextField {
     override open func textRect(forBounds bounds: CGRect) -> CGRect {
         let rect = super.textRect(forBounds: bounds)
         var newRect = CGRect(x: rect.origin.x + padding.width, y: rect.origin.y,
-            width: rect.size.width - 2 * padding.width, height: rect.size.height)
+                             width: rect.size.width - 2 * padding.width, height: rect.size.height)
 
         if !floatingPlaceholderEnabled {
             return newRect
@@ -237,23 +237,23 @@ private extension MKTextField {
             break
         }
         floatingLabel.frame = CGRect(x: originX, y: padding.height,
-            width: floatingLabel.frame.size.width, height: floatingLabel.frame.size.height)
+                                     width: floatingLabel.frame.size.width, height: floatingLabel.frame.size.height)
     }
 
     func showFloatingLabel() {
         let curFrame = floatingLabel.frame
         floatingLabel.frame = CGRect(x: curFrame.origin.x, y: bounds.height / 2, width: curFrame.width, height: curFrame.height)
         UIView.animate(withDuration: 0.45, delay: 0.0, options: .curveEaseOut,
-            animations: {
-                self.floatingLabel.alpha = 1.0
-                self.floatingLabel.frame = curFrame
-            }, completion: nil)
+                       animations: {
+                        self.floatingLabel.alpha = 1.0
+                        self.floatingLabel.frame = curFrame
+        }, completion: nil)
     }
 
     func hideFloatingLabel() {
         floatingLabel.alpha = 0.0
     }
-
+    
     func updateFloatingLabelText() {
         floatingLabel.attributedText = attributedPlaceholder
         floatingLabel.sizeToFit()

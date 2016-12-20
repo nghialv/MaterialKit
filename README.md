@@ -103,7 +103,7 @@ refreshControl.beginRefreshing()
 
 **Important**: because MKRefreshControl observes changes in `contentOffset` of the scrollView it is added to, before the scrollView is deinitialized, you must call `recycle` to remove the observer
 
-```
+``` swift
 deinit {
 	refreshControl.recycle()
 }
@@ -136,7 +136,7 @@ A subclass of CALayer.
 
 **Important**: because MKLayer observes changes in `bounds` and `cornerRadius` of the superLayer/View it is made from, before the superLayer/View is deinitialized, you must call `recycle` to remove the observers
 
-```
+``` swift
 deinit {
 	mkLayer.recycle()
 }

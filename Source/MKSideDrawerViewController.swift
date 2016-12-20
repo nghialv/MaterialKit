@@ -134,19 +134,19 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
             view.insertSubview(mainViewController.view, at: 0)
             view.addConstraints(
                 NSLayoutConstraint.constraints(
-                withVisualFormat: "V:|-0-[mainView]-0-|",
-                options: [],
-                metrics: nil,
-                views: viewDictionary
-            )
+                    withVisualFormat: "V:|-0-[mainView]-0-|",
+                    options: [],
+                    metrics: nil,
+                    views: viewDictionary
+                )
             )
             view.addConstraints(
                 NSLayoutConstraint.constraints(
-                withVisualFormat: "H:|-0-[mainView]-0-|",
-                options: [],
-                metrics: nil,
-                views: viewDictionary
-            )
+                    withVisualFormat: "H:|-0-[mainView]-0-|",
+                    options: [],
+                    metrics: nil,
+                    views: viewDictionary
+                )
             )
             mainViewController.didMove(toParentViewController: self)
         }
@@ -201,11 +201,11 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
             _containerView.addConstraint(_drawerConstraint)
             _containerView.addConstraints(
                 NSLayoutConstraint.constraints(
-                withVisualFormat: "V:|-0-[drawerView]-0-|",
-                options: [],
-                metrics: nil,
-                views: viewDictionary
-            )
+                    withVisualFormat: "V:|-0-[drawerView]-0-|",
+                    options: [],
+                    metrics: nil,
+                    views: viewDictionary
+                )
             )
             _containerView.updateConstraints()
             drawerViewController.updateViewConstraints()
@@ -233,19 +233,19 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
         view.addSubview(_containerView)
         view.addConstraints(
             NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-0-[_containerView]-0-|",
-            options: [],
-            metrics: nil,
-            views: viewDictionary
-        )
+                withVisualFormat: "H:|-0-[_containerView]-0-|",
+                options: [],
+                metrics: nil,
+                views: viewDictionary
+            )
         )
         view.addConstraints(
             NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-0-[_containerView]-0-|",
-            options: [],
-            metrics: nil,
-            views: viewDictionary
-        )
+                withVisualFormat: "V:|-0-[_containerView]-0-|",
+                options: [],
+                metrics: nil,
+                views: viewDictionary
+            )
         )
         _containerView.isHidden = true
 
@@ -264,34 +264,34 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
         let duration: TimeInterval = animated ? _kDrawerAnimationDuration : 0
         setWindowLevel(state == .opened ? UIWindowLevelStatusBar + 1 : UIWindowLevelNormal)
         UIView.animate(withDuration: duration,
-            delay: 0,
-            options: .curveEaseOut,
-            animations: { () -> Void in
-                switch state {
-                case .closed:
-                    self._drawerConstraint.constant = 0
-                    self._containerView.backgroundColor = UIColor(white: 0, alpha: 0)
-                case .opened:
-                    let constant: CGFloat
-                    switch self.drawerDirection {
-                    case .left:
-                        constant = self.drawerWidth
-                    case .right:
-                        constant = -self.drawerWidth
-                    }
-                    self._drawerConstraint.constant = constant
-                    self._containerView.backgroundColor = UIColor(
-                        white: 0
-                    , alpha: self._kContainerViewMaxAlpha
-                    )
-                }
-                self._containerView.layoutIfNeeded()
-            }) { (finished: Bool) -> Void in
-                if state == .closed {
-                    self._containerView.isHidden = true
-                }
-                self.delegate?.drawerController?(self, stateChanged: state)
+                       delay: 0,
+                       options: .curveEaseOut,
+                       animations: { () -> Void in
+                        switch state {
+                        case .closed:
+                            self._drawerConstraint.constant = 0
+                            self._containerView.backgroundColor = UIColor(white: 0, alpha: 0)
+                        case .opened:
+                            let constant: CGFloat
+                            switch self.drawerDirection {
+                            case .left:
+                                constant = self.drawerWidth
+                            case .right:
+                                constant = -self.drawerWidth
+                            }
+                            self._drawerConstraint.constant = constant
+                            self._containerView.backgroundColor = UIColor(
+                                white: 0
+                                , alpha: self._kContainerViewMaxAlpha
+                            )
+                        }
+                        self._containerView.layoutIfNeeded()
+        }) { (finished: Bool) -> Void in
+            if state == .closed {
+                self._containerView.isHidden = true
             }
+            self.delegate?.drawerController?(self, stateChanged: state)
+        }
     }
 
     open func transitionFromMainViewController(_ toViewController: UIViewController, duration: TimeInterval, options: UIViewAnimationOptions, animations: (() -> Void)?, completion: ((Bool) -> Void)?) {
@@ -311,7 +311,7 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
                 if let completion = completion {
                     completion(result)
                 }
-            })
+        })
     }
 
     open func toggleDrawer(_ animated: Bool = true) {
@@ -386,9 +386,9 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
             }
         }
     }
-
+    
     // MARK: - UIGestureRecognizerDelegate
-
+    
     open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         switch gestureRecognizer {
         case panGesture:

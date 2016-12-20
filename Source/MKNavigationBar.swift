@@ -12,7 +12,7 @@ import UIKit
 open class MKNavigationBar: UINavigationBar {
 
     let statusView = UIView(frame: CGRect(x: 0, y: -20, width: UIScreen.main.bounds.size.width, height: 20))
-    
+
     @IBInspectable open var elevation: CGFloat = 0 {
         didSet {
             drawShadow()
@@ -23,19 +23,19 @@ open class MKNavigationBar: UINavigationBar {
             drawShadow()
         }
     }
-    
+
     @IBInspectable open var color: UIColor = UIColor.white {
         didSet {
             UINavigationBar.appearance().barTintColor = self.color
         }
     }
-    
+
     @IBInspectable open var darkColor: UIColor = UIColor.gray {
         didSet {
             self.statusView.backgroundColor = self.darkColor
         }
     }
-    
+
     @IBInspectable open override var tintColor: UIColor! {
         didSet {
             UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: self.tintColor]
@@ -47,17 +47,17 @@ open class MKNavigationBar: UINavigationBar {
         super.init(frame: frame)
         setup()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-    
+
     override open func layoutSubviews() {
         drawShadow()
         super.layoutSubviews()
     }
-    
+
     fileprivate func setup() {
         self.statusView.backgroundColor = self.darkColor
         self.addSubview(self.statusView)
@@ -66,7 +66,7 @@ open class MKNavigationBar: UINavigationBar {
         UINavigationBar.appearance().tintColor = self.tintColor
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: self.tintColor]
     }
-    
+
     fileprivate func drawShadow() {
         if elevation > 0 {
             let shadowPath = UIBezierPath(rect: bounds)
