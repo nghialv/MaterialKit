@@ -9,24 +9,24 @@
 
 import UIKit
 
-public class MKRefreshControl: UIControl {
+open class MKRefreshControl: UIControl {
 
-    private var parentScrollView: UIScrollView?
-    private var animationView: UIView?
-    private var circleView: UIView?
-    private var progressPath: UIBezierPath?
-    private var progressLayer: CAShapeLayer?
-    private var refreshBlock: (() -> Void)?
-    private var radius: CGFloat = 0
-    private var rotation: CGFloat = 0
-    private var rotationIncrement: CGFloat = 0
+    fileprivate weak var parentScrollView: UIScrollView?
+    fileprivate var animationView: UIView?
+    fileprivate var circleView: UIView?
+    fileprivate var progressPath: UIBezierPath?
+    fileprivate var progressLayer: CAShapeLayer?
+    fileprivate var refreshBlock: (() -> Void)?
+    fileprivate var radius: CGFloat = 0
+    fileprivate var rotation: CGFloat = 0
+    fileprivate var rotationIncrement: CGFloat = 0
 
-    public private(set) var refreshing: Bool = false
-    public var height: CGFloat = 60
-    public var color: UIColor = UIColor.MKColor.Blue.P500 {
+    open fileprivate(set) var refreshing: Bool = false
+    open var height: CGFloat = 60
+    open var color: UIColor = UIColor.MKColor.Blue.P500 {
         didSet {
             if let progressLayer = self.progressLayer {
-                progressLayer.strokeColor = self.color.CGColor
+                progressLayer.strokeColor = self.color.cgColor
             }
         }
     }
@@ -43,73 +43,77 @@ public class MKRefreshControl: UIControl {
         setup()
     }
 
+    public func recycle() {
+        parentScrollView?.removeObserver(self, forKeyPath: "contentOffset")
+    }
+
     // MARK: Public functions
 
-    public func addToScrollView(scrollView: UIScrollView, withRefreshBlock block: (() -> Void)) {
+    open func addToScrollView(_ scrollView: UIScrollView, withRefreshBlock block: @escaping (() -> Void)) {
         self.parentScrollView = scrollView
         self.refreshBlock = block
         if let parentScrollView = self.parentScrollView {
             parentScrollView.addSubview(self)
-            parentScrollView.sendSubviewToBack(self)
+            parentScrollView.sendSubview(toBack: self)
             parentScrollView.panGestureRecognizer.addTarget(self, action: #selector(MKRefreshControl.handlePanGestureRecognizer))
-            parentScrollView.addObserver(self, forKeyPath: "contentOffset", options: .New, context: nil)
+            parentScrollView.addObserver(self, forKeyPath: "contentOffset", options: .new, context: nil)
         }
     }
 
-    public func beginRefreshing() {
+    open func beginRefreshing() {
         self.refreshing = true
         self.startRefreshing()
     }
 
-    public func endRefreshing() {
+    open func endRefreshing() {
         self.resetAnimation()
     }
 
     // MARK: Private functions
 
-    private func setupRefreshControl() {
-        self.frame = CGRectMake(0, 0, CGRectGetWidth(UIScreen.mainScreen().bounds), self.height)
+    fileprivate func setupRefreshControl() {
+        self.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: self.height)
         self.animationView = UIView(frame: self.bounds)
         if let animationView = self.animationView {
-            animationView.backgroundColor = UIColor.clearColor()
+            animationView.backgroundColor = UIColor.clear
             self.layer.masksToBounds = true
             self.addSubview(animationView)
         }
     }
 
-    private func setup() {
-        self.backgroundColor = UIColor.whiteColor()
+    fileprivate func setup() {
+        self.backgroundColor = UIColor.white
 
         self.rotation = 0
         self.rotationIncrement = CGFloat(14 * M_PI / 8.0)
         self.radius = 15.0
-        let center = CGPointMake(CGRectGetWidth(UIScreen.mainScreen().bounds) / 2, self.height / 2)
+        let center = CGPoint(x: UIScreen.main.bounds.width / 2, y: self.height / 2)
 
-        self.circleView = UIView(frame: CGRectMake(0, 0, self.radius * 2, self.radius * 2))
-        if let circleView = self.circleView, animationView = self.animationView {
+        self.circleView = UIView(frame: CGRect(x: 0, y: 0, width: self.radius * 2, height: self.radius * 2))
+        if let circleView = self.circleView, let animationView = self.animationView {
             circleView.center = center
-            circleView.backgroundColor = UIColor.clearColor()
+            circleView.backgroundColor = UIColor.clear
             animationView.addSubview(circleView)
 
-            let circleViewCenter = CGPointMake(self.radius, self.radius)
+            let circleViewCenter = CGPoint(x: self.radius, y: self.radius)
             self.progressPath = UIBezierPath(arcCenter: circleViewCenter, radius: self.radius, startAngle: CGFloat(-M_PI), endAngle: CGFloat(M_PI), clockwise: true)
             self.progressLayer = CAShapeLayer()
-            if let progressLayer = self.progressLayer, progressPath = self.progressPath {
-                progressLayer.path = progressPath.CGPath
-                progressLayer.strokeColor = self.color.CGColor
-                progressLayer.fillColor = UIColor.clearColor().CGColor
+            if let progressLayer = self.progressLayer, let progressPath = self.progressPath {
+                progressLayer.path = progressPath.cgPath
+                progressLayer.strokeColor = self.color.cgColor
+                progressLayer.fillColor = UIColor.clear.cgColor
                 progressLayer.lineWidth = 0.1 * radius * 2
                 progressLayer.strokeStart = 0
                 progressLayer.strokeEnd = 0
                 progressLayer.frame = circleView.bounds
-                circleView.layer.insertSublayer(progressLayer, atIndex: 0)
+                circleView.layer.insertSublayer(progressLayer, at: 0)
             }
         }
 
         self.refreshing = false
     }
 
-    private func setScrollViewTopInsets(withOffset offset: CGFloat) {
+    fileprivate func setScrollViewTopInsets(withOffset offset: CGFloat) {
         if let parentScrollView = self.parentScrollView {
             var insets: UIEdgeInsets = parentScrollView.contentInset
             insets.top += offset
@@ -117,45 +121,45 @@ public class MKRefreshControl: UIControl {
         }
     }
 
-    private func refresh() {
+    fileprivate func refresh() {
         self.refreshing = true
-        self.sendActionsForControlEvents(.ValueChanged)
+        self.sendActions(for: .valueChanged)
         if let refreshBlock = self.refreshBlock {
             refreshBlock()
         }
         self.startRefreshing()
     }
 
-    private func startRefreshing() {
-        UIView.animateWithDuration(0.25) { () -> Void in
+    fileprivate func startRefreshing() {
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
             self.setScrollViewTopInsets(withOffset: self.height)
-        }
+        })
         self.animateRefreshView()
     }
 
-    private func handleScrollingOnAnimationView(animationView: UIView, withPullDistance pullDistance: CGFloat, withPullRatio pullRatio: CGFloat, withPullVelocity pullVelocity: CGFloat) {
-        if let circleView = self.circleView, progressLayer = self.progressLayer {
+    fileprivate func handleScrollingOnAnimationView(_ animationView: UIView, withPullDistance pullDistance: CGFloat, withPullRatio pullRatio: CGFloat, withPullVelocity pullVelocity: CGFloat) {
+        if let circleView = self.circleView, let progressLayer = self.progressLayer {
             if pullDistance < self.height {
                 circleView.alpha = pullDistance / self.height
                 progressLayer.strokeEnd = pullDistance / self.height * 0.9
             }
             self.rotation = CGFloat(M_PI) * pullDistance / self.height * 0.5
-            circleView.transform = CGAffineTransformMakeRotation(self.rotation)
+            circleView.transform = CGAffineTransform(rotationAngle: self.rotation)
         }
     }
 
-    private func resetAnimation() {
+    fileprivate func resetAnimation() {
         self.refreshing = false
         if let animationView = self.animationView {
             self.exitAnimation(forRefreshView: animationView) { () -> Void in
-                UIView.animateWithDuration(0.25, animations: { () -> Void in
+                UIView.animate(withDuration: 0.25, animations: { () -> Void in
                     self.setScrollViewTopInsets(withOffset: -self.height)
                 }, completion: { (Bool) -> Void in
                     if let parentScrollView = self.parentScrollView {
-                        parentScrollView.scrollRectToVisible(CGRectMake(0, 0, 1, 1), animated: true)
+                        parentScrollView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
                     }
                 })
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(350 * NSEC_PER_MSEC)), dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(350 * NSEC_PER_MSEC)) / Double(NSEC_PER_SEC), execute: { () -> Void in
                     if let animationView = self.animationView {
                         self.resetAnimationView(animationView)
                     }
@@ -164,11 +168,11 @@ public class MKRefreshControl: UIControl {
         }
     }
 
-    private func resetAnimationView(animationView: UIView) {
+    fileprivate func resetAnimationView(_ animationView: UIView) {
         self.rotation = 0
         if let circleView = self.circleView {
             circleView.alpha = 1
-            circleView.transform = CGAffineTransformMakeRotation(self.rotation)
+            circleView.transform = CGAffineTransform(rotationAngle: self.rotation)
         }
         if let progressLayer = self.progressLayer {
             progressLayer.strokeStart = 0
@@ -177,7 +181,7 @@ public class MKRefreshControl: UIControl {
         }
     }
 
-    private func setupRefreshControl(forAnimationView animationView: UIView) {
+    fileprivate func setupRefreshControl(forAnimationView animationView: UIView) {
         CATransaction.begin()
         CATransaction.setCompletionBlock { () -> Void in
             self.animationSecondPhase()
@@ -194,7 +198,7 @@ public class MKRefreshControl: UIControl {
         CATransaction.commit()
     }
 
-    private func animationSecondPhase() {
+    fileprivate func animationSecondPhase() {
         CATransaction.begin()
 
         let rotationAnim = CABasicAnimation(keyPath: "transform.rotation.z")
@@ -202,7 +206,7 @@ public class MKRefreshControl: UIControl {
         rotationAnim.duration = 4
         rotationAnim.toValue = 2 * M_PI
         rotationAnim.repeatCount = Float.infinity
-        rotationAnim.removedOnCompletion = false
+        rotationAnim.isRemovedOnCompletion = false
 
         let startHeadAnim = CABasicAnimation(keyPath: "strokeStart")
         startHeadAnim.beginTime = 0.1
@@ -236,26 +240,26 @@ public class MKRefreshControl: UIControl {
         strokeAnimGroup.duration = 1.5
         strokeAnimGroup.animations = [startHeadAnim, startTailAnim, endHeadAnim, endTailAnim]
         strokeAnimGroup.repeatCount = Float.infinity
-        strokeAnimGroup.removedOnCompletion = false
+        strokeAnimGroup.isRemovedOnCompletion = false
 
         if let progressLayer = self.progressLayer {
-            progressLayer.addAnimation(rotationAnim, forKey: "rotation")
-            progressLayer.addAnimation(strokeAnimGroup, forKey: "stroke")
+            progressLayer.add(rotationAnim, forKey: "rotation")
+            progressLayer.add(strokeAnimGroup, forKey: "stroke")
         }
 
         CATransaction.commit()
     }
 
-    private func animateRefreshView() {
+    fileprivate func animateRefreshView() {
         if let animationView = self.animationView {
             self.setupRefreshControl(forAnimationView: animationView)
         }
     }
 
-    private func exitAnimation(forRefreshView view: UIView, withCompletionBlock block: (() -> Void)) {
+    fileprivate func exitAnimation(forRefreshView view: UIView, withCompletionBlock block: @escaping (() -> Void)) {
         CATransaction.begin()
         CATransaction.setCompletionBlock { () -> Void in
-            if let circleView = self.circleView, progressLayer = self.progressLayer {
+            if let circleView = self.circleView, let progressLayer = self.progressLayer {
                 circleView.alpha = 0
                 progressLayer.removeAllAnimations()
             }
@@ -266,11 +270,11 @@ public class MKRefreshControl: UIControl {
         opacityAnimation.fromValue = 1
         opacityAnimation.toValue = 0
         opacityAnimation.duration = 0.25
-        opacityAnimation.removedOnCompletion = false
+        opacityAnimation.isRemovedOnCompletion = false
         opacityAnimation.fillMode = kCAFillModeForwards
 
         if let progressLayer = self.progressLayer {
-            progressLayer.addAnimation(opacityAnimation, forKey: "opacity")
+            progressLayer.add(opacityAnimation, forKey: "opacity")
         }
 
         CATransaction.commit()
@@ -278,10 +282,10 @@ public class MKRefreshControl: UIControl {
 
     // MARK: ScrollView Observers
 
-    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if let keyPath = keyPath {
             if keyPath == "contentOffset" {
-                if let object = object as? UIScrollView, parentScrollView = self.parentScrollView {
+                if let object = object as? UIScrollView, let parentScrollView = self.parentScrollView {
                     if object == parentScrollView {
                         self.containingScrollViewDidScroll(parentScrollView)
                     }
@@ -290,21 +294,21 @@ public class MKRefreshControl: UIControl {
         }
     }
 
-    public func handlePanGestureRecognizer() {
+    open func handlePanGestureRecognizer() {
         if let parentScrollView = self.parentScrollView {
-            if parentScrollView.panGestureRecognizer.state == .Ended {
+            if parentScrollView.panGestureRecognizer.state == .ended {
                 self.containingScrollViewDidEndDragging(parentScrollView)
             }
         }
     }
 
-    private func containingScrollViewDidScroll(scrollView: UIScrollView) {
+    fileprivate func containingScrollViewDidScroll(_ scrollView: UIScrollView) {
         let actualOffset: CGFloat = scrollView.contentOffset.y
         self.setFrameForScrolling(withOffset: actualOffset)
         if !self.refreshing {
             let pullDistance: CGFloat = max(0, -actualOffset)
             let pullRatio: CGFloat = min(max(0, pullDistance), self.height) / self.height
-            let velocity: CGFloat = scrollView.panGestureRecognizer.velocityInView(scrollView).y
+            let velocity: CGFloat = scrollView.panGestureRecognizer.velocity(in: scrollView).y
             if pullRatio != 0 {
                 if let animationView = self.animationView {
                     self.handleScrollingOnAnimationView(
@@ -317,7 +321,7 @@ public class MKRefreshControl: UIControl {
         }
     }
 
-    private func containingScrollViewDidEndDragging(scrollView: UIScrollView) {
+    fileprivate func containingScrollViewDidEndDragging(_ scrollView: UIScrollView) {
         let actualOffset: CGFloat = scrollView.contentOffset.y
         if !self.refreshing && -actualOffset > self.height {
             self.refresh()
@@ -326,15 +330,15 @@ public class MKRefreshControl: UIControl {
 
     // MARK: Scrolling
 
-    private func setFrameForScrolling(withOffset offset: CGFloat) {
+    fileprivate func setFrameForScrolling(withOffset offset: CGFloat) {
         if -offset > self.height {
-            let newFrame: CGRect = CGRectMake(0, offset, CGRectGetWidth(UIScreen.mainScreen().bounds), abs(offset))
+            let newFrame: CGRect = CGRect(x: 0, y: offset, width: UIScreen.main.bounds.width, height: abs(offset))
             self.frame = newFrame
-            self.bounds = CGRectMake(0, 0, CGRectGetWidth(UIScreen.mainScreen().bounds), abs(offset))
+            self.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: abs(offset))
         } else {
             let newY: CGFloat = offset
-            self.frame = CGRectMake(0, newY, CGRectGetWidth(UIScreen.mainScreen().bounds), self.height)
-            self.bounds = CGRectMake(0, 0, CGRectGetWidth(UIScreen.mainScreen().bounds), self.height)
+            self.frame = CGRect(x: 0, y: newY, width: UIScreen.main.bounds.width, height: self.height)
+            self.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: self.height)
         }
     }
 }

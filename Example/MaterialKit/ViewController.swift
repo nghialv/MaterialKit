@@ -10,13 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         let hamburgerButton = MKButton(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
-        hamburgerButton.setImage(UIImage(named: "uibaritem_icon.png"), forState: .Normal)
+        hamburgerButton.setImage(UIImage(named: "uibaritem_icon.png"), for: UIControlState())
         hamburgerButton.maskEnabled = false
         hamburgerButton.backgroundAnimationEnabled = false
         hamburgerButton.rippleDuration = 0.15
-        hamburgerButton.addTarget(self, action: #selector(ViewController.toggleDrawer), forControlEvents: UIControlEvents.TouchUpInside)
+        hamburgerButton.addTarget(self, action: #selector(ViewController.toggleDrawer), for: UIControlEvents.touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: hamburgerButton)
     }
 
@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func cardViewClicked(sender: AnyObject) {
+    @IBAction func cardViewClicked(_ sender: AnyObject) {
         let snackbar = MKSnackbar(
             withTitle: "You clicked on CardView\nThis is a SnackBar :)",
             withDuration: nil,

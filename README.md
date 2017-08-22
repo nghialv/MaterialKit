@@ -95,10 +95,18 @@ cell.rippleLayerColor = UIColor.MKColor.Blue
 
 ``` swift
 var refreshControl = MKRefreshControl()
-refreshControl.addToScrollView(self.tableView, withRefreshBlock: { () -> Void in
-	self.tableViewRefresh()
+refreshControl.addToScrollView(self.tableView, withRefreshBlock: { [weak self] in
+	self?.tableViewRefresh()
 })
 refreshControl.beginRefreshing()
+```
+
+**Important**: because MKRefreshControl observes changes in `contentOffset` of the scrollView it is added to, before the scrollView is deinitialized, you must call `recycle` to remove the observer
+
+``` swift
+deinit {
+	refreshControl.recycle()
+}
 ```
 
 #### MKImageView (BarButtonItem), MKActivityIndicator
@@ -125,6 +133,14 @@ self.navigationItem.rightBarButtonItem = rightBarButton
 ```
 #### MKLayer
 A subclass of CALayer.
+
+**Important**: because MKLayer observes changes in `bounds` and `cornerRadius` of the superLayer/View it is made from, before the superLayer/View is deinitialized, you must call `recycle` to remove the observers
+
+``` swift
+deinit {
+	mkLayer.recycle()
+}
+```
 
 #### MKColor
 A category for UIColor that adds some methods to get flat colors designed by [Google](http://www.google.com/design/spec/style/color.html)

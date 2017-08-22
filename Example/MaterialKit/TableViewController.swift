@@ -15,23 +15,27 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     var refreshView: MKRefreshControl?
 
+    deinit {
+        refreshView?.recycle()
+    }
+
     override func viewDidLoad() {
         refreshView = MKRefreshControl()
-        refreshView!.addToScrollView(self.tableView, withRefreshBlock: { () -> Void in
-            self.tableViewRefresh()
+        refreshView!.addToScrollView(self.tableView, withRefreshBlock: { [weak self] in
+            self?.tableViewRefresh()
         })
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 100
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 65.0
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as! MyCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell") as! MyCell
         cell.setMessage(labels[indexPath.row % labels.count])
 
         let index = indexPath.row % circleColors.count
@@ -42,9 +46,9 @@ class TableViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func tableViewRefresh() {
         NSLog("Refresh Block")
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(5 * NSEC_PER_SEC)) / Double(NSEC_PER_SEC), execute: { [weak self] in
             NSLog("End refreshing")
-            self.refreshView!.endRefreshing()
+            self?.refreshView!.endRefreshing()
         })
     }
 }
