@@ -49,10 +49,14 @@ open class MKLayer: CALayer, CAAnimationDelegate {
     fileprivate var userIsHolding: Bool = false
     fileprivate var effectIsRunning: Bool = false
 
-    fileprivate override init(layer: Any) {
+    public override init() {
         super.init()
     }
-
+    
+    override init(layer: Any) {
+        super.init()
+    }
+    
     public init(superLayer: CALayer) {
         super.init()
         self.superLayer = superLayer

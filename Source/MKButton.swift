@@ -69,7 +69,7 @@ open class MKButton : UIButton
         }
     }
 
-    fileprivate lazy var mkLayer: MKLayer = MKLayer(withView: self)
+    fileprivate lazy var mkLayer: MKLayer = MKLayer()
 
     // MARK: Init
     override public init(frame: CGRect) {
