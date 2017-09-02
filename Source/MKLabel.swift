@@ -16,7 +16,7 @@ open class MKLabel: UILabel {
     }
     @IBInspectable open var cornerRadius: CGFloat = 0 {
         didSet {
-            self.layer.cornerRadius = self.cornerRadius
+            layer.cornerRadius = cornerRadius
             mkLayer.superLayerDidResize()
         }
     }
@@ -30,7 +30,7 @@ open class MKLabel: UILabel {
             mkLayer.shadowOffset = shadowOffset
         }
     }
-    @IBInspectable open var roundingCorners: UIRectCorner = UIRectCorner.allCorners {
+    @IBInspectable open var roundingCorners: UIRectCorner = .allCorners {
         didSet {
             mkLayer.roundingCorners = roundingCorners
         }
@@ -66,7 +66,7 @@ open class MKLabel: UILabel {
             mkLayer.superLayerDidResize()
         }
     }
-    fileprivate lazy var mkLayer: MKLayer = MKLayer(withView: self)
+    private lazy var mkLayer: MKLayer = MKLayer(withView: self)
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -83,17 +83,17 @@ open class MKLabel: UILabel {
     }
 
     // MARK: Setup
-    fileprivate func setupLayer() {
-        mkLayer.elevation = self.elevation
-        self.layer.cornerRadius = self.cornerRadius
-        mkLayer.elevationOffset = self.shadowOffset
-        mkLayer.roundingCorners = self.roundingCorners
-        mkLayer.maskEnabled = self.maskEnabled
-        mkLayer.rippleScaleRatio = self.rippleScaleRatio
-        mkLayer.rippleDuration = self.rippleDuration
-        mkLayer.rippleEnabled = self.rippleEnabled
-        mkLayer.backgroundAnimationEnabled = self.backgroundAnimationEnabled
-        mkLayer.setRippleColor(self.rippleLayerColor)
+    private func setupLayer() {
+        mkLayer.elevation = elevation
+        layer.cornerRadius = cornerRadius
+        mkLayer.elevationOffset = shadowOffset
+        mkLayer.roundingCorners = roundingCorners
+        mkLayer.maskEnabled = maskEnabled
+        mkLayer.rippleScaleRatio = rippleScaleRatio
+        mkLayer.rippleDuration = rippleDuration
+        mkLayer.rippleEnabled = rippleEnabled
+        mkLayer.backgroundAnimationEnabled = backgroundAnimationEnabled
+        mkLayer.setRippleColor(rippleLayerColor)
     }
 
     // MARK: Touch

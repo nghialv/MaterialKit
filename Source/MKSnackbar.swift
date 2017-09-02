@@ -12,49 +12,41 @@ open class MKSnackbar: UIControl {
 
     open var text: String? {
         didSet {
-            if let textLabel = self.textLabel {
-                textLabel.text = text
-            }
+            textLabel?.text = text
         }
     }
     open var actionTitle: String? {
         didSet {
-            if let actionButton = self.actionButton {
-                actionButton.setTitle(actionTitle, for: UIControlState())
-            }
+            actionButton?.setTitle(actionTitle, for: .normal)
         }
     }
     open var textColor: UIColor? {
         didSet {
-            if let textLabel = self.textLabel {
-                textLabel.textColor = textColor
-            }
+            textLabel?.textColor = textColor
         }
     }
     open var actionTitleColor: UIColor? {
         didSet {
-            if let actionButton = self.actionButton {
-                actionButton.setTitleColor(actionTitleColor, for: UIControlState())
-            }
+            actionButton?.setTitleColor(actionTitleColor, for: .normal)
         }
     }
     open var actionRippleColor: UIColor? {
         didSet {
-            if let actionButton = self.actionButton, let actionRippleColor = self.actionRippleColor {
+            if let actionButton = actionButton, let actionRippleColor = actionRippleColor {
                 actionButton.rippleLayerColor = actionRippleColor
             }
         }
     }
     open var duration: TimeInterval = 3.5
-    open fileprivate(set) var isShowing: Bool = false
+    open private(set) var isShowing = false
 
-    fileprivate var hiddenConstraint: NSLayoutConstraint?
-    fileprivate var showingConstraint: NSLayoutConstraint?
-    fileprivate var rootView: UIView?
-    fileprivate var textLabel: UILabel?
-    fileprivate var actionButton: MKButton?
-    fileprivate var isAnimating: Bool = false
-    fileprivate var delegates: NSMutableSet = NSMutableSet()
+    private var hiddenConstraint: NSLayoutConstraint?
+    private var showingConstraint: NSLayoutConstraint?
+    private var rootView: UIView?
+    private var textLabel: UILabel?
+    private var actionButton: MKButton?
+    private var isAnimating = false
+    private var delegates = NSMutableSet()
 
     // MARK: Init
 
@@ -74,58 +66,56 @@ open class MKSnackbar: UIControl {
         withTitleColor titleColor: UIColor?,
         withActionButtonTitle actionTitle: String?,
         withActionButtonColor actionColor: UIColor?) {
-        super.init(frame: CGRect.zero)
-        self.text = title
+        super.init(frame: .zero)
+        text = title
         if let duration = duration {
             self.duration = duration
         }
-        self.textColor = titleColor
+        textColor = titleColor
         self.actionTitle = actionTitle
-        self.actionTitleColor = actionColor
-        self.setup()
+        actionTitleColor = actionColor
+        setup()
     }
 
-    fileprivate func setup() {
+    private func setup() {
         if actionTitleColor == nil {
-            actionTitleColor = UIColor.white
+            actionTitleColor = .white
         }
         if textColor == nil {
-            textColor = UIColor.white
+            textColor = .white
         }
-        self.backgroundColor = UIColor.black
-        self.translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .black
+        translatesAutoresizingMaskIntoConstraints = false
 
-        textLabel = UILabel()
-        if let textLabel = textLabel {
-            textLabel.font = UIFont.systemFont(ofSize: 16)
+        textLabel = { let textLabel = UILabel()
+            textLabel.font = .systemFont(ofSize: 16)
             textLabel.textColor = textColor
             textLabel.alpha = 0
             textLabel.numberOfLines = 0
             textLabel.translatesAutoresizingMaskIntoConstraints = false
-            textLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow,
-                                                              for: UILayoutConstraintAxis.horizontal)
-        }
+            textLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+            return textLabel
+        }()
 
-        actionButton = MKButton()
-        if let actionButton = actionButton {
-            actionButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-            actionButton.setTitleColor(actionTitleColor, for: UIControlState())
+        actionButton = { let actionButton = MKButton()
+            actionButton.titleLabel?.font = .boldSystemFont(ofSize: 16)
+            actionButton.setTitleColor(actionTitleColor, for: .normal)
             actionButton.alpha = 0
             actionButton.isEnabled = false
             actionButton.translatesAutoresizingMaskIntoConstraints = false
-            actionButton.setContentHuggingPriority(UILayoutPriorityRequired,
-                                                   for: UILayoutConstraintAxis.horizontal)
+            actionButton.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
             actionButton.addTarget(
                 self,
                 action: #selector(MKSnackbar.actionButtonClicked(_:)),
-                for: UIControlEvents.touchUpInside)
-        }
+                for: .touchUpInside)
+            return actionButton
+        }()
     }
 
     // Mark: Public functions
 
     open func show() {
-        MKSnackbarManager.getInstance().showSnackbar(self)
+        MKSnackbarManager.instance.showSnackbar(self)
     }
 
     open func dismiss() {
@@ -136,38 +126,32 @@ open class MKSnackbar: UIControl {
         isAnimating = true
 
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(MKSnackbar.dismiss), object: nil)
-        if let rootView = rootView {
-            rootView.layoutIfNeeded()
+        guard let rootView = rootView else { return }
+        rootView.layoutIfNeeded()
 
-            UIView.animate(
-                withDuration: 0.25,
-                delay: 0,
-                options: UIViewAnimationOptions(),
-                animations: {() -> Void in
-                    if let textLabel = self.textLabel,
-                        let actionButton = self.actionButton,
-                        let hiddenConstraint = self.hiddenConstraint,
-                        let showingConstraint = self.showingConstraint {
-                        textLabel.alpha = 0
-                        actionButton.alpha = 0
-                        rootView.removeConstraint(showingConstraint)
-                        rootView.addConstraint(hiddenConstraint)
-                        rootView.layoutIfNeeded()
-                    }
-
-            }, completion: {(finished: Bool) -> Void in
-                if finished {
-                    self.isAnimating = false
-                    self.performDelegateAction(#selector(MKSnackbarManager.snackbabrDismissed(_:)))
-                    self.removeFromSuperview()
-                    if let textLabel = self.textLabel, let actionButton = self.actionButton {
-                        textLabel.removeFromSuperview()
-                        actionButton.removeFromSuperview()
-                    }
-                    self.isShowing = false
+        UIView.animate(
+            withDuration: 0.25,
+            delay: 0,
+            animations: {
+                if let hiddenConstraint = self.hiddenConstraint,
+                    let showingConstraint = self.showingConstraint {
+                    self.textLabel?.alpha = 0
+                    self.actionButton?.alpha = 0
+                    rootView.removeConstraint(showingConstraint)
+                    rootView.addConstraint(hiddenConstraint)
+                    rootView.layoutIfNeeded()
                 }
-            })
-        }
+
+        }, completion: { finished in
+            if finished {
+                self.isAnimating = false
+                self.performDelegateAction(#selector(MKSnackbarManager.snackbabrDismissed(_:)))
+                self.removeFromSuperview()
+                self.textLabel?.removeFromSuperview()
+                self.actionButton?.removeFromSuperview()
+                self.isShowing = false
+            }
+        })
     }
 
     open func addDeleagte(_ delegate: MKSnackbarDelegate) {
@@ -179,93 +163,81 @@ open class MKSnackbar: UIControl {
     }
 
     open func actionButtonSelector(withTarget target: AnyObject, andAction action: Selector) {
-        if let actionButton = actionButton {
-            actionButton.addTarget(target, action: action, for: UIControlEvents.touchUpInside)
-        }
+        actionButton?.addTarget(target, action: action, for: .touchUpInside)
     }
 
     // Mark: Action
 
     internal func actionButtonClicked(_ sender: AnyObject) {
         performDelegateAction(#selector(MKSnackbarDelegate.actionClicked(_:)))
-        if let actionButton = actionButton {
-            actionButton.isEnabled = false
-        }
+        actionButton?.isEnabled = false
         dismiss()
     }
 
 
     // Mark: Private functions
 
-    fileprivate func arrangeContent() {
+    private func arrangeContent() {
         if let textLabel = textLabel, let actionButton = actionButton {
-            self.addSubview(textLabel)
-            if let _ = actionTitle {
-                self.addSubview(actionButton)
+            addSubview(textLabel)
+            if actionTitle != nil {
+                addSubview(actionButton)
             }
 
-            let views: Dictionary<String, AnyObject> = [
+            let views = [
                 "label": textLabel,
                 "button": actionButton
             ]
-            let metrics: Dictionary<String, AnyObject> = [
-                "normalPadding": 14 as AnyObject,
-                "largePadding": 24 as AnyObject
+            let metrics = [
+                "normalPadding": 14,
+                "largePadding": 24
             ]
 
             let labelConstraints = NSLayoutConstraint.constraints(
                 withVisualFormat: "V:|-largePadding-[label]-largePadding-|",
-                options: NSLayoutFormatOptions(rawValue: 0),
                 metrics: metrics,
                 views: views
             )
-            self.addConstraints(labelConstraints)
+            addConstraints(labelConstraints)
 
             if let _ = actionTitle {
                 let centerConstraint = NSLayoutConstraint(
                     item: actionButton,
-                    attribute: NSLayoutAttribute.centerY,
-                    relatedBy: NSLayoutRelation.equal,
+                    attribute: .centerY,
+                    relatedBy: .equal,
                     toItem: self,
-                    attribute: NSLayoutAttribute.centerY,
+                    attribute: .centerY,
                     multiplier: 1,
                     constant: 0)
 
-                self.addConstraint(centerConstraint)
+                addConstraint(centerConstraint)
 
                 let horizontalContraint = NSLayoutConstraint.constraints(
                     withVisualFormat: "H:|-largePadding-[label]-largePadding-[button]-largePadding-|",
-                    options: NSLayoutFormatOptions(rawValue: 0),
                     metrics: metrics,
                     views: views)
-                self.addConstraints(horizontalContraint)
+                addConstraints(horizontalContraint)
             } else {
                 let horizontalContraint = NSLayoutConstraint.constraints(
                     withVisualFormat: "H:|-largePadding-[label]-largePadding-|",
-                    options: NSLayoutFormatOptions(rawValue: 0),
                     metrics: metrics,
                     views: views)
-                self.addConstraints(horizontalContraint)
+                addConstraints(horizontalContraint)
             }
         }
     }
 
-    fileprivate func addToScreen() {
-        if let window = UIApplication.shared.keyWindow {
-            rootView = window
-        } else if let window = UIApplication.shared.delegate?.window {
-            rootView = window
-        }
+    private func addToScreen() {
+        rootView = UIApplication.shared.keyWindow
+            ?? UIApplication.shared.delegate?.window
+            ?? rootView
 
         if let rootView = rootView {
             rootView.addSubview(self)
-            let views: Dictionary<String, AnyObject> = [
-                "view": self
-            ]
+            let views = ["view": self]
 
             let horizontalConstraints = NSLayoutConstraint.constraints(
                 withVisualFormat: "H:|-0-[view]-0-|",
-                options: NSLayoutFormatOptions(rawValue: 0),
                 metrics: nil,
                 views: views)
 
@@ -273,19 +245,19 @@ open class MKSnackbar: UIControl {
 
             hiddenConstraint = NSLayoutConstraint(
                 item: self,
-                attribute: NSLayoutAttribute.top,
-                relatedBy: NSLayoutRelation.equal,
+                attribute: .top,
+                relatedBy: .equal,
                 toItem: rootView,
-                attribute: NSLayoutAttribute.bottom,
+                attribute: .bottom,
                 multiplier: 1.0,
                 constant: 0)
 
             showingConstraint = NSLayoutConstraint(
                 item: self,
-                attribute: NSLayoutAttribute.bottom,
-                relatedBy: NSLayoutRelation.equal,
+                attribute: .bottom,
+                relatedBy: .equal,
                 toItem: rootView,
-                attribute: NSLayoutAttribute.bottom,
+                attribute: .bottom,
                 multiplier: 1.0,
                 constant: 0)
 
@@ -297,7 +269,7 @@ open class MKSnackbar: UIControl {
         }
 
         if let actionTitle = actionTitle, let actionButton = actionButton {
-            actionButton.setTitle(actionTitle, for: UIControlState())
+            actionButton.setTitle(actionTitle, for: .normal)
         }
     }
 
@@ -317,20 +289,17 @@ open class MKSnackbar: UIControl {
             UIView.animate(
                 withDuration: 0.25,
                 delay: 0,
-                options: UIViewAnimationOptions(),
-                animations: {() -> Void in
-                    if let textLabel = self.textLabel,
-                        let actionButton = self.actionButton,
-                        let hiddenConstraint = self.hiddenConstraint,
+                animations: {
+                    if let hiddenConstraint = self.hiddenConstraint,
                         let showingConstraint = self.showingConstraint {
-                        textLabel.alpha = 1
-                        actionButton.alpha = 1
+                        self.textLabel?.alpha = 1
+                        self.actionButton?.alpha = 1
                         rootView.removeConstraint(hiddenConstraint)
                         rootView.addConstraint(showingConstraint)
                         rootView.layoutIfNeeded()
                     }
 
-            }, completion: {(finished: Bool) -> Void in
+            }, completion: { finished in
                 if finished {
                     self.isAnimating = false
                     self.performDelegateAction(#selector(MKSnackbarDelegate.snackbarShown(_:)))
@@ -346,12 +315,11 @@ open class MKSnackbar: UIControl {
         }
     }
 
-    fileprivate func performDelegateAction(_ action: Selector) {
+    private func performDelegateAction(_ action: Selector) {
         for delegate in delegates {
-            if let delegate = delegate as? MKSnackbarDelegate {
-                if delegate.responds(to: action) {
-                    delegate.perform(action, with: self)
-                }
+            if let delegate = delegate as? MKSnackbarDelegate,
+                delegate.responds(to: action) {
+                delegate.perform(action, with: self)
             }
         }
     }
@@ -369,44 +337,27 @@ open class MKSnackbar: UIControl {
 
 private class MKSnackbarManager: NSObject, MKSnackbarDelegate {
 
-    static var instance: MKSnackbarManager!
+    public static let instance = MKSnackbarManager()
 
-    fileprivate var snackbarQueue: Array<MKSnackbar>?
-
-    fileprivate override init() {
-        snackbarQueue = Array<MKSnackbar>()
-    }
-
-    static func getInstance() -> MKSnackbarManager {
-        if instance == nil {
-            instance = MKSnackbarManager()
-        }
-        return instance
-    }
+    private var snackbarQueue = [MKSnackbar]()
 
     func showSnackbar(_ snackbar: MKSnackbar) {
-        if var snackbarQueue = snackbarQueue {
-            if !snackbarQueue.contains(snackbar) {
-                snackbar.addDeleagte(self)
-                snackbarQueue.append(snackbar)
+        if !snackbarQueue.contains(snackbar) {
+            snackbar.addDeleagte(self)
+            snackbarQueue.append(snackbar)
 
-                if snackbarQueue.count == 1 {
-                    snackbar.displaySnackbar()
-                } else {
-                    snackbarQueue[0].dismiss()
-                }
+            if snackbarQueue.count == 1 {
+                snackbar.displaySnackbar()
+            } else {
+                snackbarQueue[0].dismiss()
             }
         }
     }
-
+    
     @objc fileprivate func snackbabrDismissed(_ snackbar: MKSnackbar) {
-        if var snackbarQueue = snackbarQueue {
-            if let index = snackbarQueue.index(of: snackbar) {
-                snackbarQueue.remove(at: index)
-            }
-            if snackbarQueue.count > 0 {
-                snackbarQueue[0].displaySnackbar()
-            }
+        if let index = snackbarQueue.index(of: snackbar) {
+            snackbarQueue.remove(at: index)
         }
+        snackbarQueue.first?.displaySnackbar()
     }
 }

@@ -1,28 +1,24 @@
-MaterialKit
-===========
+# MaterialKit
 
-[![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat
-)](https://developer.apple.com/iphone/index.action)
-[![Language](http://img.shields.io/badge/language-swift-brightgreen.svg?style=flat
-)](https://developer.apple.com/swift)
-[![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat
-)](http://mit-license.org)
-[![Issues](https://img.shields.io/github/issues/nghialv/MaterialKit.svg?style=flat
-)](https://github.com/nghialv/MaterialKit/issues?state=open)
+[![Release](https://img.shields.io/github/release/ApolloZhu/MaterialKit/all.svg)](https://github.com/ApolloZhu/MaterialKit/releases)
+[![Platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)](https://developer.apple.com/iphone/index.action)
+[![Language](https://img.shields.io/badge/swift-3-ffac45.svg)](https://developer.apple.com/swift)
+[![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](http://mit-license.org)
+[![Issues](https://img.shields.io/github/issues/nghialv/MaterialKit.svg)](https://github.com/nghialv/MaterialKit/issues?state=open)
 
 
-#### NOTE: This project is unmaintained.
+#### NOTE: The upstream project is unmaintained.
 
 Material design components (inspired by [Google Material Design](http://www.google.com/design/spec/material-design/introduction.html)) for iOS written in Swift
 
 Please feel free to make pull requests.
 
-Features
------
+## Features
+
 - Highly customizable
 - Complete example
-- Supports @IBDesignable to live-render the component in the Interface Builder
-- By supporting @IBInspectable, the class properties can be exposed in the Interface Builder, and you can edit these properties in realtime
+- Supports `@IBDesignable` to live-render the component in the Interface Builder
+- By supporting `@IBInspectable`, the class properties can be exposed in the Interface Builder, and you can edit these properties in real time.
 
 - [x] MKButton: floating action button, raised button, flat button, ripple effect
 - [x] MKTextField: ripple effect, floating placeholder
@@ -35,8 +31,8 @@ Features
 - [x] MKRefreshControl
 - [x] MKNavigationBar
 
-Components
------
+## Components
+
 #### MKButton
 <p align="center">
 <img style="-webkit-user-select: none;" src="./Assets/MKButton.gif" width="320" height="628">
@@ -48,7 +44,6 @@ Components
 ``` swift
 let button = MKButton(frame: CGRect(x: 10, y: 10, width: 100, height: 35))
 button.maskEnabled = true
-button.rippleLocation = .TapLocation
 button.rippleLayerColor = UIColor.MKColor.LightGreen
 ```
 
@@ -66,7 +61,6 @@ button.rippleLayerColor = UIColor.MKColor.LightGreen
 - Customizable attributes: color, ripple location, bottom border, animation timing function, animation duration...
 
 ``` swift
-textField.rippleLocation = .Left
 textField.floatingPlaceholderEnabled = true
 textField.placeholder = "Description"
 textField.layer.borderColor = UIColor.MKColor.Green.CGColor
@@ -82,7 +76,6 @@ textField.rippleLayerColor = UIColor.MKColor.LightGreen
 
 ``` swift
 var cell = tableView.dequeueReusableCellWithIdentifier("MyCell") as MyCell
-cell.rippleLocation = .Center
 cell.rippleLayerColor = UIColor.MKColor.Blue
 ```
 
@@ -95,13 +88,13 @@ cell.rippleLayerColor = UIColor.MKColor.Blue
 
 ``` swift
 var refreshControl = MKRefreshControl()
-refreshControl.addToScrollView(self.tableView, withRefreshBlock: { [weak self] in
+refreshControl.addToScrollView(self.tableView) { [weak self] in
 	self?.tableViewRefresh()
-})
+}
 refreshControl.beginRefreshing()
 ```
 
-**Important**: because MKRefreshControl observes changes in `contentOffset` of the scrollView it is added to, before the scrollView is deinitialized, you must call `recycle` to remove the observer
+**Important**: because MKRefreshControl observes changes in `contentOffset` of the scrollView it is added to, before the scrollView is deinitialized, you must call `recycle` to remove the observer.
 
 ``` swift
 deinit {
@@ -124,17 +117,16 @@ deinit {
 // customize UIBarButtonItem by using MKImageView
 let imgView = MKImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
 imgView.image = UIImage(named: "uibaritem_icon.png")
-imgView.rippleLocation = .Center
 imgView.userInteractionEnabled = true
 
 let rightBarButton = UIBarButtonItem(customView: imgView)
 self.navigationItem.rightBarButtonItem = rightBarButton
-
 ```
+
 #### MKLayer
 A subclass of CALayer.
 
-**Important**: because MKLayer observes changes in `bounds` and `cornerRadius` of the superLayer/View it is made from, before the superLayer/View is deinitialized, you must call `recycle` to remove the observers
+**Important**: because MKLayer observes changes in `bounds` and `cornerRadius` of the superLayer/View it is made from, before the superLayer/View is deinitialized, you must call `recycle` to remove the observers.
 
 ``` swift
 deinit {
@@ -158,12 +150,12 @@ A custom UINavigationBar which supports elevation and adding a tint above itself
 ### MKSwitch
 On/off switches toggle the state of a single settings option. The option that the switch controls, as well as the state it’s in, should be made clear from the corresponding inline label. Switches take on the same visual properties of the radio button.
 
-Installation
------
-* Installation with CocoaPods
+## Installation
+
+* Install using CocoaPods
 
 ```
-	pod 'MaterialKit', '~> 0.4'
+	pod 'MaterialKit', :git => 'https://github.com/ApolloZhu/MaterialKit.git'
 ```
 
 * Copying all the files into your project
@@ -172,9 +164,8 @@ Installation
 Requirements
 -----
 - iOS 8.0+
-- Xcode 6.1
+- Xcode 8.0+
 
-License
------
+## License
 
-MaterialKit is released under the MIT license. See LICENSE for details.
+MaterialKit is released under the MIT license. See [LICENSE](./LICENSE) for details.

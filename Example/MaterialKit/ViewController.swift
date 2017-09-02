@@ -12,18 +12,16 @@ class ViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         let hamburgerButton = MKButton(frame: CGRect(x: 0, y: 0, width: 44, height: 32))
-        hamburgerButton.setImage(UIImage(named: "uibaritem_icon.png"), for: UIControlState())
+        hamburgerButton.setImage(UIImage(named: "uibaritem_icon.png"), for: .normal)
         hamburgerButton.maskEnabled = false
         hamburgerButton.backgroundAnimationEnabled = false
         hamburgerButton.rippleDuration = 0.15
-        hamburgerButton.addTarget(self, action: #selector(ViewController.toggleDrawer), for: UIControlEvents.touchUpInside)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: hamburgerButton)
+        hamburgerButton.addTarget(self, action: #selector(ViewController.toggleDrawer), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: hamburgerButton)
     }
 
     func toggleDrawer() {
-        if let sideDrawerViewController = self.sideDrawerViewController {
-            sideDrawerViewController.toggleDrawer()
-        }
+        sideDrawerViewController?.toggleDrawer()
     }
 
     @IBAction func cardViewClicked(_ sender: AnyObject) {

@@ -24,22 +24,22 @@ open class MKNavigationBar: UINavigationBar {
         }
     }
 
-    @IBInspectable open var color: UIColor = UIColor.white {
+    @IBInspectable open var color: UIColor = .white {
         didSet {
-            UINavigationBar.appearance().barTintColor = self.color
+            UINavigationBar.appearance().barTintColor = color
         }
     }
 
-    @IBInspectable open var darkColor: UIColor = UIColor.gray {
+    @IBInspectable open var darkColor: UIColor = .gray {
         didSet {
-            self.statusView.backgroundColor = self.darkColor
+            statusView.backgroundColor = darkColor
         }
     }
 
     @IBInspectable open override var tintColor: UIColor! {
         didSet {
-            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: self.tintColor]
-            UINavigationBar.appearance().tintColor = self.tintColor
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: tintColor]
+            UINavigationBar.appearance().tintColor = tintColor
         }
     }
 
@@ -58,16 +58,16 @@ open class MKNavigationBar: UINavigationBar {
         super.layoutSubviews()
     }
 
-    fileprivate func setup() {
-        self.statusView.backgroundColor = self.darkColor
-        self.addSubview(self.statusView)
-        UINavigationBar.appearance().barTintColor = self.color
-        UINavigationBar.appearance().backgroundColor = self.tintColor
-        UINavigationBar.appearance().tintColor = self.tintColor
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: self.tintColor]
+    private func setup() {
+        statusView.backgroundColor = darkColor
+        addSubview(statusView)
+        UINavigationBar.appearance().barTintColor = color
+        UINavigationBar.appearance().backgroundColor = tintColor
+        UINavigationBar.appearance().tintColor = tintColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: tintColor]
     }
 
-    fileprivate func drawShadow() {
+    private func drawShadow() {
         if elevation > 0 {
             let shadowPath = UIBezierPath(rect: bounds)
             layer.masksToBounds = false
@@ -78,5 +78,4 @@ open class MKNavigationBar: UINavigationBar {
             layer.shadowPath = shadowPath.cgPath
         }
     }
-    
 }

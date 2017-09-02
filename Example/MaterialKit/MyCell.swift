@@ -12,8 +12,8 @@ class MyCell : MKTableViewCell {
     @IBOutlet var messageLabel: UILabel!
 
     override var layoutMargins: UIEdgeInsets {
-        get { return UIEdgeInsets.zero }
-        set(newVal) {}
+        get { return .zero }
+        set { }
     }
 
     func setMessage(_ message: String) {

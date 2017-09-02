@@ -9,7 +9,6 @@
 import UIKit
 
 open class MKEmbedDrawerControllerSegue: UIStoryboardSegue {
-
     final override public func perform() {
         if let sourceViewController = source as? MKSideDrawerViewController {
             sourceViewController.drawerViewController = destination

@@ -9,8 +9,8 @@
 import UIKit
 
 @IBDesignable
-open class MKImageView: UIImageView
-{
+open class MKImageView: UIImageView {
+
     @IBInspectable open var maskEnabled: Bool = true {
         didSet {
             mkLayer.maskEnabled = maskEnabled
@@ -18,7 +18,7 @@ open class MKImageView: UIImageView
     }
     @IBInspectable open var cornerRadius: CGFloat = 0 {
         didSet {
-            self.layer.cornerRadius = self.cornerRadius
+            layer.cornerRadius = cornerRadius
             mkLayer.superLayerDidResize()
         }
     }
@@ -27,12 +27,12 @@ open class MKImageView: UIImageView
             mkLayer.elevation = elevation
         }
     }
-    @IBInspectable open var shadowOffset: CGSize = CGSize.zero {
+    @IBInspectable open var shadowOffset: CGSize = .zero {
         didSet {
             mkLayer.shadowOffset = shadowOffset
         }
     }
-    @IBInspectable open var roundingCorners: UIRectCorner = UIRectCorner.allCorners {
+    @IBInspectable open var roundingCorners: UIRectCorner = .allCorners {
         didSet {
             mkLayer.roundingCorners = roundingCorners
         }
@@ -68,7 +68,7 @@ open class MKImageView: UIImageView
             mkLayer.superLayerDidResize()
         }
     }
-    fileprivate lazy var mkLayer: MKLayer = MKLayer(withView: self)
+    private lazy var mkLayer: MKLayer = MKLayer(withView: self)
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -95,17 +95,17 @@ open class MKImageView: UIImageView
     }
 
     // MARK: Setup
-    fileprivate func setupLayer() {
-        mkLayer.elevation = self.elevation
-        self.layer.cornerRadius = self.cornerRadius
-        mkLayer.elevationOffset = self.shadowOffset
-        mkLayer.roundingCorners = self.roundingCorners
-        mkLayer.maskEnabled = self.maskEnabled
-        mkLayer.rippleScaleRatio = self.rippleScaleRatio
-        mkLayer.rippleDuration = self.rippleDuration
-        mkLayer.rippleEnabled = self.rippleEnabled
-        mkLayer.backgroundAnimationEnabled = self.backgroundAnimationEnabled
-        mkLayer.setRippleColor(self.rippleLayerColor)
+    private func setupLayer() {
+        mkLayer.elevation = elevation
+        layer.cornerRadius = cornerRadius
+        mkLayer.elevationOffset = shadowOffset
+        mkLayer.roundingCorners = roundingCorners
+        mkLayer.maskEnabled = maskEnabled
+        mkLayer.rippleScaleRatio = rippleScaleRatio
+        mkLayer.rippleDuration = rippleDuration
+        mkLayer.rippleEnabled = rippleEnabled
+        mkLayer.backgroundAnimationEnabled = backgroundAnimationEnabled
+        mkLayer.setRippleColor(rippleLayerColor)
     }
 
     // MARK: Touch
@@ -127,4 +127,5 @@ open class MKImageView: UIImageView
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         mkLayer.touchesMoved(touches, withEvent: event)
-    } }
+    }
+}

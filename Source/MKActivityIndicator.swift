@@ -11,19 +11,19 @@ import UIKit
 @IBDesignable
 open class MKActivityIndicator: UIView {
 
-    fileprivate let drawableLayer = CAShapeLayer()
-    fileprivate var animating = false
+    private let drawableLayer = CAShapeLayer()
+    private var animating = false
 
     @IBInspectable open var color: UIColor = UIColor.MKColor.Blue.P500 {
         didSet {
-            drawableLayer.strokeColor = self.color.cgColor
+            drawableLayer.strokeColor = color.cgColor
         }
     }
 
     @IBInspectable open var lineWidth: CGFloat = 6 {
         didSet {
-            drawableLayer.lineWidth = self.lineWidth
-            self.updatePath()
+            drawableLayer.lineWidth = lineWidth
+            updatePath()
         }
     }
 
@@ -51,58 +51,58 @@ open class MKActivityIndicator: UIView {
     }
 
     open func startAnimating() {
-        if self.animating {
+        if animating {
             return
         }
 
-        self.animating = true
-        self.isHidden = false
-        self.resetAnimations()
+        animating = true
+        isHidden = false
+        resetAnimations()
     }
 
     open func stopAnimating() {
-        self.drawableLayer.removeAllAnimations()
-        self.animating = false
-        self.isHidden = true
+        drawableLayer.removeAllAnimations()
+        animating = false
+        isHidden = true
     }
 
-    fileprivate func setup() {
-        self.isHidden = true
-        self.layer.addSublayer(self.drawableLayer)
-        self.drawableLayer.strokeColor = self.color.cgColor
-        self.drawableLayer.lineWidth = self.lineWidth
-        self.drawableLayer.fillColor = UIColor.clear.cgColor
-        self.drawableLayer.lineCap = kCALineJoinRound
-        self.drawableLayer.strokeStart = 0.99
-        self.drawableLayer.strokeEnd = 1
+    private func setup() {
+        isHidden = true
+        layer.addSublayer(drawableLayer)
+        drawableLayer.strokeColor = color.cgColor
+        drawableLayer.lineWidth = lineWidth
+        drawableLayer.fillColor = UIColor.clear.cgColor
+        drawableLayer.lineCap = kCALineJoinRound
+        drawableLayer.strokeStart = 0.99
+        drawableLayer.strokeEnd = 1
         updateFrame()
         updatePath()
     }
 
-    fileprivate func updateFrame() {
-        self.drawableLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
+    private func updateFrame() {
+        drawableLayer.frame = bounds
     }
 
-    fileprivate func updatePath() {
-        let center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
-        let radius = min(self.bounds.width, self.bounds.height) / 2 - self.lineWidth
-        self.drawableLayer.path = UIBezierPath(
+    private func updatePath() {
+        let center = CGPoint(x: bounds.midX, y: bounds.midY)
+        let radius = min(bounds.width, bounds.height) / 2 - lineWidth
+        drawableLayer.path = UIBezierPath(
             arcCenter: center,
             radius: radius,
             startAngle: 0,
-            endAngle: CGFloat(2 * M_PI),
+            endAngle: 2 * .pi,
             clockwise: true)
             .cgPath
     }
 
-    fileprivate func resetAnimations() {
+    private func resetAnimations() {
         drawableLayer.removeAllAnimations()
 
         let rotationAnim = CABasicAnimation(keyPath: "transform.rotation")
         rotationAnim.fromValue = 0
         rotationAnim.duration = 4
-        rotationAnim.toValue = 2 * M_PI
-        rotationAnim.repeatCount = Float.infinity
+        rotationAnim.toValue = CGFloat.pi * 2
+        rotationAnim.repeatCount = .infinity
         rotationAnim.isRemovedOnCompletion = false
 
         let startHeadAnim = CABasicAnimation(keyPath: "strokeStart")
@@ -136,10 +136,10 @@ open class MKActivityIndicator: UIView {
         let strokeAnimGroup = CAAnimationGroup()
         strokeAnimGroup.duration = 1.5
         strokeAnimGroup.animations = [startHeadAnim, startTailAnim, endHeadAnim, endTailAnim]
-        strokeAnimGroup.repeatCount = Float.infinity
+        strokeAnimGroup.repeatCount = .infinity
         strokeAnimGroup.isRemovedOnCompletion = false
 
-        self.drawableLayer.add(rotationAnim, forKey: "rotation")
-        self.drawableLayer.add(strokeAnimGroup, forKey: "stroke")
+        drawableLayer.add(rotationAnim, forKey: "rotation")
+        drawableLayer.add(strokeAnimGroup, forKey: "stroke")
     }
 }

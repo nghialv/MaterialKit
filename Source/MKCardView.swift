@@ -34,16 +34,16 @@ open class MKCardView: UIControl {
     }
     @IBInspectable open var cornerRadius: CGFloat = 0 {
         didSet {
-            self.layer.cornerRadius = cornerRadius
+            layer.cornerRadius = cornerRadius
             mkLayer.superLayerDidResize()
         }
     }
-    @IBInspectable open var shadowOffset: CGSize = CGSize.zero {
+    @IBInspectable open var shadowOffset: CGSize = .zero {
         didSet {
             mkLayer.shadowOffset = shadowOffset
         }
     }
-    @IBInspectable open var roundingCorners: UIRectCorner = UIRectCorner.allCorners {
+    @IBInspectable open var roundingCorners: UIRectCorner = .allCorners {
         didSet {
             mkLayer.roundingCorners = roundingCorners
         }
@@ -101,17 +101,17 @@ open class MKCardView: UIControl {
         mkLayer.recycle()
     }
 
-    fileprivate func setupLayer() {
-        mkLayer.elevation = self.elevation
-        self.layer.cornerRadius = self.cornerRadius
-        mkLayer.elevationOffset = self.shadowOffset
-        mkLayer.roundingCorners = self.roundingCorners
-        mkLayer.maskEnabled = self.maskEnabled
-        mkLayer.rippleScaleRatio = self.rippleScaleRatio
-        mkLayer.rippleDuration = self.rippleDuration
-        mkLayer.rippleEnabled = self.rippleEnabled
-        mkLayer.backgroundAnimationEnabled = self.backgroundAnimationEnabled
-        mkLayer.setRippleColor(self.rippleLayerColor)
+    private func setupLayer() {
+        mkLayer.elevation = elevation
+        layer.cornerRadius = cornerRadius
+        mkLayer.elevationOffset = shadowOffset
+        mkLayer.roundingCorners = roundingCorners
+        mkLayer.maskEnabled = maskEnabled
+        mkLayer.rippleScaleRatio = rippleScaleRatio
+        mkLayer.rippleDuration = rippleDuration
+        mkLayer.rippleEnabled = rippleEnabled
+        mkLayer.backgroundAnimationEnabled = backgroundAnimationEnabled
+        mkLayer.setRippleColor(rippleLayerColor)
     }
 
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
