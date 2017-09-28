@@ -2,21 +2,21 @@
 
 [![Release](https://img.shields.io/github/release/ApolloZhu/MaterialKit/all.svg)](https://github.com/ApolloZhu/MaterialKit/releases)
 [![Platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)](https://developer.apple.com/iphone/index.action)
-[![Language](https://img.shields.io/badge/swift-3-ffac45.svg)](https://developer.apple.com/swift)
+[![Language](https://img.shields.io/badge/swift-3|4-ffac45.svg)](https://developer.apple.com/swift)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](http://mit-license.org)
-[![Issues](https://img.shields.io/github/issues/nghialv/MaterialKit.svg)](https://github.com/nghialv/MaterialKit/issues?state=open)
+[![Issues](https://img.shields.io/github/issues/ApolloZhu/MaterialKit.svg)](https://github.com/ApolloZhu/MaterialKit/issues?state=open)
+[![Up Stream Issues](https://img.shields.io/github/issues/nghialv/MaterialKit.svg)](https://github.com/nghialv/MaterialKit/issues?state=open)
 
+#### NOTE: The ***upstream*** project is no longer maintained.
 
-#### NOTE: The upstream project is unmaintained.
-
-Material design components (inspired by [Google Material Design](http://www.google.com/design/spec/material-design/introduction.html)) for iOS written in Swift
+Material design components (inspired by [Google Material Design](https://material.io/guidelines/material-design/introduction.html)) for iOS, written in Swift
 
 Please feel free to make pull requests.
 
 ## Features
 
 - Highly customizable
-- Complete example
+- Complete examples
 - Supports `@IBDesignable` to live-render the component in the Interface Builder
 - By supporting `@IBInspectable`, the class properties can be exposed in the Interface Builder, and you can edit these properties in real time.
 
@@ -34,6 +34,7 @@ Please feel free to make pull requests.
 ## Components
 
 #### MKButton
+
 <p align="center">
 <img style="-webkit-user-select: none;" src="./Assets/MKButton.gif" width="320" height="628">
 </p>
@@ -48,6 +49,7 @@ button.rippleLayerColor = UIColor.MKColor.LightGreen
 ```
 
 #### MKTextField
+
 <p align="center">
 <img style="-webkit-user-select: none;" src="https://dl.dropboxusercontent.com/u/8556646/MKTextField.gif" width="365" height="568">
 </p>
@@ -68,6 +70,7 @@ textField.rippleLayerColor = UIColor.MKColor.LightGreen
 ```
 
 #### MKTableViewCell
+
 <p align="center">
 <img style="-webkit-user-select: none;" src="./Assets/MKTableViewCell.gif" width="320" height="628">
 </p>
@@ -80,6 +83,7 @@ cell.rippleLayerColor = UIColor.MKColor.Blue
 ```
 
 #### MKRefreshControl
+
 <p align="center">
 <img style="-webkit-user-select: none;" src="./Assets/MKRefreshControl.gif" width="320" height="628">
 </p>
@@ -88,7 +92,7 @@ cell.rippleLayerColor = UIColor.MKColor.Blue
 
 ``` swift
 var refreshControl = MKRefreshControl()
-refreshControl.addToScrollView(self.tableView) { [weak self] in
+refreshControl.addToScrollView(tableView) { [weak self] in
 	self?.tableViewRefresh()
 }
 refreshControl.beginRefreshing()
@@ -103,13 +107,14 @@ deinit {
 ```
 
 #### MKImageView (BarButtonItem), MKActivityIndicator
+
 <p align="center">
 <img style="-webkit-user-select: none;" src="./Assets/MKImageView+MKActivityIndicator.gif" width="328" height="628">
 </p>
 
 - Customizable attributes: color, ripple location, animation timing function, animation duration...
 - Play ripple animation whenever you want by calling `animateRipple` method
-  or by setting `userInteractionEnabled = true` ripple animation will be played when the label/imageview is tapped
+  or by setting `userInteractionEnabled = true` ripple animation will be played when the label/image view is tapped
 
 - Easy to customize UIBarButtonItem or UITabBarButton by using MKLabel or MKImageView
 
@@ -124,6 +129,7 @@ self.navigationItem.rightBarButtonItem = rightBarButton
 ```
 
 #### MKLayer
+
 A subclass of CALayer.
 
 **Important**: because MKLayer observes changes in `bounds` and `cornerRadius` of the superLayer/View it is made from, before the superLayer/View is deinitialized, you must call `recycle` to remove the observers.
@@ -135,6 +141,7 @@ deinit {
 ```
 
 #### MKColor
+
 A category for UIColor that adds some methods to get flat colors designed by [Google](http://www.google.com/design/spec/style/color.html)
 
 ``` swift
@@ -143,26 +150,29 @@ let lightBlueColor = UIColor.MKColor.LightBlue
 ```
 
 ### MKNavigationBar
+
 A custom UINavigationBar which supports elevation and adding a tint above itself
+
 - Customizable attributes: color, dark color, elevation, shadow opacity, tint color...
 - Set the class of the navigation bar in the storyboard designer to MKNavigationBar and set the custom properties
 
 ### MKSwitch
+
 On/off switches toggle the state of a single settings option. The option that the switch controls, as well as the state it’s in, should be made clear from the corresponding inline label. Switches take on the same visual properties of the radio button.
 
 ## Installation
 
-* Install using CocoaPods
+- Install using CocoaPods
 
 ```
 	pod 'MaterialKit', :git => 'https://github.com/ApolloZhu/MaterialKit.git'
 ```
 
-* Copying all the files into your project
-* Using submodule
+- Copying all the files into your project
+- Using submodule
 
-Requirements
------
+## Requirements
+
 - iOS 8.0+
 - Xcode 8.0+
 
