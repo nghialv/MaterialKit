@@ -65,7 +65,7 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
         let view = UIView(frame: self.view.frame)
         let tapGesture = UITapGestureRecognizer(
             target: self,
-            action: #selector(MKSideDrawerViewController.didtapContainerView(_:))
+            action: #selector(didtapContainerView(_:))
         )
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
@@ -79,7 +79,7 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
     lazy private(set) var screenEdgePanGesture: UIScreenEdgePanGestureRecognizer = {
         let gesture = UIScreenEdgePanGestureRecognizer(
             target: self,
-            action: #selector(MKSideDrawerViewController.handlePanGesture(_:))
+            action: #selector(handlePanGesture(_:))
         )
         switch self.drawerDirection {
         case .left: gesture.edges = .left
@@ -92,7 +92,7 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
     lazy private(set) var panGesture: UIPanGestureRecognizer = {
         let gesture = UIPanGestureRecognizer(
             target: self,
-            action: #selector(MKSideDrawerViewController.handlePanGesture(_:))
+            action: #selector(handlePanGesture(_:))
         )
         gesture.delegate = self
         return gesture
@@ -316,7 +316,7 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
 
     // MARK: - Private Method
 
-    final func handlePanGesture(_ sender: UIGestureRecognizer) {
+    @objc final func handlePanGesture(_ sender: UIGestureRecognizer) {
         _containerView.isHidden = false
         if sender.state == .began {
             _panStartLocation = sender.location(in: view)
@@ -365,7 +365,7 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
         }
     }
 
-    final func didtapContainerView(_ gesture: UITapGestureRecognizer) {
+    @objc final func didtapContainerView(_ gesture: UITapGestureRecognizer) {
         setDrawerState(.closed, animated: true)
     }
 

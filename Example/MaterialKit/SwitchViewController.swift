@@ -8,6 +8,4 @@
 
 import UIKit
 
-class SwitchViewController: UIViewController {
-
-}
+class SwitchViewController: UIViewController { }

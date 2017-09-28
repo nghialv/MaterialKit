@@ -10,12 +10,12 @@ import UIKit
 
 class MyCell : MKTableViewCell {
     @IBOutlet var messageLabel: UILabel!
-
+    
     override var layoutMargins: UIEdgeInsets {
         get { return .zero }
         set { }
     }
-
+    
     func setMessage(_ message: String) {
         messageLabel.text = message
     }

@@ -11,7 +11,7 @@ import UIKit
 let kMKClearEffectsDuration = 0.3
 
 open class MKLayer: CALayer, CAAnimationDelegate {
-
+    
     open var maskEnabled: Bool = true {
         didSet {
             mask = maskEnabled ? maskLayer : nil
@@ -40,7 +40,7 @@ open class MKLayer: CALayer, CAAnimationDelegate {
         }
     }
     open var backgroundAnimationEnabled: Bool = true
-
+    
     private weak var superView: UIView?
     private weak var superLayer: CALayer?
     private var rippleLayer: CAShapeLayer?
@@ -48,35 +48,35 @@ open class MKLayer: CALayer, CAAnimationDelegate {
     private var maskLayer: CAShapeLayer?
     private var userIsHolding: Bool = false
     private var effectIsRunning: Bool = false
-
+    
     private override init(layer: Any) {
         super.init()
     }
-
+    
     public init(superLayer: CALayer) {
         super.init()
         self.superLayer = superLayer
         setup()
     }
-
+    
     public init(withView view: UIView) {
         super.init()
         superView = view
         superLayer = view.layer
         setup()
     }
-
+    
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         superLayer = superlayer
         setup()
     }
-
+    
     public func recycle() {
         superLayer?.removeObserver(self, forKeyPath: "bounds")
         superLayer?.removeObserver(self, forKeyPath: "cornerRadius")
     }
-
+    
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if let keyPath = keyPath {
             if keyPath == "bounds" {
@@ -88,7 +88,7 @@ open class MKLayer: CALayer, CAAnimationDelegate {
             }
         }
     }
-
+    
     open func superLayerDidResize() {
         if let superLayer = superLayer {
             CATransaction.begin()
@@ -99,7 +99,7 @@ open class MKLayer: CALayer, CAAnimationDelegate {
             CATransaction.commit()
         }
     }
-
+    
     open func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         if anim == animation(forKey: "opacityAnim") {
             opacity = 0
@@ -111,7 +111,7 @@ open class MKLayer: CALayer, CAAnimationDelegate {
             }
         }
     }
-
+    
     open func startEffects(atLocation touchLocation: CGPoint) {
         userIsHolding = true
         if let rippleLayer = rippleLayer {
@@ -122,7 +122,7 @@ open class MKLayer: CALayer, CAAnimationDelegate {
             }
         }
     }
-
+    
     open func stopEffects() {
         userIsHolding = false
         if !effectIsRunning {
@@ -133,7 +133,7 @@ open class MKLayer: CALayer, CAAnimationDelegate {
             rippleLayer.speed = 1.2
         }
     }
-
+    
     open func stopEffectsImmediately() {
         userIsHolding = false
         effectIsRunning = false
@@ -146,7 +146,7 @@ open class MKLayer: CALayer, CAAnimationDelegate {
             backgroundLayer.opacity = 0
         }
     }
-
+    
     open func setRippleColor(_ color: UIColor,
                              withRippleAlpha rippleAlpha: CGFloat = 0.3,
                              withBackgroundAlpha backgroundAlpha: CGFloat = 0.3) {
@@ -156,43 +156,43 @@ open class MKLayer: CALayer, CAAnimationDelegate {
             backgroundLayer.fillColor = color.withAlphaComponent(backgroundAlpha).cgColor
         }
     }
-
+    
     // MARK: Touches
-
+    
     open func touchesBegan(_ touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let first = touches.first, let superView = superView {
             let point = first.location(in: superView)
             startEffects(atLocation: point)
         }
     }
-
+    
     open func touchesEnded(_ touches: Set<UITouch>, withEvent event: UIEvent?) {
         stopEffects()
     }
-
+    
     open func touchesCancelled(_ touches: Set<UITouch>?, withEvent event: UIEvent?) {
         stopEffects()
     }
-
+    
     open func touchesMoved(_ touches: Set<UITouch>, withEvent event: UIEvent?) {
     }
-
+    
     // MARK: Private
-
+    
     private func setup() {
         rippleLayer = CAShapeLayer()
         rippleLayer!.opacity = 0
         addSublayer(rippleLayer!)
-
+        
         backgroundLayer = CAShapeLayer()
         backgroundLayer!.opacity = 0
         backgroundLayer!.frame = superLayer!.bounds
         addSublayer(backgroundLayer!)
-
+        
         maskLayer = CAShapeLayer()
         setMaskLayerCornerRadius(superLayer!.cornerRadius)
         mask = maskLayer
-
+        
         frame = superLayer!.bounds
         superLayer!.addSublayer(self)
         superLayer!.addObserver(
@@ -205,15 +205,15 @@ open class MKLayer: CALayer, CAAnimationDelegate {
             forKeyPath: "cornerRadius",
             options: NSKeyValueObservingOptions(rawValue: 0),
             context: nil)
-
+        
         enableElevation()
         superLayerDidResize()
     }
-
+    
     private func setMaskLayerCornerRadius(_ radius: CGFloat) {
         maskLayer?.path = UIBezierPath(roundedRect: bounds, cornerRadius: radius).cgPath
     }
-
+    
     private func nearestInnerPoint(_ point: CGPoint) -> CGPoint {
         let centerX = bounds.midX
         let centerY = bounds.midY
@@ -231,18 +231,18 @@ open class MKLayer: CALayer, CAAnimationDelegate {
         }
         return .zero
     }
-
+    
     private func clearEffects() {
         if let rippleLayer = rippleLayer,
             let backgroundLayer = backgroundLayer {
             rippleLayer.timeOffset = 0
             rippleLayer.speed = 1
-
+            
             if rippleEnabled {
                 rippleLayer.removeAllAnimations()
                 backgroundLayer.removeAllAnimations()
                 removeAllAnimations()
-
+                
                 let opacityAnim = CABasicAnimation(keyPath: "opacity")
                 opacityAnim.fromValue = 1
                 opacityAnim.toValue = 0
@@ -251,12 +251,12 @@ open class MKLayer: CALayer, CAAnimationDelegate {
                 opacityAnim.isRemovedOnCompletion = false
                 opacityAnim.fillMode = kCAFillModeForwards
                 opacityAnim.delegate = self
-
+                
                 add(opacityAnim, forKey: "opacityAnim")
             }
         }
     }
-
+    
     private func startRippleEffect(_ touchLocation: CGPoint) {
         removeAllAnimations()
         opacity = 1
@@ -265,14 +265,14 @@ open class MKLayer: CALayer, CAAnimationDelegate {
             let superLayer = superLayer {
             rippleLayer.removeAllAnimations()
             backgroundLayer.removeAllAnimations()
-
+            
             let scaleAnim = CABasicAnimation(keyPath: "transform.scale")
             scaleAnim.fromValue = 0
             scaleAnim.toValue = 1
             scaleAnim.duration = rippleDuration
             scaleAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
             scaleAnim.delegate = self
-
+            
             let moveAnim = CABasicAnimation(keyPath: "position")
             moveAnim.fromValue = NSValue(cgPoint: touchLocation)
             moveAnim.toValue = NSValue(cgPoint: CGPoint(
@@ -280,35 +280,35 @@ open class MKLayer: CALayer, CAAnimationDelegate {
                 y: superLayer.bounds.midY))
             moveAnim.duration = rippleDuration
             moveAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
-
+            
             effectIsRunning = true
             rippleLayer.opacity = 1
             backgroundLayer.opacity = backgroundAnimationEnabled ? 1 : 0
-
+            
             rippleLayer.add(moveAnim, forKey: "position")
             rippleLayer.add(scaleAnim, forKey: "scale")
         }
     }
-
+    
     private func calculateRippleSize() {
         if let superLayer = superLayer {
             let superLayerWidth = superLayer.bounds.width
             let superLayerHeight = superLayer.bounds.height
             let circleDiameter = sqrt(pow(superLayerWidth, 2) + pow(superLayerHeight, 2)) * rippleScaleRatio
-
+            
             if let rippleLayer = rippleLayer {
                 rippleLayer.frame = CGRect(
                     x: superLayer.bounds.midX - circleDiameter / 2,
                     y: superLayer.bounds.midY - circleDiameter / 2,
                     width: circleDiameter, height: circleDiameter)
                 rippleLayer.path = UIBezierPath(ovalIn: rippleLayer.bounds).cgPath
-
+                
                 backgroundLayer?.frame = rippleLayer.frame
                 backgroundLayer?.path = rippleLayer.path
             }
         }
     }
-
+    
     private func enableElevation() {
         if let superLayer = superLayer {
             superLayer.shadowOpacity = 0.5
