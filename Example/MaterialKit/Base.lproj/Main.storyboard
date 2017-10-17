@@ -150,7 +150,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a0t-tT-v1W" customClass="MKCardView" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="123.5" y="347" width="128" height="64"/>
+                                <rect key="frame" x="124" y="347" width="128" height="64"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card View" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3u2-L7-nLE" customClass="MKLabel" customModule="MaterialKit" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="64"/>
@@ -235,11 +235,11 @@
                                         <rect key="frame" x="0.0" y="22" width="600" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EnH-cu-c0A" id="r1H-dx-ucE">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="65"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59G-6p-W59">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="64.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" red="0.23529411759999999" green="0.64705882349999999" blue="0.2274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -312,7 +312,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="npW-gx-EJH" customClass="MKActivityIndicator" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="155.5" y="72" width="64" height="64"/>
+                                <rect key="frame" x="156" y="72" width="64" height="64"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="6cx-0L-H79"/>
@@ -331,7 +331,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vcv-XP-keV" customClass="MKSwitch" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="167.5" y="205" width="40" height="40"/>
+                                <rect key="frame" x="168" y="205" width="40" height="40"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="xAY-0Y-Pn9"/>
@@ -454,7 +454,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LHn-c9-UeF" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="97.5" y="80" width="180" height="45"/>
+                                <rect key="frame" x="98" y="80" width="180" height="45"/>
                                 <color key="backgroundColor" red="0.20392156862745098" green="0.50196078431372548" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="NOa-gO-iZ8"/>
@@ -475,7 +475,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VIB-GK-Jle" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="97.5" y="141" width="180" height="45"/>
+                                <rect key="frame" x="98" y="141" width="180" height="45"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="FLAT BUTTON">
                                     <color key="titleColor" red="0.21957780671963514" green="0.25220345923465765" blue="0.66646938131313127" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -483,7 +483,7 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qSz-ai-pBs" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="97.5" y="202" width="180" height="45"/>
+                                <rect key="frame" x="98" y="202" width="180" height="45"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="NO BACKGROUND ANIMATION">
                                     <color key="titleColor" red="0.47450980392156861" green="0.73725490196078436" blue="0.19607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -494,7 +494,7 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gT6-rQ-K01" customClass="MKButton" customModule="MaterialKit" customModuleProvider="target">
-                                <rect key="frame" x="147.5" y="263" width="80" height="80"/>
+                                <rect key="frame" x="148" y="263" width="80" height="80"/>
                                 <color key="backgroundColor" red="0.792156862745098" green="0.14901960784313725" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="Hyc-2X-xAO"/>
