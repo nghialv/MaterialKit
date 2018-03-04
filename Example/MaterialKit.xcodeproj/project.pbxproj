@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52B82BB4204B6E28001B4D27 /* MKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B82BB3204B6E28001B4D27 /* MKExtensions.swift */; };
 		8667C0111A299B7200025664 /* MKLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8667C0101A299B7200025664 /* MKLabel.swift */; };
 		8667C0131A29A53100025664 /* uibaritem_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8667C0121A29A53100025664 /* uibaritem_icon.png */; };
 		866D96861A17B12500897451 /* icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 866D96841A17B12500897451 /* icon1.png */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		52B82BB3204B6E28001B4D27 /* MKExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MKExtensions.swift; path = "../../../../../apollonian/Documents/Git-Repo/MaterialKit/Source/MKExtensions.swift"; sourceTree = "<group>"; };
 		8667C0101A299B7200025664 /* MKLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLabel.swift; sourceTree = "<group>"; };
 		8667C0121A29A53100025664 /* uibaritem_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uibaritem_icon.png; sourceTree = "<group>"; };
 		866D96841A17B12500897451 /* icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1.png; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				90740D6A1C6B9F14001F4C22 /* MKSideDrawerViewController.swift */,
 				90740D6C1C6BA266001F4C22 /* MKEmbedMainControllerSegue.swift */,
 				90740D6E1C6BA2AB001F4C22 /* MKEmbedDrawerControllerSegue.swift */,
+				52B82BB3204B6E28001B4D27 /* MKExtensions.swift */,
 			);
 			name = Source;
 			path = ../../Source;
@@ -238,7 +241,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Le Van Nghia";
 				TargetAttributes = {
 					8C4D638D1A160C95003629F6 = {
@@ -288,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C780DD31A16203100C9DEB9 /* MKButton.swift in Sources */,
+				52B82BB4204B6E28001B4D27 /* MKExtensions.swift in Sources */,
 				8C780DD51A16205100C9DEB9 /* MKTextField.swift in Sources */,
 				907589831BEA696E0025DC73 /* MKCardView.swift in Sources */,
 				90F956281C5B43220056B976 /* MKSwitch.swift in Sources */,
@@ -349,12 +353,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -401,12 +407,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

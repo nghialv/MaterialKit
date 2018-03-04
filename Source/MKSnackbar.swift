@@ -236,8 +236,8 @@ open class MKSnackbar: UIControl {
     }
     
     private func addToScreen() {
-        rootView = UIApplication.shared.keyWindow
-            ?? UIApplication.shared.delegate?.window
+        rootView = UIApplication.this?.keyWindow
+            ?? UIApplication.this?.delegate?.window
             ?? rootView
         
         if let rootView = rootView {

@@ -370,7 +370,7 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
     }
 
     private func setWindowLevel(_ windowLevel: UIWindowLevel) {
-        UIApplication.shared.delegate?.window??.windowLevel = windowLevel
+        UIApplication.this?.delegate?.window??.windowLevel = windowLevel
     }
 
     // MARK: - UIGestureRecognizerDelegate
