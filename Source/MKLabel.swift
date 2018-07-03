@@ -30,7 +30,7 @@ public class MKLabel: UILabel {
             mkLayer.shadowOffset = shadowOffset
         }
     }
-    @IBInspectable public var roundingCorners: UIRectCorner = UIRectCorner.AllCorners {
+    @IBInspectable public var roundingCorners: UIRectCorner = UIRectCorner.allCorners {
         didSet {
             mkLayer.roundingCorners = roundingCorners
         }
@@ -52,7 +52,7 @@ public class MKLabel: UILabel {
     }
     @IBInspectable public var rippleLayerColor: UIColor = UIColor(hex: 0xEEEEEE) {
         didSet {
-            mkLayer.setRippleColor(rippleLayerColor)
+            mkLayer.setRippleColor(color: rippleLayerColor)
         }
     }
     @IBInspectable public var backgroundAnimationEnabled: Bool = true {
@@ -89,27 +89,27 @@ public class MKLabel: UILabel {
         mkLayer.rippleDuration = self.rippleDuration
         mkLayer.rippleEnabled = self.rippleEnabled
         mkLayer.backgroundAnimationEnabled = self.backgroundAnimationEnabled
-        mkLayer.setRippleColor(self.rippleLayerColor)
+        mkLayer.setRippleColor(color: self.rippleLayerColor)
     }
 
     // MARK: Touch
-    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
-        mkLayer.touchesBegan(touches, withEvent: event)
+    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        mkLayer.touchesBegan(touches: touches, withEvent: event)
     }
 
-    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesEnded(touches, withEvent: event)
-        mkLayer.touchesEnded(touches, withEvent: event)
+    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        mkLayer.touchesEnded(touches: touches, withEvent: event)
     }
 
-    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        super.touchesCancelled(touches, withEvent: event)
-        mkLayer.touchesCancelled(touches, withEvent: event)
+    public override func touchesCancelled(_ touches: Set<UITouch>?, with event: UIEvent?) {
+        super.touchesCancelled(touches!, with: event)
+        mkLayer.touchesCancelled(touches: touches, withEvent: event)
     }
 
-    public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesMoved(touches, withEvent: event)
-        mkLayer.touchesMoved(touches, withEvent: event)
+    public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        mkLayer.touchesMoved(touches: touches, withEvent: event)
     }
 }
