@@ -247,9 +247,17 @@ open class MKLayer: CALayer, CAAnimationDelegate {
                 opacityAnim.fromValue = 1
                 opacityAnim.toValue = 0
                 opacityAnim.duration = kMKClearEffectsDuration
+                #if swift(>=4.2)
+                opacityAnim.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+                #else
                 opacityAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                #endif
                 opacityAnim.isRemovedOnCompletion = false
+                #if swift(>=4.2)
+                opacityAnim.fillMode = .forwards
+                #else
                 opacityAnim.fillMode = kCAFillModeForwards
+                #endif
                 opacityAnim.delegate = self
                 
                 add(opacityAnim, forKey: "opacityAnim")
@@ -270,7 +278,11 @@ open class MKLayer: CALayer, CAAnimationDelegate {
             scaleAnim.fromValue = 0
             scaleAnim.toValue = 1
             scaleAnim.duration = rippleDuration
+            #if swift(>=4.2)
+            scaleAnim.timingFunction = CAMediaTimingFunction(name: .easeIn)
+            #else
             scaleAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+            #endif
             scaleAnim.delegate = self
             
             let moveAnim = CABasicAnimation(keyPath: "position")
@@ -279,7 +291,11 @@ open class MKLayer: CALayer, CAAnimationDelegate {
                 x: superLayer.bounds.midX,
                 y: superLayer.bounds.midY))
             moveAnim.duration = rippleDuration
+            #if swift(>=4.2)
+            moveAnim.timingFunction = CAMediaTimingFunction(name: .easeIn)
+            #else
             moveAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+            #endif
             
             effectIsRunning = true
             rippleLayer.opacity = 1

@@ -123,15 +123,27 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
     open var mainViewController: UIViewController! {
         didSet {
             if let oldController = oldValue {
+                #if swift(>=4.2)
+                oldController.willMove(toParent: nil)
+                #else
                 oldController.willMove(toParentViewController: nil)
+                #endif
                 oldController.view.removeFromSuperview()
+                #if swift(>=4.2)
+                oldController.removeFromParent()
+                #else
                 oldController.removeFromParentViewController()
+                #endif
             }
             guard let mainViewController = mainViewController,
                 let mainView = mainViewController.view else { return }
             let viewDictionary = ["mainView" : mainView]
             mainViewController.view.translatesAutoresizingMaskIntoConstraints = false
+            #if swift(>=4.2)
+            addChild(mainViewController)
+            #else
             addChildViewController(mainViewController)
+            #endif
             view.insertSubview(mainViewController.view, at: 0)
             view.addConstraints(
                 NSLayoutConstraint.constraints(
@@ -147,22 +159,39 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
                     views: viewDictionary
                 )
             )
+            #if swift(>=4.2)
+            mainViewController.didMove(toParent: self)
+            #else
             mainViewController.didMove(toParentViewController: self)
+            #endif
         }
     }
 
     open var drawerViewController: UIViewController? {
         didSet {
             if let oldController = oldValue {
+                #if swift(>=4.2)
+                oldController.willMove(toParent: nil)
+                #else
                 oldController.willMove(toParentViewController: nil)
+                #endif
                 oldController.view.removeFromSuperview()
+                #if swift(>=4.2)
+                oldController.removeFromParent()
+                #else
                 oldController.removeFromParentViewController()
+                #endif
             }
             guard let drawerViewController = drawerViewController,
                 let drawerView = drawerViewController.view else { return }
             let viewDictionary = ["drawerView": drawerView]
+            #if swift(>=4.2)
+            let itemAttribute: NSLayoutConstraint.Attribute
+            let toItemAttribute: NSLayoutConstraint.Attribute
+            #else
             let itemAttribute: NSLayoutAttribute
             let toItemAttribute: NSLayoutAttribute
+            #endif
             switch drawerDirection {
             case .left:
                 itemAttribute = .right
@@ -176,7 +205,11 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
             drawerViewController.view.layer.shadowOpacity = 0.4
             drawerViewController.view.layer.shadowRadius = 5.0
             drawerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+            #if swift(>=4.2)
+            addChild(drawerViewController)
+            #else
             addChildViewController(drawerViewController)
+            #endif
             _containerView.addSubview(drawerViewController.view)
             _drawerWidthConstraint = NSLayoutConstraint(
                 item: drawerViewController.view,
@@ -208,7 +241,11 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
             )
             _containerView.updateConstraints()
             drawerViewController.updateViewConstraints()
+            #if swift(>=4.2)
+            drawerViewController.didMove(toParent: self)
+            #else
             drawerViewController.didMove(toParentViewController: self)
+            #endif
         }
     }
 
@@ -259,7 +296,11 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
     open func setDrawerState(_ state: DrawerState, animated: Bool) {
         _containerView.isHidden = false
         let duration: TimeInterval = animated ? _kDrawerAnimationDuration : 0
+        #if swift(>=4.2)
+        setWindowLevel(state == .opened ? .statusBar + 1 : .normal)
+        #else
         setWindowLevel(state == .opened ? UIWindowLevelStatusBar + 1 : UIWindowLevelNormal)
+        #endif
         UIView.animate(withDuration: duration,
                        delay: 0,
                        options: .curveEaseOut,
@@ -290,6 +331,25 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
         }
     }
 
+    #if swift(>=4.2)
+    open func transitionFromMainViewController(_ toViewController: UIViewController, duration: TimeInterval, options: UIView.AnimationOptions, animations: (() -> Void)?, completion: ((Bool) -> Void)?) {
+        mainViewController.willMove(toParent: nil)
+        addChild(toViewController)
+        toViewController.view.frame = view.bounds
+        transition(
+            from: mainViewController,
+            to: toViewController,
+            duration: duration,
+            options: options,
+            animations: animations,
+            completion: { [unowned self] result in
+                toViewController.didMove(toParent: self)
+                self.mainViewController.removeFromParent()
+                self.mainViewController = toViewController
+                completion?(result)
+        })
+    }
+    #else
     open func transitionFromMainViewController(_ toViewController: UIViewController, duration: TimeInterval, options: UIViewAnimationOptions, animations: (() -> Void)?, completion: ((Bool) -> Void)?) {
         mainViewController.willMove(toParentViewController: nil)
         addChildViewController(toViewController)
@@ -307,6 +367,7 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
                 completion?(result)
         })
     }
+    #endif
 
     open func toggleDrawer(_ animated: Bool = true) {
         setDrawerState(
@@ -345,7 +406,11 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
         }
 
         if sender.state == .began && drawerState == .closed {
+            #if swift(>=4.2)
+            setWindowLevel(.statusBar + 1)
+            #else
             setWindowLevel(UIWindowLevelStatusBar + 1)
+            #endif
         }
 
         _drawerConstraint.constant = constant
@@ -369,9 +434,15 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
         setDrawerState(.closed, animated: true)
     }
 
+    #if swift(>=4.2)
+    private func setWindowLevel(_ windowLevel: UIWindow.Level) {
+        UIApplication.this?.delegate?.window??.windowLevel = windowLevel
+    }
+    #else
     private func setWindowLevel(_ windowLevel: UIWindowLevel) {
         UIApplication.this?.delegate?.window??.windowLevel = windowLevel
     }
+    #endif
 
     // MARK: - UIGestureRecognizerDelegate
 

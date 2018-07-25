@@ -72,7 +72,11 @@ open class MKActivityIndicator: UIView {
         drawableLayer.strokeColor = color.cgColor
         drawableLayer.lineWidth = lineWidth
         drawableLayer.fillColor = UIColor.clear.cgColor
-        drawableLayer.lineCap = kCALineJoinRound
+        #if swift(>=4.2)
+        drawableLayer.lineCap = .round
+        #else
+        drawableLayer.lineCap = kCALineCapRound
+        #endif
         drawableLayer.strokeStart = 0.99
         drawableLayer.strokeEnd = 1
         updateFrame()
@@ -110,28 +114,44 @@ open class MKActivityIndicator: UIView {
         startHeadAnim.fromValue = 0
         startHeadAnim.toValue = 0.25
         startHeadAnim.duration = 1
+        #if swift(>=4.2)
+        startHeadAnim.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        #else
         startHeadAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        #endif
         
         let startTailAnim = CABasicAnimation(keyPath: "strokeEnd")
         startTailAnim.beginTime = 0.1
         startTailAnim.fromValue = 0
         startTailAnim.toValue = 1
         startTailAnim.duration = 1
+        #if swift(>=4.2)
+        startTailAnim.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        #else
         startTailAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        #endif
         
         let endHeadAnim = CABasicAnimation(keyPath: "strokeStart")
         endHeadAnim.beginTime = 1
         endHeadAnim.fromValue = 0.25
         endHeadAnim.toValue = 0.99
         endHeadAnim.duration = 0.5
+        #if swift(>=4.2)
+        endHeadAnim.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        #else
         endHeadAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        #endif
         
         let endTailAnim = CABasicAnimation(keyPath: "strokeEnd")
         endTailAnim.beginTime = 1
         endTailAnim.fromValue = 1
         endTailAnim.toValue = 1
         endTailAnim.duration = 0.5
+        #if swift(>=4.2)
+        endTailAnim.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        #else
         endTailAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        #endif
         
         let strokeAnimGroup = CAAnimationGroup()
         strokeAnimGroup.duration = 1.5
