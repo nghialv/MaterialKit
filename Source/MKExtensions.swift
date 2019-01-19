@@ -10,10 +10,6 @@ import UIKit
 
 extension UIApplication {
     class var this: UIApplication? {
-        if #available(iOSApplicationExtension 8.0, tvOSApplicationExtension 9.0, *) {
-            return nil
-        } else {
-            return UIApplication.value(forKeyPath: #keyPath(shared)) as? UIApplication
-        }
+        return UIApplication.value(forKeyPath: #keyPath(shared)) as? UIApplication
     }
 }

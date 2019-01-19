@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "MaterialKit"
-  s.version      = "0.6.3"
+  s.version      = "0.6.4"
   s.summary      = "Material design components for iOS written in Swift"
 
   s.homepage     = "https://github.com/ApolloZhu/MaterialKit"
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios
   s.ios.deployment_target = "8.0"
-  s.source       = { :git => "https://github.com/ApolloZhu/MaterialKit.git", :tag => "0.6.3" }
+  s.source       = { :git => "https://github.com/ApolloZhu/MaterialKit.git", :tag => "0.6.4" }
 
   s.source_files = "Source/*"
   s.requires_arc = true
