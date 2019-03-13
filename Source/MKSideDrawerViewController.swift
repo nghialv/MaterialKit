@@ -15,7 +15,7 @@ public extension UIViewController {
      This is the recommended method of accessing the SideNavigationViewController
      through child UIViewControllers.
      */
-    public var sideDrawerViewController: MKSideDrawerViewController? {
+    var sideDrawerViewController: MKSideDrawerViewController? {
         var viewController: UIViewController? = self
         while viewController != nil {
             if viewController is MKSideDrawerViewController {
@@ -183,7 +183,8 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
                 #endif
             }
             guard let drawerViewController = drawerViewController,
-                let drawerView = drawerViewController.view else { return }
+                let drawerView = drawerViewController.view
+                else { return }
             let viewDictionary = ["drawerView": drawerView]
             #if swift(>=4.2)
             let itemAttribute: NSLayoutConstraint.Attribute
@@ -201,18 +202,18 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
                 toItemAttribute = .right
             }
 
-            drawerViewController.view.layer.shadowColor = UIColor.black.cgColor
-            drawerViewController.view.layer.shadowOpacity = 0.4
-            drawerViewController.view.layer.shadowRadius = 5.0
-            drawerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+            drawerView.layer.shadowColor = UIColor.black.cgColor
+            drawerView.layer.shadowOpacity = 0.4
+            drawerView.layer.shadowRadius = 5.0
+            drawerView.translatesAutoresizingMaskIntoConstraints = false
             #if swift(>=4.2)
             addChild(drawerViewController)
             #else
             addChildViewController(drawerViewController)
             #endif
-            _containerView.addSubview(drawerViewController.view)
+            _containerView.addSubview(drawerView)
             _drawerWidthConstraint = NSLayoutConstraint(
-                item: drawerViewController.view,
+                item: drawerView,
                 attribute: .width,
                 relatedBy: .equal,
                 toItem: nil,
@@ -220,10 +221,10 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
                 multiplier: 1,
                 constant: drawerWidth
             )
-            drawerViewController.view.addConstraint(_drawerWidthConstraint)
+            drawerView.addConstraint(_drawerWidthConstraint)
 
             _drawerConstraint = NSLayoutConstraint(
-                item: drawerViewController.view,
+                item: drawerView,
                 attribute: itemAttribute,
                 relatedBy: .equal,
                 toItem: _containerView,
