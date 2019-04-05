@@ -8,8 +8,13 @@
 
 import UIKit
 
+@available(iOSApplicationExtension, unavailable)
+@available(watchOSApplicationExtension, unavailable)
+@available(tvOSApplicationExtension, unavailable)
+@available(iOSMacApplicationExtension, unavailable)
+@available(OSXApplicationExtension, unavailable)
 extension UIApplication {
     class var this: UIApplication? {
-        return UIApplication.value(forKeyPath: #keyPath(shared)) as? UIApplication
+        return UIApplication.shared
     }
 }
