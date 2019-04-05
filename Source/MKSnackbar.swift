@@ -349,7 +349,12 @@ private class MKSnackbarManager: NSObject, MKSnackbarDelegate {
     }
     
     @objc fileprivate func snackbabrDismissed(_ snackbar: MKSnackbar) {
-        if let index = snackbarQueue.index(of: snackbar) {
+        #if swift(>=5.0)
+        let index = snackbarQueue.firstIndex(of: snackbar)
+        #else
+        let index = snackbarQueue.index(of: snackbar)
+        #endif
+        if let index = index {
             snackbarQueue.remove(at: index)
         }
         snackbarQueue.first?.displaySnackbar()
