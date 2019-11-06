@@ -2,7 +2,7 @@
 
 [![Release](https://img.shields.io/github/release/ApolloZhu/MaterialKit/all.svg)](https://github.com/ApolloZhu/MaterialKit/releases)
 [![Platform](https://img.shields.io/badge/platform-iOS-brightgreen.svg)](https://developer.apple.com/iphone/index.action)
-[![Language](https://img.shields.io/badge/swift-3|4-ffac45.svg)](https://developer.apple.com/swift)
+[![Language](https://img.shields.io/badge/swift-3|4|5-ffac45.svg)](https://developer.apple.com/swift)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](http://mit-license.org)
 [![Issues](https://img.shields.io/github/issues/ApolloZhu/MaterialKit.svg)](https://github.com/ApolloZhu/MaterialKit/issues?state=open)
 [![Up Stream Issues](https://img.shields.io/github/issues/nghialv/MaterialKit.svg)](https://github.com/nghialv/MaterialKit/issues?state=open)
