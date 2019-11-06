@@ -93,7 +93,7 @@ cell.rippleLayerColor = UIColor.MKColor.Blue
 ``` swift
 var refreshControl = MKRefreshControl()
 refreshControl.addToScrollView(tableView) { [weak self] in
-	self?.tableViewRefresh()
+    self?.tableViewRefresh()
 }
 refreshControl.beginRefreshing()
 ```
@@ -102,7 +102,7 @@ refreshControl.beginRefreshing()
 
 ``` swift
 deinit {
-	refreshControl.recycle()
+    refreshControl.recycle()
 }
 ```
 
@@ -136,7 +136,7 @@ A subclass of CALayer.
 
 ``` swift
 deinit {
-	mkLayer.recycle()
+    mkLayer.recycle()
 }
 ```
 
@@ -162,11 +162,20 @@ On/off switches toggle the state of a single settings option. The option that th
 
 ## Installation
 
-- Install using CocoaPods
+### Swift Package Manager
 
+``` swift
+.package(url: "https://github.com/ApolloZhu/MaterialKit.git",
+         .upToNextMinor(from: "0.6.6")),
 ```
-	pod 'MaterialKit', :git => 'https://github.com/ApolloZhu/MaterialKit.git'
+
+### Using CocoaPods
+
+``` ruby
+pod 'MaterialKit', :git => 'https://github.com/ApolloZhu/MaterialKit.git'
 ```
+
+### Other Methods
 
 - Copying all the files into your project
 - Using submodule
