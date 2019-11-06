@@ -43,7 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		52B82BB3204B6E28001B4D27 /* MKExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MKExtensions.swift; path = "../../../../../apollonian/Documents/Git-Repo/MaterialKit/Source/MKExtensions.swift"; sourceTree = "<group>"; };
+		52B82BB3204B6E28001B4D27 /* MKExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKExtensions.swift"; sourceTree = "<group>"; };
 		8667C0101A299B7200025664 /* MKLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLabel.swift; sourceTree = "<group>"; };
 		8667C0121A29A53100025664 /* uibaritem_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uibaritem_icon.png; sourceTree = "<group>"; };
 		866D96841A17B12500897451 /* icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1.png; sourceTree = "<group>"; };

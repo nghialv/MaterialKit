@@ -11,7 +11,7 @@ import UIKit
 @available(iOSApplicationExtension, unavailable)
 @available(watchOSApplicationExtension, unavailable)
 @available(tvOSApplicationExtension, unavailable)
-@available(iOSMacApplicationExtension, unavailable)
+@available(macCatalystApplicationExtension, unavailable)
 @available(OSXApplicationExtension, unavailable)
 extension UIApplication {
     class var this: UIApplication? {

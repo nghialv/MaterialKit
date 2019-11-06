@@ -113,7 +113,7 @@ open class MKSideDrawerViewController: UIViewController, UIGestureRecognizerDele
 
     open var drawerState: DrawerState {
         get { return _containerView.isHidden ? .closed : .opened }
-        set { setDrawerState(drawerState, animated: false) }
+        set { setDrawerState(newValue, animated: false) }
     }
 
     @IBInspectable open var drawerWidth: CGFloat = 240 {
