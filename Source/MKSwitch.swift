@@ -16,80 +16,72 @@ public let kMKTrackCornerRadius: CGFloat = 6
 public let kMKThumbRadius: CGFloat = 10
 
 @IBDesignable
-public class MKSwitch: UIControl {
+open class MKSwitch: UIControl {
 
-    @IBInspectable public override var enabled: Bool {
+    @IBInspectable open override var isEnabled: Bool {
         didSet {
-            if let switchLayer = self.switchLayer {
-                switchLayer.enabled = self.enabled
+            switchLayer?.enabled = isEnabled
+        }
+    }
+    @IBInspectable open var thumbOnColor: UIColor = UIColor.MKColor.Blue.P500 {
+        didSet {
+            if let switchLayer = switchLayer,
+                let onColorPallete = switchLayer.onColorPallete {
+                onColorPallete.thumbColor = thumbOnColor
+                switchLayer.updateColors()
             }
         }
     }
-    @IBInspectable public var thumbOnColor: UIColor = UIColor.MKColor.Blue.P500 {
+    @IBInspectable open var thumbOffColor: UIColor = UIColor(hex: 0xFAFAFA) {
         didSet {
-            if let switchLayer = self.switchLayer {
-                if let onColorPallete = switchLayer.onColorPallete {
-                    onColorPallete.thumbColor = self.thumbOnColor
-                    switchLayer.updateColors()
-                }
+            if let switchLayer = switchLayer,
+                let offColorPallete = switchLayer.offColorPallete {
+                offColorPallete.thumbColor = thumbOffColor
+                switchLayer.updateColors()
             }
         }
     }
-    @IBInspectable public var thumbOffColor: UIColor = UIColor(hex: 0xFAFAFA) {
+    @IBInspectable open var thumbDisabledColor: UIColor = UIColor(hex: 0xBDBDBD) {
         didSet {
-            if let switchLayer = self.switchLayer {
-                if let offColorPallete = switchLayer.offColorPallete {
-                    offColorPallete.thumbColor = self.thumbOffColor
-                    switchLayer.updateColors()
-                }
+            if let switchLayer = switchLayer,
+                let disabledColorPallete = switchLayer.disabledColorPallete {
+                disabledColorPallete.thumbColor = thumbDisabledColor
+                switchLayer.updateColors()
             }
         }
     }
-    @IBInspectable public var thumbDisabledColor: UIColor = UIColor(hex: 0xBDBDBD) {
+    @IBInspectable open var trackOnColor: UIColor = UIColor.MKColor.Blue.P300 {
         didSet {
-            if let switchLayer = self.switchLayer {
-                if let disabledColorPallete = switchLayer.disabledColorPallete {
-                    disabledColorPallete.thumbColor = self.thumbDisabledColor
-                    switchLayer.updateColors()
-                }
+            if let switchLayer = switchLayer,
+                let onColorPallete = switchLayer.onColorPallete {
+                onColorPallete.trackColor = trackOnColor
+                switchLayer.updateColors()
             }
         }
     }
-    @IBInspectable public var trackOnColor: UIColor = UIColor.MKColor.Blue.P300 {
+    @IBInspectable open var trackOffColor: UIColor = UIColor(hex: 0x000042, alpha: 0.1) {
         didSet {
-            if let switchLayer = self.switchLayer {
-                if let onColorPallete = switchLayer.onColorPallete {
-                    onColorPallete.trackColor = self.trackOnColor
-                    switchLayer.updateColors()
-                }
+            if let switchLayer = switchLayer,
+                let offColorPallete = switchLayer.offColorPallete {
+                offColorPallete.trackColor = trackOffColor
+                switchLayer.updateColors()
             }
         }
     }
-    @IBInspectable public var trackOffColor: UIColor = UIColor(hex: 0x000042, alpha: 0.1) {
+    @IBInspectable open var trackDisabledColor: UIColor = UIColor(hex: 0xBDBDBD) {
         didSet {
-            if let switchLayer = self.switchLayer {
-                if let offColorPallete = switchLayer.offColorPallete {
-                    offColorPallete.trackColor = self.trackOffColor
-                    switchLayer.updateColors()
-                }
+            if let switchLayer = switchLayer,
+                let disabledColorPallete = switchLayer.disabledColorPallete {
+                disabledColorPallete.trackColor = trackDisabledColor
+                switchLayer.updateColors()
             }
         }
     }
-    @IBInspectable public var trackDisabledColor: UIColor = UIColor(hex: 0xBDBDBD) {
+    @IBInspectable open var on: Bool = false {
         didSet {
-            if let switchLayer = self.switchLayer {
-                if let disabledColorPallete = switchLayer.disabledColorPallete {
-                    disabledColorPallete.trackColor = self.trackDisabledColor
-                    switchLayer.updateColors()
-                }
-            }
-        }
-    }
-    @IBInspectable public var on: Bool = false {
-        didSet {
-            if let switchLayer = self.switchLayer {
-                switchLayer.switchState(self.on)
-                sendActionsForControlEvents(.ValueChanged)
+            if let switchLayer = switchLayer {
+                switchLayer.switchState(on)
+                sendActions(for: .valueChanged)
             }
         }
     }
@@ -98,107 +90,117 @@ public class MKSwitch: UIControl {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setup()
+        setup()
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.setup()
+        setup()
     }
 
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
-        if let switchLayer = switchLayer {
-            switchLayer.updateSuperBounds(self.bounds)
+        switchLayer?.updateSuperBounds(bounds)
+    }
+
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if let point = touches.first?.location(in: self),
+            let switchLayer = switchLayer {
+            switchLayer.onTouchDown(layer.convert(point, to: switchLayer))
         }
     }
 
-    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
-        if let touch = touches.first {
-            let point = touch.locationInView(self)
-            if let switchLayer = switchLayer {
-                switchLayer.onTouchDown(self.layer.convertPoint(point, toLayer: switchLayer))
-            }
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        if let point = touches.first?.location(in: self),
+            let switchLayer = switchLayer {
+            switchLayer.onTouchUp(layer.convert(point, to: switchLayer))
         }
     }
 
-    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesEnded(touches, withEvent: event)
-        if let touch = touches.first {
-            let point = touch.locationInView(self)
-            if let switchLayer = switchLayer {
-                switchLayer.onTouchUp(self.layer.convertPoint(point, toLayer: switchLayer))
-            }
+    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
+        if let point = touches.first?.location(in: self),
+            let switchLayer = switchLayer {
+            switchLayer.onTouchUp(layer.convert(point, to: switchLayer))
         }
     }
 
-    public override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        super.touchesCancelled(touches, withEvent: event)
-        if let touches = touches {
-            if let touch = touches.first {
-                let point = touch.locationInView(self)
-                if let switchLayer = switchLayer {
-                    switchLayer.onTouchUp(self.layer.convertPoint(point, toLayer: switchLayer))
-                }
-            }
-        }
-    }
-
-    public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesMoved(touches, withEvent: event)
-        if let touch = touches.first {
-            let point = touch.locationInView(self)
-            if let switchLayer = switchLayer {
-                switchLayer.onTouchMoved(self.layer.convertPoint(point, toLayer: switchLayer))
-            }
+    open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        if let point = touches.first?.location(in: self),
+            let switchLayer = switchLayer {
+            switchLayer.onTouchMoved(layer.convert(point, to: switchLayer))
         }
     }
 
     private func setup() {
-        switchLayer = MKSwitchLayer(withParent: self)
-        self.enabled = true
-
-        switchLayer!.onColorPallete = MKSwitchColorPallete(
-            thumbColor: thumbOnColor, trackColor: trackOnColor)
-        switchLayer!.offColorPallete = MKSwitchColorPallete(
-            thumbColor: thumbOffColor, trackColor: trackOffColor)
-        switchLayer!.disabledColorPallete = MKSwitchColorPallete(
-            thumbColor: thumbDisabledColor, trackColor: trackDisabledColor)
-        self.layer.addSublayer(switchLayer!)
+        switchLayer = { let switchLayer = MKSwitchLayer(withParent: self)
+            switchLayer.onColorPallete = MKSwitchColorPallete(
+                thumbColor: thumbOnColor, trackColor: trackOnColor)
+            switchLayer.offColorPallete = MKSwitchColorPallete(
+                thumbColor: thumbOffColor, trackColor: trackOffColor)
+            switchLayer.disabledColorPallete = MKSwitchColorPallete(
+                thumbColor: thumbDisabledColor, trackColor: trackDisabledColor)
+            layer.addSublayer(switchLayer)
+            return switchLayer
+        }()
+        isEnabled = true
     }
 }
 
-public class MKSwitchLayer: CALayer {
+open class MKSwitchLayer: CALayer {
 
-    public var enabled: Bool = true {
+    open var enabled = true {
         didSet {
             updateColors()
         }
     }
-    public var parent: MKSwitch?
-    public var rippleAnimationDuration: CFTimeInterval = 0.35
+    open weak var parent: MKSwitch?
+    open var rippleAnimationDuration: CFTimeInterval = 0.35
 
-    private var trackLayer: CAShapeLayer?
-    private var thumbHolder: CALayer?
-    private var thumbLayer: CAShapeLayer?
-    private var thumbBackground: CALayer?
-    private var rippleLayer: MKLayer?
-    private var shadowLayer: MKLayer?
-    private var touchInside: Bool = false
+    private lazy var trackLayer: CAShapeLayer = {
+        let trackLayer = CAShapeLayer()
+        self.addSublayer(trackLayer)
+        return trackLayer
+    }()
+    private var thumbBackground = CALayer()
+    private lazy var rippleLayer: MKLayer = {
+        let rippleLayer = MKLayer(superLayer: self.thumbBackground)
+        rippleLayer.rippleScaleRatio = 1.7
+        rippleLayer.maskEnabled = false
+        rippleLayer.elevation = 0
+        return rippleLayer
+    }()
+    private var thumbLayer = CAShapeLayer()
+    private lazy var shadowLayer: MKLayer = {
+        let shadowLayer = MKLayer(superLayer: self.thumbLayer)
+        shadowLayer.rippleScaleRatio = 0
+        return shadowLayer
+    }()
+    private lazy var thumbHolder: CALayer = {
+        let thumbHolder = CALayer()
+        thumbHolder.addSublayer(self.thumbBackground)
+        thumbHolder.addSublayer(self.thumbLayer)
+        self.addSublayer(thumbHolder)
+        return thumbHolder
+    }()
+
+    private var touchInside = false
     private var touchDownLocation: CGPoint?
     private var thumbFrame: CGRect?
-    private var onColorPallete: MKSwitchColorPallete? {
+    fileprivate var onColorPallete: MKSwitchColorPallete? {
         didSet {
             updateColors()
         }
     }
-    private var offColorPallete: MKSwitchColorPallete? {
+    fileprivate var offColorPallete: MKSwitchColorPallete? {
         didSet {
             updateColors()
         }
     }
-    private var disabledColorPallete: MKSwitchColorPallete? {
+    fileprivate var disabledColorPallete: MKSwitchColorPallete? {
         didSet {
             updateColors()
         }
@@ -207,53 +209,39 @@ public class MKSwitchLayer: CALayer {
     public init(withParent parent: MKSwitch) {
         super.init()
         self.parent = parent
-        setup()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        // MARK: FIXME - Previously no setup
     }
 
-    private func setup() {
-        trackLayer = CAShapeLayer()
-        thumbLayer = CAShapeLayer()
-        thumbHolder = CALayer()
-        thumbBackground = CALayer()
-        shadowLayer = MKLayer(superLayer: thumbLayer!)
-        shadowLayer!.rippleScaleRatio = 0
-        rippleLayer = MKLayer(superLayer: thumbBackground!)
-        rippleLayer!.rippleScaleRatio = 1.7
-        rippleLayer!.maskEnabled = false
-        rippleLayer!.elevation = 0
-        thumbHolder!.addSublayer(thumbBackground!)
-        thumbHolder!.addSublayer(thumbLayer!)
-        self.addSublayer(trackLayer!)
-        self.addSublayer(thumbHolder!)
+    deinit {
+        shadowLayer.recycle()
+        rippleLayer.recycle()
     }
 
-    private func updateSuperBounds(bounds: CGRect) {
-        let center = CGPoint(x: CGRectGetMidX(bounds), y: CGRectGetMidY(bounds))
+    fileprivate func updateSuperBounds(_ bounds: CGRect) {
+        let center = CGPoint(x: bounds.midX, y: bounds.midY)
         let subX = center.x - kMKControlWidth / 2
         let subY = center.y - kMKControlHeight / 2
-        self.frame = CGRect(x: subX, y: subY, width: kMKControlWidth, height: kMKControlHeight)
+        frame = CGRect(x: subX, y: subY, width: kMKControlWidth, height: kMKControlHeight)
         updateTrackLayer()
         updateThumbLayer()
     }
 
     private func updateTrackLayer() {
-        let center = CGPoint(x: CGRectGetMidX(self.bounds), y: CGRectGetMidY(self.bounds))
+        let center = CGPoint(x: bounds.midX, y: bounds.midY)
         let subX = center.x - kMKTrackWidth / 2
         let subY = center.y - kMKTrackHeight / 2
 
-        if let trackLayer = trackLayer {
-            trackLayer.frame = CGRect(x: subX, y: subY, width: kMKTrackWidth, height: kMKTrackHeight)
-            trackLayer.path = UIBezierPath(
-                roundedRect: trackLayer.bounds,
-                byRoundingCorners: UIRectCorner.AllCorners,
-                cornerRadii: CGSize(
-                    width: kMKTrackCornerRadius,
-                    height: kMKTrackCornerRadius)).CGPath
-        }
+        trackLayer.frame = CGRect(x: subX, y: subY, width: kMKTrackWidth, height: kMKTrackHeight)
+        trackLayer.path = UIBezierPath(
+            roundedRect: trackLayer.bounds,
+            byRoundingCorners: .allCorners,
+            cornerRadii: CGSize(
+                width: kMKTrackCornerRadius,
+                height: kMKTrackCornerRadius)).cgPath
     }
 
     private func updateThumbLayer() {
@@ -265,49 +253,42 @@ public class MKSwitchLayer: CALayer {
         }
 
         thumbFrame = CGRect(x: subX, y: 0, width: kMKThumbRadius * 2, height: kMKThumbRadius * 2)
-        if let
-        thumbHolder = thumbHolder,
-        thumbBackground = thumbBackground,
-        thumbLayer = thumbLayer {
-            thumbHolder.frame = thumbFrame!
-            thumbBackground.frame = thumbHolder.bounds
-            thumbLayer.frame = thumbHolder.bounds
-            thumbLayer.path = UIBezierPath(ovalInRect: thumbLayer.bounds).CGPath
-        }
+
+        thumbHolder.frame = thumbFrame!
+        thumbBackground.frame = thumbHolder.bounds
+        thumbLayer.frame = thumbHolder.bounds
+        thumbLayer.path = UIBezierPath(ovalIn: thumbLayer.bounds).cgPath
     }
 
-    private func updateColors() {
-        if let trackLayer = trackLayer,
-        thumbLayer = thumbLayer,
-        rippleLayer = rippleLayer,
-        parent = parent {
+    fileprivate func updateColors() {
+        if let parent = parent {
             if !enabled {
                 if let disabledColorPallete = disabledColorPallete {
-                    trackLayer.fillColor = disabledColorPallete.trackColor.CGColor
-                    thumbLayer.fillColor = disabledColorPallete.thumbColor.CGColor
+                    trackLayer.fillColor = disabledColorPallete.trackColor.cgColor
+                    thumbLayer.fillColor = disabledColorPallete.thumbColor.cgColor
                 }
             } else if parent.on {
                 if let
-                onColorPallete = onColorPallete {
-                    trackLayer.fillColor = onColorPallete.trackColor.CGColor
-                    thumbLayer.fillColor = onColorPallete.thumbColor.CGColor
+                    onColorPallete = onColorPallete {
+                    trackLayer.fillColor = onColorPallete.trackColor.cgColor
+                    thumbLayer.fillColor = onColorPallete.thumbColor.cgColor
                     rippleLayer.setRippleColor(onColorPallete.thumbColor, withRippleAlpha: 0.1,
-                        withBackgroundAlpha: 0.1)
+                                               withBackgroundAlpha: 0.1)
                 }
             } else {
                 if let
-                offColorPallete = offColorPallete {
-                    trackLayer.fillColor = offColorPallete.trackColor.CGColor
-                    thumbLayer.fillColor = offColorPallete.thumbColor.CGColor
+                    offColorPallete = offColorPallete {
+                    trackLayer.fillColor = offColorPallete.trackColor.cgColor
+                    thumbLayer.fillColor = offColorPallete.thumbColor.cgColor
                     rippleLayer.setRippleColor(offColorPallete.thumbColor,
-                        withRippleAlpha: 0.1,
-                        withBackgroundAlpha: 0.1)
+                                               withRippleAlpha: 0.1,
+                                               withBackgroundAlpha: 0.1)
                 }
             }
         }
     }
 
-    private func switchState(on: Bool) {
+    fileprivate func switchState(_ on: Bool) {
         if on {
             thumbFrame = CGRect(
                 x: kMKControlWidth - kMKThumbRadius * 2,
@@ -318,35 +299,29 @@ public class MKSwitchLayer: CALayer {
             thumbFrame = CGRect(
                 x: 0, y: 0, width: kMKThumbRadius * 2, height: kMKThumbRadius * 2)
         }
-        if let thumbHolder = thumbHolder {
-            thumbHolder.frame = thumbFrame!
-        }
-        self.updateColors()
+        thumbHolder.frame = thumbFrame!
+        updateColors()
     }
 
-    public func onTouchDown(touchLocation: CGPoint) {
+    open func onTouchDown(_ touchLocation: CGPoint) {
         if enabled {
-            if let
-            rippleLayer = rippleLayer, shadowLayer = shadowLayer,
-            thumbBackground = thumbBackground, thumbLayer = thumbLayer {
-                rippleLayer.startEffects(atLocation: self.convertPoint(touchLocation, toLayer: thumbBackground))
-                shadowLayer.startEffects(atLocation: self.convertPoint(touchLocation, toLayer: thumbLayer))
+            rippleLayer.startEffects(atLocation: convert(touchLocation, to: thumbBackground))
+            shadowLayer.startEffects(atLocation: convert(touchLocation, to: thumbLayer))
 
-                self.touchInside = self.containsPoint(touchLocation)
-                self.touchDownLocation = touchLocation
-            }
+            touchInside = contains(touchLocation)
+            touchDownLocation = touchLocation
         }
     }
 
-    public func onTouchMoved(moveLocation: CGPoint) {
+    open func onTouchMoved(_ moveLocation: CGPoint) {
         if enabled {
             if touchInside {
-                if let thumbFrame = thumbFrame, thumbHolder = thumbHolder, touchDownLocation = touchDownLocation {
+                if let thumbFrame = thumbFrame, let touchDownLocation = touchDownLocation {
                     var x = thumbFrame.origin.x + moveLocation.x - touchDownLocation.x
                     if x < 0 {
                         x = 0
-                    } else if x > self.bounds.size.width - thumbFrame.size.width {
-                        x = self.bounds.size.width - thumbFrame.size.width
+                    } else if x > bounds.size.width - thumbFrame.size.width {
+                        x = bounds.size.width - thumbFrame.size.width
                     }
                     thumbHolder.frame = CGRect(
                         x: x,
@@ -358,15 +333,13 @@ public class MKSwitchLayer: CALayer {
         }
     }
 
-    public func onTouchUp(touchLocation: CGPoint) {
+    open func onTouchUp(_ touchLocation: CGPoint) {
         if enabled {
-            if let rippleLayer = rippleLayer, shadowLayer = shadowLayer {
-                rippleLayer.stopEffects()
-                shadowLayer.stopEffects()
-            }
+            rippleLayer.stopEffects()
+            shadowLayer.stopEffects()
 
-            if let touchDownLocation = touchDownLocation, parent = parent {
-                if !touchInside || self.checkPoint(touchLocation, equalTo: touchDownLocation) {
+            if let touchDownLocation = touchDownLocation, let parent = parent {
+                if !touchInside || checkPoint(touchLocation, equalTo: touchDownLocation) {
                     parent.on = !parent.on
                 } else {
                     if parent.on && touchLocation.x < touchDownLocation.x {
@@ -380,16 +353,20 @@ public class MKSwitchLayer: CALayer {
         }
     }
 
-    private func checkPoint(point: CGPoint, equalTo other: CGPoint) -> Bool {
+    private func checkPoint(_ point: CGPoint, equalTo other: CGPoint) -> Bool {
+        #if swift(>=4.2)
+        return abs(point.x - other.x) <= 5 && abs(point.y - other.y) <= 5
+        #else
         return fabs(point.x - other.x) <= 5 && fabs(point.y - other.y) <= 5
+        #endif
     }
 }
 
-public class MKSwitchColorPallete {
-    public var thumbColor: UIColor
-    public var trackColor: UIColor
+open class MKSwitchColorPallete {
+    open var thumbColor: UIColor
+    open var trackColor: UIColor
 
-    init(thumbColor: UIColor, trackColor: UIColor) {
+    public init(thumbColor: UIColor, trackColor: UIColor) {
         self.thumbColor = thumbColor
         self.trackColor = trackColor
     }

@@ -9,9 +9,9 @@
 import UIKit
 
 class BarButtonItemViewController: UIViewController {
-
+    
     @IBOutlet var progressView: MKActivityIndicator!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         progressView.startAnimating()

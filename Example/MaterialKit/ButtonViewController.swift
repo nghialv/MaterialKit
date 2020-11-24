@@ -9,5 +9,4 @@
 import UIKit
 import QuartzCore
 
-class ButtonViewController: UIViewController {
-}
+class ButtonViewController: UIViewController { }

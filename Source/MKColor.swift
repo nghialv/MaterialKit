@@ -9,16 +9,16 @@
 import UIKit
 
 extension UIColor {
-
+    
     convenience public init(hex: Int, alpha: CGFloat = 1.0) {
         let red = CGFloat((hex & 0xFF0000) >> 16) / 255.0
         let green = CGFloat((hex & 0xFF00) >> 8) / 255.0
         let blue = CGFloat((hex & 0xFF)) / 255.0
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
-
+    
     public struct MKColor {
-
+        
         public struct Red {
             public static let P50 = UIColor(hex: 0xFFEBEE)
             public static let P100 = UIColor(hex: 0xFFCDD2)
@@ -35,7 +35,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0xFF1744)
             public static let A700 = UIColor(hex: 0xD50000)
         }
-
+        
         public struct Pink {
             public static let P50 = UIColor(hex: 0xFCE4EC)
             public static let P100 = UIColor(hex: 0xF8BBD0)
@@ -52,7 +52,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0xF50057)
             public static let A700 = UIColor(hex: 0xC51162)
         }
-
+        
         public struct Purple {
             public static let P50 = UIColor(hex: 0xF3E5F5)
             public static let P100 = UIColor(hex: 0xE1BEE7)
@@ -69,7 +69,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0xD500F9)
             public static let A700 = UIColor(hex: 0xAA00FF)
         }
-
+        
         public struct DeepPurple {
             public static let P50 = UIColor(hex: 0xEDE7F6)
             public static let P100 = UIColor(hex: 0xD1C4E9)
@@ -86,7 +86,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0x651FFF)
             public static let A700 = UIColor(hex: 0x6200EA)
         }
-
+        
         public struct Indigo {
             public static let P50 = UIColor(hex: 0xE8EAF6)
             public static let P100 = UIColor(hex: 0xC5CAE9)
@@ -103,7 +103,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0x3D5AFE)
             public static let A700 = UIColor(hex: 0x304FFE)
         }
-
+        
         public struct Blue {
             public static let P50 = UIColor(hex: 0xE3F2FD)
             public static let P100 = UIColor(hex: 0xBBDEFB)
@@ -120,7 +120,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0x2979FF)
             public static let A700 = UIColor(hex: 0x2962FF)
         }
-
+        
         public struct LightBlue {
             public static let P50 = UIColor(hex: 0xE1F5FE)
             public static let P100 = UIColor(hex: 0xB3E5FC)
@@ -137,7 +137,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0x00B0FF)
             public static let A700 = UIColor(hex: 0x0091EA)
         }
-
+        
         public struct Cyan {
             public static let P50 = UIColor(hex: 0xE0F7FA)
             public static let P100 = UIColor(hex: 0xB2EBF2)
@@ -154,7 +154,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0x00E5FF)
             public static let A700 = UIColor(hex: 0x00B8D4)
         }
-
+        
         public struct Teal {
             public static let P50 = UIColor(hex: 0xE0F2F1)
             public static let P100 = UIColor(hex: 0xB2DFDB)
@@ -171,7 +171,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0x1DE9B6)
             public static let A700 = UIColor(hex: 0x00BFA5)
         }
-
+        
         public struct Green {
             public static let P50 = UIColor(hex: 0xE8F5E9)
             public static let P100 = UIColor(hex: 0xC8E6C9)
@@ -188,7 +188,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0x00E676)
             public static let A700 = UIColor(hex: 0x00C853)
         }
-
+        
         public struct LightGreen {
             public static let P50 = UIColor(hex: 0xF1F8E9)
             public static let P100 = UIColor(hex: 0xDCEDC8)
@@ -205,7 +205,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0x76FF03)
             public static let A700 = UIColor(hex: 0x64DD17)
         }
-
+        
         public struct Lime {
             public static let P50 = UIColor(hex: 0xF9FBE7)
             public static let P100 = UIColor(hex: 0xF0F4C3)
@@ -222,7 +222,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0xC6FF00)
             public static let A700 = UIColor(hex: 0xAEEA00)
         }
-
+        
         public struct Yellow {
             public static let P50 = UIColor(hex: 0xFFFDE7)
             public static let P100 = UIColor(hex: 0xFFF9C4)
@@ -239,7 +239,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0xFFEA00)
             public static let A700 = UIColor(hex: 0xFFD600)
         }
-
+        
         public struct Amber {
             public static let P50 = UIColor(hex: 0xFFF8E1)
             public static let P100 = UIColor(hex: 0xFFECB3)
@@ -256,7 +256,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0xFFC400)
             public static let A700 = UIColor(hex: 0xFFAB00)
         }
-
+        
         public struct Orange {
             public static let P50 = UIColor(hex: 0xFFF3E0)
             public static let P100 = UIColor(hex: 0xFFE0B2)
@@ -273,7 +273,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0xFF9100)
             public static let A700 = UIColor(hex: 0xFF6D00)
         }
-
+        
         public struct DeepOrange {
             public static let P50 = UIColor(hex: 0xFBE9E7)
             public static let P100 = UIColor(hex: 0xFFCCBC)
@@ -290,7 +290,7 @@ extension UIColor {
             public static let A400 = UIColor(hex: 0xFF3D00)
             public static let A700 = UIColor(hex: 0xDD2C00)
         }
-
+        
         public struct Brown {
             public static let P50 = UIColor(hex: 0xEFEBE9)
             public static let P100 = UIColor(hex: 0xD7CCC8)
@@ -303,7 +303,7 @@ extension UIColor {
             public static let P800 = UIColor(hex: 0x4E342E)
             public static let P900 = UIColor(hex: 0x3E2723)
         }
-
+        
         public struct Grey {
             public static let P50 = UIColor(hex: 0xFAFAFA)
             public static let P100 = UIColor(hex: 0xF5F5F5)
@@ -316,7 +316,7 @@ extension UIColor {
             public static let P800 = UIColor(hex: 0x424242)
             public static let P900 = UIColor(hex: 0x212121)
         }
-
+        
         public struct BlueGrey {
             public static let P50 = UIColor(hex: 0xECEFF1)
             public static let P100 = UIColor(hex: 0xCFD8DC)

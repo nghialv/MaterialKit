@@ -9,137 +9,157 @@
 import UIKit
 
 @IBDesignable
-public class MKActivityIndicator: UIView {
-
+open class MKActivityIndicator: UIView {
+    
     private let drawableLayer = CAShapeLayer()
     private var animating = false
-
-    @IBInspectable public var color: UIColor = UIColor.MKColor.Blue.P500 {
+    
+    @IBInspectable open var color: UIColor = UIColor.MKColor.Blue.P500 {
         didSet {
-            drawableLayer.strokeColor = self.color.CGColor
+            drawableLayer.strokeColor = color.cgColor
         }
     }
-
-    @IBInspectable public var lineWidth: CGFloat = 6 {
+    
+    @IBInspectable open var lineWidth: CGFloat = 6 {
         didSet {
-            drawableLayer.lineWidth = self.lineWidth
-            self.updatePath()
+            drawableLayer.lineWidth = lineWidth
+            updatePath()
         }
     }
-
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-
+    
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-
-    public override var bounds: CGRect {
+    
+    open override var bounds: CGRect {
         didSet {
             updateFrame()
             updatePath()
         }
     }
-
-    public override func layoutSubviews() {
+    
+    open override func layoutSubviews() {
         super.layoutSubviews()
         updateFrame()
         updatePath()
     }
-
-    public func startAnimating() {
-        if self.animating {
+    
+    open func startAnimating() {
+        if animating {
             return
         }
-
-        self.animating = true
-        self.hidden = false
-        self.resetAnimations()
+        
+        animating = true
+        isHidden = false
+        resetAnimations()
     }
-
-    public func stopAnimating() {
-        self.drawableLayer.removeAllAnimations()
-        self.animating = false
-        self.hidden = true
+    
+    open func stopAnimating() {
+        drawableLayer.removeAllAnimations()
+        animating = false
+        isHidden = true
     }
-
+    
     private func setup() {
-        self.hidden = true
-        self.layer.addSublayer(self.drawableLayer)
-        self.drawableLayer.strokeColor = self.color.CGColor
-        self.drawableLayer.lineWidth = self.lineWidth
-        self.drawableLayer.fillColor = UIColor.clearColor().CGColor
-        self.drawableLayer.lineCap = kCALineJoinRound
-        self.drawableLayer.strokeStart = 0.99
-        self.drawableLayer.strokeEnd = 1
+        isHidden = true
+        layer.addSublayer(drawableLayer)
+        drawableLayer.strokeColor = color.cgColor
+        drawableLayer.lineWidth = lineWidth
+        drawableLayer.fillColor = UIColor.clear.cgColor
+        #if swift(>=4.2)
+        drawableLayer.lineCap = .round
+        #else
+        drawableLayer.lineCap = kCALineCapRound
+        #endif
+        drawableLayer.strokeStart = 0.99
+        drawableLayer.strokeEnd = 1
         updateFrame()
         updatePath()
     }
-
+    
     private func updateFrame() {
-        self.drawableLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))
+        drawableLayer.frame = bounds
     }
-
+    
     private func updatePath() {
-        let center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))
-        let radius = min(CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)) / 2 - self.lineWidth
-        self.drawableLayer.path = UIBezierPath(
+        let center = CGPoint(x: bounds.midX, y: bounds.midY)
+        let radius = min(bounds.width, bounds.height) / 2 - lineWidth
+        drawableLayer.path = UIBezierPath(
             arcCenter: center,
             radius: radius,
             startAngle: 0,
-            endAngle: CGFloat(2 * M_PI),
+            endAngle: 2 * .pi,
             clockwise: true)
-            .CGPath
+            .cgPath
     }
-
+    
     private func resetAnimations() {
         drawableLayer.removeAllAnimations()
-
+        
         let rotationAnim = CABasicAnimation(keyPath: "transform.rotation")
         rotationAnim.fromValue = 0
         rotationAnim.duration = 4
-        rotationAnim.toValue = 2 * M_PI
-        rotationAnim.repeatCount = Float.infinity
-        rotationAnim.removedOnCompletion = false
-
+        rotationAnim.toValue = CGFloat.pi * 2
+        rotationAnim.repeatCount = .infinity
+        rotationAnim.isRemovedOnCompletion = false
+        
         let startHeadAnim = CABasicAnimation(keyPath: "strokeStart")
         startHeadAnim.beginTime = 0.1
         startHeadAnim.fromValue = 0
         startHeadAnim.toValue = 0.25
         startHeadAnim.duration = 1
+        #if swift(>=4.2)
+        startHeadAnim.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        #else
         startHeadAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-
+        #endif
+        
         let startTailAnim = CABasicAnimation(keyPath: "strokeEnd")
         startTailAnim.beginTime = 0.1
         startTailAnim.fromValue = 0
         startTailAnim.toValue = 1
         startTailAnim.duration = 1
+        #if swift(>=4.2)
+        startTailAnim.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        #else
         startTailAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-
+        #endif
+        
         let endHeadAnim = CABasicAnimation(keyPath: "strokeStart")
         endHeadAnim.beginTime = 1
         endHeadAnim.fromValue = 0.25
         endHeadAnim.toValue = 0.99
         endHeadAnim.duration = 0.5
+        #if swift(>=4.2)
+        endHeadAnim.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        #else
         endHeadAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-
+        #endif
+        
         let endTailAnim = CABasicAnimation(keyPath: "strokeEnd")
         endTailAnim.beginTime = 1
         endTailAnim.fromValue = 1
         endTailAnim.toValue = 1
         endTailAnim.duration = 0.5
+        #if swift(>=4.2)
+        endTailAnim.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        #else
         endTailAnim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-
+        #endif
+        
         let strokeAnimGroup = CAAnimationGroup()
         strokeAnimGroup.duration = 1.5
         strokeAnimGroup.animations = [startHeadAnim, startTailAnim, endHeadAnim, endTailAnim]
-        strokeAnimGroup.repeatCount = Float.infinity
-        strokeAnimGroup.removedOnCompletion = false
-
-        self.drawableLayer.addAnimation(rotationAnim, forKey: "rotation")
-        self.drawableLayer.addAnimation(strokeAnimGroup, forKey: "stroke")
+        strokeAnimGroup.repeatCount = .infinity
+        strokeAnimGroup.isRemovedOnCompletion = false
+        
+        drawableLayer.add(rotationAnim, forKey: "rotation")
+        drawableLayer.add(strokeAnimGroup, forKey: "stroke")
     }
 }
