@@ -9,7 +9,6 @@
 import UIKit
 
 open class MKSnackbar: UIControl {
-    
     open var text: String? {
         didSet {
             textLabel?.text = text
